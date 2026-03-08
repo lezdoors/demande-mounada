@@ -1,4 +1,5 @@
 import { Home, Zap, TrendingUp, MapPin, Building, MoreHorizontal } from "lucide-react";
+import { useScrollFadeIn } from "@/hooks/useScrollFadeIn";
 
 const requestTypes = [
   {
@@ -34,25 +35,29 @@ const requestTypes = [
 ];
 
 const RequestTypesSection = () => {
+  const ref = useScrollFadeIn();
+
   return (
     <section id="services" className="section-padding bg-muted/40">
       <div className="section-container">
-        <div className="text-center mb-12">
-          <h2 className="font-heading text-2xl sm:text-3xl font-semibold text-foreground mb-3">
+        <div ref={ref} className="scroll-fade-in text-center mb-14">
+          <h2 className="font-heading text-3xl sm:text-4xl font-semibold text-foreground mb-4">
             Types de demandes
           </h2>
-          <p className="text-muted-foreground max-w-2xl mx-auto">
+          <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
             Sélectionnez le type de raccordement correspondant à votre situation pour commencer votre demande.
           </p>
         </div>
 
-        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
+        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {requestTypes.map((item) => (
             <article
               key={item.title}
-              className="bg-card border border-border rounded-lg p-6 hover:shadow-sm hover:border-primary/20 transition-all duration-200 group"
+              className="bg-card border border-border rounded-lg p-7 hover:shadow-md hover:-translate-y-1 hover:border-primary/30 transition-all duration-300 group cursor-pointer"
             >
-              <item.icon className="h-5 w-5 text-primary mb-4" />
+              <div className="h-12 w-12 rounded-lg bg-primary/8 flex items-center justify-center mb-5 group-hover:bg-primary/15 transition-colors duration-300">
+                <item.icon className="h-6 w-6 text-primary" />
+              </div>
               <h3 className="font-heading text-base font-semibold text-foreground mb-2">
                 {item.title}
               </h3>

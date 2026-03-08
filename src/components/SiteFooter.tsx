@@ -42,7 +42,7 @@ const SiteFooter = () => {
           </div>
 
           <div>
-            <h3 className="text-xs font-semibold text-foreground uppercase tracking-wider mb-3">
+            <h3 className="text-sm font-semibold text-foreground uppercase tracking-wider mb-4">
               Informations légales
             </h3>
             <ul className="space-y-2">

@@ -1,3 +1,5 @@
+import { useScrollFadeIn } from "@/hooks/useScrollFadeIn";
+
 const steps = [
   {
     number: "01",
@@ -22,22 +24,27 @@ const steps = [
 ];
 
 const ProcessSection = () => {
+  const ref = useScrollFadeIn();
+
   return (
     <section id="process" className="section-padding bg-background">
       <div className="section-container">
-        <div className="text-center mb-14">
-          <h2 className="font-heading text-2xl sm:text-3xl font-semibold text-foreground mb-3">
+        <div ref={ref} className="scroll-fade-in text-center mb-16">
+          <h2 className="font-heading text-3xl sm:text-4xl font-semibold text-foreground mb-4">
             Comment ça marche
           </h2>
-          <p className="text-muted-foreground max-w-2xl mx-auto">
+          <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
             Un processus simple en quatre étapes pour préparer votre dossier de raccordement.
           </p>
         </div>
 
-        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-8">
+        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
           {steps.map((step, i) => (
-            <div key={step.number} className="relative">
-              <div className="text-4xl font-heading font-bold text-primary/15 mb-3">
+            <div
+              key={step.number}
+              className="relative rounded-lg p-6 hover:bg-muted/50 transition-all duration-300"
+            >
+              <div className="text-5xl font-heading font-bold text-primary/12 mb-4 leading-none">
                 {step.number}
               </div>
               <h3 className="font-heading text-base font-semibold text-foreground mb-2">
@@ -47,7 +54,7 @@ const ProcessSection = () => {
                 {step.description}
               </p>
               {i < steps.length - 1 && (
-                <div className="hidden lg:block absolute top-5 -right-4 w-8 border-t border-dashed border-border" />
+                <div className="hidden lg:block absolute top-8 -right-3 w-6 border-t-2 border-dashed border-border" />
               )}
             </div>
           ))}

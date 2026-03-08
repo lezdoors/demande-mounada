@@ -4,6 +4,7 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
+import { useScrollFadeIn } from "@/hooks/useScrollFadeIn";
 
 const faqs = [
   {
@@ -39,27 +40,29 @@ const faqs = [
 ];
 
 const FaqSection = () => {
+  const ref = useScrollFadeIn();
+
   return (
     <section id="faq" className="section-padding bg-muted/40">
       <div className="section-container">
         <div className="max-w-2xl mx-auto">
-          <div className="text-center mb-10">
-            <h2 className="font-heading text-2xl sm:text-3xl font-semibold text-foreground mb-3">
+          <div ref={ref} className="scroll-fade-in text-center mb-12">
+            <h2 className="font-heading text-3xl sm:text-4xl font-semibold text-foreground mb-4">
               Questions fréquentes
             </h2>
           </div>
 
-          <Accordion type="single" collapsible className="space-y-2">
+          <Accordion type="single" collapsible className="space-y-3">
             {faqs.map((faq, i) => (
               <AccordionItem
                 key={i}
                 value={`item-${i}`}
-                className="bg-card border border-border rounded-lg px-6 data-[state=open]:shadow-sm"
+                className="bg-card border border-border rounded-lg px-6 data-[state=open]:shadow-sm hover:bg-muted/30 transition-colors duration-200"
               >
-                <AccordionTrigger className="text-sm font-medium text-foreground hover:no-underline py-4">
+                <AccordionTrigger className="text-base font-medium text-foreground hover:no-underline py-5">
                   {faq.question}
                 </AccordionTrigger>
-                <AccordionContent className="text-sm text-muted-foreground leading-relaxed pb-4">
+                <AccordionContent className="text-sm text-muted-foreground leading-relaxed pb-5">
                   {faq.answer}
                 </AccordionContent>
               </AccordionItem>

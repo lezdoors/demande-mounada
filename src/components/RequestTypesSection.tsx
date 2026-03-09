@@ -74,7 +74,7 @@ const RequestTypesSection = () => {
               <Button
                 variant="cta"
                 size="sm"
-                className="w-full rounded-full text-xs uppercase tracking-wider font-semibold"
+                className="w-full rounded-md text-xs uppercase tracking-wider font-semibold whitespace-normal h-auto py-2.5"
               >
                 {service.cta}
               </Button>

@@ -92,6 +92,10 @@ export default {
           from: { width: "0%" },
           to: { width: "50%" },
         },
+        "hero-scroll": {
+          "0%": { transform: "translateX(0)" },
+          "100%": { transform: "translateX(-50%)" },
+        },
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
@@ -99,6 +103,7 @@ export default {
         "float": "float 6s ease-in-out infinite",
         "float-delayed": "float-delayed 7s ease-in-out infinite",
         "progress-fill": "progress-fill 2s ease-out 0.5s forwards",
+        "hero-scroll": "hero-scroll 40s linear infinite",
       },
     },
   },

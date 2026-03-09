@@ -95,7 +95,7 @@ const EnedisInfoSection = () => {
 
             {/* SVG illustration */}
             <img
-              src="/illustration-phones.svg"
+              src="/illustration-phones.png"
               alt="Illustration du processus de demande"
               className="w-64 sm:w-72 lg:w-80 h-auto"
             />

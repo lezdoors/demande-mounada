@@ -1,23 +1,41 @@
 import { Button } from "@/components/ui/button";
+import { Phone } from "lucide-react";
 
 const FinalCtaSection = () => {
   return (
-    <section className="py-16 sm:py-20 bg-primary">
-      <div className="section-container text-center">
-        <h2 className="font-heading text-3xl sm:text-4xl font-semibold text-primary-foreground mb-5">
-          Commencez votre demande de raccordement en ligne
+    <section className="py-20 sm:py-28 bg-primary relative overflow-hidden">
+      <div className="absolute inset-0 opacity-10">
+        <div
+          className="absolute inset-0"
+          style={{
+            backgroundImage:
+              "radial-gradient(circle at 20% 50%, hsl(210 20% 98%) 0%, transparent 50%), radial-gradient(circle at 80% 50%, hsl(210 20% 98%) 0%, transparent 50%)",
+          }}
+        />
+      </div>
+      <div className="section-container text-center relative z-10">
+        <h2 className="font-heading text-3xl sm:text-4xl lg:text-5xl text-primary-foreground mb-5">
+          Pret a lancer votre raccordement ?
         </h2>
-        <p className="text-lg text-primary-foreground/80 max-w-xl mx-auto mb-8">
-          Le formulaire est conçu pour vous guider étape par étape dans la préparation
-          de votre dossier.
+        <p className="text-lg text-primary-foreground/80 max-w-xl mx-auto mb-10">
+          Commencez votre demande en ligne. Notre equipe prend en charge votre dossier sous 48h.
         </p>
-        <Button
-          variant="secondary"
-          size="lg"
-          className="font-medium hover:scale-[1.02] transition-all duration-200"
-        >
-          Commencer ma demande
-        </Button>
+        <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+          <Button
+            variant="secondary"
+            size="lg"
+            className="rounded-full px-10 font-medium hover:scale-[1.02] transition-all text-base"
+          >
+            Commencer ma demande
+          </Button>
+          <a
+            href="tel:0188615000"
+            className="inline-flex items-center gap-2 text-primary-foreground/80 hover:text-primary-foreground transition-colors text-sm"
+          >
+            <Phone className="h-4 w-4" />
+            01 88 61 50 00 (Non surtaxe)
+          </a>
+        </div>
       </div>
     </section>
   );

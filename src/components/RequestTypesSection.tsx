@@ -1,36 +1,49 @@
-import { Home, Zap, TrendingUp, MapPin, Building, MoreHorizontal } from "lucide-react";
+import { Home, HardHat, Map, Zap, Building2, Sun } from "lucide-react";
+import { Button } from "@/components/ui/button";
 import { useScrollFadeIn } from "@/hooks/useScrollFadeIn";
 
-const requestTypes = [
+const services = [
   {
     icon: Home,
-    title: "Raccordement d'une maison neuve",
-    description: "Première mise en service électrique pour une construction neuve sur un terrain non raccordé.",
+    title: "Raccordement definitif",
+    description:
+      "Raccordement electrique permanent pour votre maison neuve ou votre batiment. Nous preparons l'ensemble du dossier Enedis.",
+    cta: "Faire ma demande",
+  },
+  {
+    icon: HardHat,
+    title: "Raccordement provisoire",
+    description:
+      "Alimentation electrique temporaire pour votre chantier de construction. Compteur de chantier installe sous 10 jours.",
+    cta: "Faire ma demande",
+  },
+  {
+    icon: Map,
+    title: "Viabilisation de terrain",
+    description:
+      "Amenagement des reseaux electriques sur votre terrain avant construction. Etape indispensable pour tout projet neuf.",
+    cta: "Faire ma demande",
   },
   {
     icon: Zap,
-    title: "Raccordement provisoire",
-    description: "Alimentation électrique temporaire pour un chantier ou un événement de durée limitée.",
-  },
-  {
-    icon: TrendingUp,
     title: "Augmentation de puissance",
-    description: "Modification de la puissance de raccordement pour répondre à de nouveaux besoins.",
+    description:
+      "Modification de votre branchement pour repondre a de nouveaux besoins energetiques : pompe a chaleur, borne de recharge.",
+    cta: "Faire ma demande",
   },
   {
-    icon: MapPin,
-    title: "Raccordement de terrain",
-    description: "Raccordement d'une parcelle en vue d'un projet de construction ou d'aménagement.",
+    icon: Building2,
+    title: "Raccordement collectif",
+    description:
+      "Raccordement pour immeubles, lotissements ou coproprietes. Gestion multi-logements avec un dossier centralise.",
+    cta: "Faire ma demande",
   },
   {
-    icon: Building,
-    title: "Raccordement pour local professionnel",
-    description: "Mise en service pour un commerce, bureau, atelier ou tout local à usage professionnel.",
-  },
-  {
-    icon: MoreHorizontal,
-    title: "Autres demandes de raccordement",
-    description: "Toute autre situation nécessitant une demande spécifique de raccordement électrique.",
+    icon: Sun,
+    title: "Raccordement production",
+    description:
+      "Raccordement pour installations photovoltaiques et production d'electricite. Injection reseau et autoconsommation.",
+    cta: "Faire ma demande",
   },
 ];
 
@@ -38,38 +51,38 @@ const RequestTypesSection = () => {
   const ref = useScrollFadeIn();
 
   return (
-    <section id="services" className="section-padding bg-muted/40">
+    <section id="services" className="section-padding bg-background">
       <div className="section-container">
-        <div ref={ref} className="scroll-fade-in text-center mb-14">
-          <h2 className="font-heading text-3xl sm:text-4xl font-semibold text-foreground mb-4">
-            Types de demandes
+        <div ref={ref} className="scroll-fade-in text-center mb-16">
+          <h2 className="font-heading text-3xl sm:text-4xl lg:text-5xl text-foreground mb-4">
+            Nos services de raccordement
           </h2>
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-            Sélectionnez le type de raccordement correspondant à votre situation pour commencer votre demande.
+            Quel que soit votre projet, nous preparons votre dossier Enedis de A a Z.
           </p>
         </div>
 
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          {requestTypes.map((item) => (
+          {services.map((service) => (
             <article
-              key={item.title}
-              className="bg-card border border-border rounded-lg p-7 hover:shadow-md hover:-translate-y-1 hover:border-primary/30 transition-all duration-300 group cursor-pointer"
+              key={service.title}
+              className="group bg-card border border-border rounded-2xl p-8 hover:shadow-lg hover:border-primary/20 transition-all duration-300 flex flex-col"
             >
-              <div className="h-12 w-12 rounded-lg bg-primary/8 flex items-center justify-center mb-5 group-hover:bg-primary/15 transition-colors duration-300">
-                <item.icon className="h-6 w-6 text-primary" />
+              <div className="h-14 w-14 rounded-2xl bg-primary/8 flex items-center justify-center mb-6 group-hover:bg-primary/12 transition-colors">
+                <service.icon className="h-7 w-7 text-primary" strokeWidth={1.5} />
               </div>
-              <h3 className="font-heading text-base font-semibold text-foreground mb-2">
-                {item.title}
+              <h3 className="font-heading text-xl text-foreground mb-3">
+                {service.title}
               </h3>
-              <p className="text-sm text-muted-foreground leading-relaxed mb-4">
-                {item.description}
+              <p className="text-sm text-muted-foreground leading-relaxed mb-6 flex-1">
+                {service.description}
               </p>
-              <a
-                href="#"
-                className="text-sm text-primary font-medium hover:underline underline-offset-2 transition-colors"
+              <Button
+                variant="cta"
+                className="w-full rounded-full"
               >
-                En savoir plus
-              </a>
+                {service.cta}
+              </Button>
             </article>
           ))}
         </div>

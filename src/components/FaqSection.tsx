@@ -6,36 +6,44 @@ import {
 } from "@/components/ui/accordion";
 import { useScrollFadeIn } from "@/hooks/useScrollFadeIn";
 
-const faqs = [
+const faqsLeft = [
   {
-    question: "À quoi sert ce service ?",
+    question: "Quel est le delai pour un raccordement electrique ?",
     answer:
-      "Ce service vous permet de préparer et structurer votre demande de raccordement électrique en ligne. Il vous guide à travers les informations nécessaires et organise votre dossier de manière claire.",
+      "Le delai varie selon le type de raccordement. Un raccordement provisoire peut etre realise en 2 a 4 semaines. Un raccordement definitif sans extension de reseau prend 2 a 3 mois. Avec extension de reseau, comptez 4 a 6 mois.",
   },
   {
-    question: "Quels documents sont nécessaires ?",
+    question: "Combien coute un raccordement Enedis ?",
     answer:
-      "Les documents requis varient selon votre projet. En général, une autorisation d'urbanisme, un plan de situation, un plan de masse et les coordonnées du demandeur sont demandés. Le formulaire vous indiquera les pièces nécessaires.",
+      "Le cout depend de la distance au reseau, de la puissance demandee et du type de raccordement. Enedis etablit un devis personnalise apres etude technique. Notre service de preparation de dossier est facture 129,80 EUR.",
   },
   {
-    question: "Combien de temps prend la préparation d'un dossier ?",
+    question: "Quels documents faut-il fournir ?",
     answer:
-      "La durée dépend de la complexité de votre projet et de la disponibilité de vos documents. Le formulaire est conçu pour être complété en quelques minutes si vous disposez des informations nécessaires.",
+      "Les documents principaux sont : l'autorisation d'urbanisme (permis de construire ou declaration prealable), un plan de situation, un plan de masse, des photos du terrain et les coordonnees du demandeur. Le formulaire vous guide pour chaque document.",
   },
   {
-    question: "Ce service convient-il pour une maison neuve ?",
+    question: "Peut-on faire un raccordement provisoire pour un chantier ?",
     answer:
-      "Oui, le service couvre les demandes de raccordement pour les constructions neuves, qu'il s'agisse de maisons individuelles ou d'autres types de bâtiments.",
+      "Oui, le raccordement provisoire (compteur de chantier) est prevu pour alimenter un chantier de construction. Il est temporaire et sera remplace par le raccordement definitif a la fin des travaux.",
+  },
+];
+
+const faqsRight = [
+  {
+    question: "Quelle est la difference entre Enedis et EDF ?",
+    answer:
+      "Enedis (ex-ERDF) gere le reseau de distribution d'electricite et les raccordements. EDF est un fournisseur d'electricite. Pour un raccordement, la demande est adressee a Enedis. Le choix du fournisseur (EDF, TotalEnergies, etc.) intervient apres.",
   },
   {
-    question: "Puis-je faire une demande pour un raccordement provisoire ?",
+    question: "Mon terrain n'est pas encore viabilise, que faire ?",
     answer:
-      "Oui, les demandes de raccordement provisoire pour chantier ou événement temporaire sont prises en charge par le service.",
+      "La viabilisation consiste a amener les reseaux (electricite, eau, gaz) jusqu'a votre terrain. Nous pouvons preparer votre dossier de demande de viabilisation electrique aupres d'Enedis dans le cadre d'un projet de construction.",
   },
   {
-    question: "Que se passe-t-il après la demande ?",
+    question: "Comment suivre l'avancement de ma demande ?",
     answer:
-      "Une fois votre dossier complété et vérifié, il est structuré pour être transmis au gestionnaire de réseau compétent. Vous recevrez les informations de suivi nécessaires.",
+      "Apres soumission de votre dossier, vous recevez un numero de reference. Vous pouvez suivre l'avancement en ligne ou contacter notre equipe qui vous informe a chaque etape : reception, etude technique, devis, planification des travaux.",
   },
 ];
 
@@ -45,21 +53,41 @@ const FaqSection = () => {
   return (
     <section id="faq" className="section-padding bg-muted/40">
       <div className="section-container">
-        <div className="max-w-2xl mx-auto">
-          <div ref={ref} className="scroll-fade-in text-center mb-12">
-            <h2 className="font-heading text-3xl sm:text-4xl font-semibold text-foreground mb-4">
-              Questions fréquentes
-            </h2>
-          </div>
+        <div ref={ref} className="scroll-fade-in text-center mb-14">
+          <h2 className="font-heading text-3xl sm:text-4xl lg:text-5xl text-foreground mb-4">
+            Questions frequentes
+          </h2>
+          <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+            Tout ce que vous devez savoir sur le raccordement electrique.
+          </p>
+        </div>
 
+        <div className="grid lg:grid-cols-2 gap-6 max-w-5xl mx-auto">
           <Accordion type="single" collapsible className="space-y-3">
-            {faqs.map((faq, i) => (
+            {faqsLeft.map((faq, i) => (
               <AccordionItem
                 key={i}
-                value={`item-${i}`}
-                className="bg-card border border-border rounded-lg px-6 data-[state=open]:shadow-sm hover:bg-muted/30 transition-colors duration-200"
+                value={`left-${i}`}
+                className="bg-card border border-border rounded-xl px-6 data-[state=open]:shadow-sm"
               >
-                <AccordionTrigger className="text-base font-medium text-foreground hover:no-underline py-5">
+                <AccordionTrigger className="text-sm font-medium text-foreground hover:no-underline py-5 text-left">
+                  {faq.question}
+                </AccordionTrigger>
+                <AccordionContent className="text-sm text-muted-foreground leading-relaxed pb-5">
+                  {faq.answer}
+                </AccordionContent>
+              </AccordionItem>
+            ))}
+          </Accordion>
+
+          <Accordion type="single" collapsible className="space-y-3">
+            {faqsRight.map((faq, i) => (
+              <AccordionItem
+                key={i}
+                value={`right-${i}`}
+                className="bg-card border border-border rounded-xl px-6 data-[state=open]:shadow-sm"
+              >
+                <AccordionTrigger className="text-sm font-medium text-foreground hover:no-underline py-5 text-left">
                   {faq.question}
                 </AccordionTrigger>
                 <AccordionContent className="text-sm text-muted-foreground leading-relaxed pb-5">

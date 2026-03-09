@@ -14,7 +14,7 @@ export default {
     },
     extend: {
       fontFamily: {
-        heading: ['Source Serif 4', 'Georgia', 'serif'],
+        heading: ['Playfair Display', 'Georgia', 'serif'],
         body: ['Inter', 'system-ui', 'sans-serif'],
       },
       colors: {

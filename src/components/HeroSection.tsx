@@ -1,60 +1,100 @@
 import { Button } from "@/components/ui/button";
 
-const mockups = [
-  { src: "/mockups/definitif.jpeg", alt: "Raccordement définitif" },
-  { src: "/mockups/provisoire.jpeg", alt: "Raccordement provisoire" },
-  { src: "/mockups/puissance.jpeg", alt: "Augmentation de puissance" },
-  { src: "/mockups/collectif.jpeg", alt: "Raccordement collectif" },
-  { src: "/mockups/definitif-alt.jpeg", alt: "Compteur Linky" },
-  { src: "/mockups/provisoire-alt.jpeg", alt: "Chantier électrique" },
-];
+const illustrationStyle = "grayscale(1) brightness(1.8) contrast(0.4)";
 
 const HeroSection = () => {
   return (
-    <section className="relative bg-background overflow-hidden">
-      {/* Centered content */}
-      <div className="section-container pt-20 pb-12 lg:pt-32 lg:pb-16">
-        <div className="max-w-3xl mx-auto text-center">
-          <h1 className="font-heading text-4xl sm:text-5xl md:text-6xl lg:text-[4.25rem] leading-[1.1] font-semibold text-foreground mb-6">
-            Votre raccordement Enedis, simplifié
-          </h1>
-
-          <p className="text-lg lg:text-xl text-muted-foreground leading-relaxed mb-10 max-w-lg mx-auto">
-            Constituez votre dossier en quelques minutes. Nous gérons les démarches auprès d'Enedis.
-          </p>
-
-          <Button variant="cta" size="lg" className="text-base h-14 px-12 rounded-full shadow-lg hover:shadow-xl transition-all hover:scale-[1.02]">
-            Commencer ma demande
-          </Button>
-        </div>
+    <section className="relative min-h-screen bg-background overflow-hidden flex flex-col items-center justify-center">
+      {/* Left-side scene — Lemonade-style positioned illustrations */}
+      <div className="hidden lg:block absolute left-0 bottom-0 w-[40%] h-[65%] pointer-events-none select-none">
+        <img
+          src="/mockups/collectif.jpeg"
+          alt=""
+          className="absolute bottom-0 -left-4 w-[60%] rounded-tr-3xl object-cover"
+          style={{ filter: illustrationStyle, maxHeight: "75%" }}
+        />
+        <img
+          src="/mockups/definitif.jpeg"
+          alt=""
+          className="absolute bottom-12 left-[28%] w-[55%] rounded-2xl object-cover"
+          style={{ filter: illustrationStyle, maxHeight: "80%" }}
+        />
       </div>
 
-      {/* Scrolling mockup strip — Lemonade-style panoramic scene */}
-      <div className="relative w-full overflow-hidden pb-4">
-        {/* Fade edges */}
-        <div className="absolute left-0 top-0 bottom-0 w-24 bg-gradient-to-r from-background to-transparent z-10 pointer-events-none" />
-        <div className="absolute right-0 top-0 bottom-0 w-24 bg-gradient-to-l from-background to-transparent z-10 pointer-events-none" />
+      {/* Right-side scene */}
+      <div className="hidden lg:block absolute right-0 bottom-0 w-[40%] h-[65%] pointer-events-none select-none">
+        <img
+          src="/mockups/provisoire.jpeg"
+          alt=""
+          className="absolute bottom-0 -right-4 w-[60%] rounded-tl-3xl object-cover"
+          style={{ filter: illustrationStyle, maxHeight: "75%" }}
+        />
+        <img
+          src="/mockups/puissance.jpeg"
+          alt=""
+          className="absolute bottom-12 right-[28%] w-[55%] rounded-2xl object-cover"
+          style={{ filter: illustrationStyle, maxHeight: "80%" }}
+        />
+      </div>
 
-        {/* Scrolling track — duplicated for seamless loop */}
-        <div className="flex gap-6 animate-hero-scroll">
-          {[...mockups, ...mockups].map((img, i) => (
-            <div
-              key={i}
-              className="flex-shrink-0 w-52 sm:w-64 lg:w-72 aspect-square rounded-2xl overflow-hidden bg-muted shadow-sm"
-            >
+      {/* Wide center gradient — ensures text is always readable */}
+      <div
+        className="hidden lg:block absolute inset-0 pointer-events-none z-[1]"
+        style={{
+          background: "radial-gradient(ellipse 60% 100% at 50% 45%, hsl(210 20% 98%) 30%, transparent 75%)"
+        }}
+      />
+
+      {/* Centered content */}
+      <div className="relative z-10 section-container text-center py-24 lg:py-0">
+        <h1 className="font-heading text-4xl sm:text-5xl md:text-6xl lg:text-7xl leading-[1.08] font-semibold text-foreground mb-6 max-w-3xl mx-auto">
+          Votre raccordement<br className="hidden sm:inline" /> Enedis, simplifié
+        </h1>
+
+        <p className="text-lg lg:text-xl text-muted-foreground mb-10 max-w-md mx-auto">
+          Constituez votre dossier en quelques minutes. Nous gérons tout.
+        </p>
+
+        <Button
+          variant="cta"
+          size="lg"
+          className="text-base sm:text-lg h-14 sm:h-16 px-12 sm:px-16 rounded-full shadow-lg hover:shadow-xl transition-all hover:scale-[1.02] uppercase tracking-wider font-semibold"
+        >
+          Commencer ma demande
+        </Button>
+      </div>
+
+      {/* Mobile — scrolling strip fallback */}
+      <div className="lg:hidden relative w-full overflow-hidden mt-12 pb-4">
+        <div className="absolute left-0 top-0 bottom-0 w-16 bg-gradient-to-r from-background to-transparent z-10 pointer-events-none" />
+        <div className="absolute right-0 top-0 bottom-0 w-16 bg-gradient-to-l from-background to-transparent z-10 pointer-events-none" />
+        <div className="flex gap-4 animate-hero-scroll">
+          {[
+            "/mockups/definitif.jpeg",
+            "/mockups/provisoire.jpeg",
+            "/mockups/puissance.jpeg",
+            "/mockups/collectif.jpeg",
+            "/mockups/definitif-alt.jpeg",
+            "/mockups/provisoire-alt.jpeg",
+            "/mockups/definitif.jpeg",
+            "/mockups/provisoire.jpeg",
+            "/mockups/puissance.jpeg",
+            "/mockups/collectif.jpeg",
+            "/mockups/definitif-alt.jpeg",
+            "/mockups/provisoire-alt.jpeg",
+          ].map((src, i) => (
+            <div key={i} className="flex-shrink-0 w-40 aspect-square rounded-xl overflow-hidden">
               <img
-                src={img.src}
-                alt={img.alt}
+                src={src}
+                alt=""
                 className="w-full h-full object-cover"
-                loading={i < 6 ? "eager" : "lazy"}
+                style={{ filter: illustrationStyle }}
+                loading="lazy"
               />
             </div>
           ))}
         </div>
       </div>
-
-      {/* Bottom gradient fade into next section */}
-      <div className="h-16 bg-gradient-to-b from-background to-transparent" />
     </section>
   );
 };

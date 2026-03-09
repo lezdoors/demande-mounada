@@ -62,8 +62,8 @@ const EnedisInfoSection = () => {
         </div>
 
         {/* Lemonade-style illustration section */}
-        <div ref={ref2} className="scroll-fade-in bg-muted/40 rounded-3xl pt-16 sm:pt-20 px-6 overflow-hidden">
-          <div className="text-center mb-8">
+        <div ref={ref2} className="scroll-fade-in bg-muted/40 rounded-3xl pt-14 sm:pt-16 px-6">
+          <div className="text-center mb-6">
             <h3 className="font-heading text-2xl sm:text-3xl lg:text-4xl text-foreground mb-3">
               Rapide, simple, efficace
             </h3>
@@ -93,16 +93,16 @@ const EnedisInfoSection = () => {
               </svg>
             </div>
 
-            {/* Phone illustration — bottom cropped into container like Lemonade */}
+            {/* Phone illustration */}
             <img
               src="/illustration-phones.png"
               alt="Illustration du processus de demande"
-              className="w-72 sm:w-80 md:w-96 lg:w-[420px] h-auto mb-[-15%]"
+              className="w-72 sm:w-80 md:w-96 lg:w-[420px] h-auto"
             />
           </div>
 
           {/* Mobile callouts */}
-          <div className="md:hidden flex justify-center gap-10 pb-6">
+          <div className="md:hidden flex justify-center gap-10 py-4">
             <div className="text-center">
               <p className="text-3xl font-heading text-foreground font-semibold">5 min</p>
               <p className="text-sm text-muted-foreground">pour remplir</p>
@@ -112,14 +112,14 @@ const EnedisInfoSection = () => {
               <p className="text-sm text-muted-foreground">de traitement</p>
             </div>
           </div>
-        </div>
 
-        {/* CTA sits right below, phones bleed into it */}
-        <div className="text-center mt-8">
-          <Button variant="cta" size="lg" className="rounded-md px-10 text-base">
-            Faire ma demande maintenant
-            <ArrowRight className="h-4 w-4 ml-2" />
-          </Button>
+          {/* CTA inside the section, phones sit on top of it */}
+          <div className="text-center -mt-4 pb-10">
+            <Button variant="cta" size="lg" className="rounded-md px-10 text-base">
+              Faire ma demande maintenant
+              <ArrowRight className="h-4 w-4 ml-2" />
+            </Button>
+          </div>
         </div>
       </div>
     </section>

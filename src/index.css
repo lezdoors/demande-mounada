@@ -37,7 +37,7 @@
     /* Custom tokens */
     --heading-font: 'DM Serif Display', Georgia, serif;
     --body-font: 'Inter', system-ui, sans-serif;
-    --section-gap: 7rem;
+    --section-gap: 4.5rem;
     --container-max: 1200px;
 
     --surface: 210 15% 96%;

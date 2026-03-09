@@ -4,8 +4,8 @@ const illustrationStyle = "grayscale(1) brightness(1.8) contrast(0.4)";
 
 const HeroSection = () => {
   return (
-    <section className="relative min-h-screen bg-background overflow-hidden flex flex-col items-center justify-center">
-      {/* Left-side scene — Lemonade-style positioned illustrations */}
+    <section className="relative min-h-[85vh] bg-background overflow-hidden flex flex-col items-center justify-center">
+      {/* Left-side scene */}
       <div className="hidden lg:block absolute left-0 bottom-0 w-[40%] h-[65%] pointer-events-none select-none">
         <img
           src="/mockups/collectif.jpeg"
@@ -37,7 +37,7 @@ const HeroSection = () => {
         />
       </div>
 
-      {/* Wide center gradient — ensures text is always readable */}
+      {/* Wide center gradient */}
       <div
         className="hidden lg:block absolute inset-0 pointer-events-none z-[1]"
         style={{
@@ -46,26 +46,26 @@ const HeroSection = () => {
       />
 
       {/* Centered content */}
-      <div className="relative z-10 section-container text-center py-24 lg:py-0">
-        <h1 className="font-heading text-4xl sm:text-5xl md:text-6xl lg:text-7xl leading-[1.08] font-semibold text-foreground mb-6 max-w-3xl mx-auto">
-          Votre raccordement<br className="hidden sm:inline" /> Enedis, simplifié
+      <div className="relative z-10 section-container text-center py-16 lg:py-0">
+        <h1 className="font-heading text-4xl sm:text-5xl md:text-6xl lg:text-7xl leading-[1.08] text-foreground mb-5 max-w-3xl mx-auto">
+          Votre raccordement<br className="hidden sm:inline" /> Enedis, simplifie
         </h1>
 
-        <p className="text-lg lg:text-xl text-muted-foreground mb-10 max-w-md mx-auto">
-          Constituez votre dossier en quelques minutes. Nous gérons tout.
+        <p className="text-lg lg:text-xl text-muted-foreground mb-8 max-w-md mx-auto">
+          Constituez votre dossier en quelques minutes. Nous gerons tout.
         </p>
 
         <Button
           variant="cta"
           size="lg"
-          className="text-base sm:text-lg h-14 sm:h-16 px-12 sm:px-16 rounded-full shadow-lg hover:shadow-xl transition-all hover:scale-[1.02] uppercase tracking-wider font-semibold"
+          className="text-base sm:text-lg h-13 sm:h-14 px-10 sm:px-14 rounded-full shadow-lg hover:shadow-xl transition-all hover:scale-[1.02] uppercase tracking-wider font-semibold"
         >
           Commencer ma demande
         </Button>
       </div>
 
-      {/* Mobile — scrolling strip fallback */}
-      <div className="lg:hidden relative w-full overflow-hidden mt-12 pb-4">
+      {/* Mobile scrolling strip */}
+      <div className="lg:hidden relative w-full overflow-hidden mt-8 pb-4">
         <div className="absolute left-0 top-0 bottom-0 w-16 bg-gradient-to-r from-background to-transparent z-10 pointer-events-none" />
         <div className="absolute right-0 top-0 bottom-0 w-16 bg-gradient-to-l from-background to-transparent z-10 pointer-events-none" />
         <div className="flex gap-4 animate-hero-scroll">

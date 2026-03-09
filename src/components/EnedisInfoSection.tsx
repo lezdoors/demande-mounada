@@ -114,8 +114,8 @@ const EnedisInfoSection = () => {
           </div>
 
           {/* CTA inside the section, phones sit on top of it */}
-          <div className="text-center -mt-4 pb-10">
-            <Button variant="cta" size="lg" className="rounded-md px-10 text-base">
+          <div className="flex justify-center -mt-4 pb-10">
+            <Button variant="cta" size="lg" className="rounded-md text-base w-72 sm:w-80 md:w-96 lg:w-[420px]">
               Faire ma demande maintenant
               <ArrowRight className="h-4 w-4 ml-2" />
             </Button>

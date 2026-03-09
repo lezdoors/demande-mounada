@@ -62,8 +62,8 @@ const EnedisInfoSection = () => {
         </div>
 
         {/* Lemonade-style illustration section */}
-        <div ref={ref2} className="scroll-fade-in bg-muted/50 rounded-3xl py-16 sm:py-20 px-6">
-          <div className="text-center mb-10">
+        <div ref={ref2} className="scroll-fade-in bg-muted/40 rounded-3xl pt-16 sm:pt-20 px-6 overflow-hidden">
+          <div className="text-center mb-8">
             <h3 className="font-heading text-2xl sm:text-3xl lg:text-4xl text-foreground mb-3">
               Rapide, simple, efficace
             </h3>
@@ -72,9 +72,9 @@ const EnedisInfoSection = () => {
             </p>
           </div>
 
-          <div className="relative max-w-4xl mx-auto flex items-center justify-center py-8">
+          <div className="relative max-w-4xl mx-auto flex items-center justify-center">
             {/* Left callout */}
-            <div className="hidden md:block absolute left-0 top-[30%] text-right">
+            <div className="hidden md:block absolute left-0 top-[28%] text-right">
               <p className="text-base text-muted-foreground">En seulement</p>
               <p className="text-3xl lg:text-4xl font-heading text-foreground font-semibold">5 minutes</p>
               <svg className="ml-auto mr-6 mt-2" width="50" height="40" viewBox="0 0 50 40" fill="none">
@@ -84,7 +84,7 @@ const EnedisInfoSection = () => {
             </div>
 
             {/* Right callout */}
-            <div className="hidden md:block absolute right-0 top-[30%] text-left">
+            <div className="hidden md:block absolute right-0 top-[28%] text-left">
               <p className="text-3xl lg:text-4xl font-heading text-foreground font-semibold">48h</p>
               <p className="text-base text-muted-foreground">de traitement</p>
               <svg className="ml-6 mt-2" width="50" height="40" viewBox="0 0 50 40" fill="none">
@@ -93,16 +93,16 @@ const EnedisInfoSection = () => {
               </svg>
             </div>
 
-            {/* Phone illustration */}
+            {/* Phone illustration — bottom cropped into container like Lemonade */}
             <img
               src="/illustration-phones.png"
               alt="Illustration du processus de demande"
-              className="w-72 sm:w-80 md:w-96 lg:w-[420px] h-auto"
+              className="w-72 sm:w-80 md:w-96 lg:w-[420px] h-auto mb-[-15%]"
             />
           </div>
 
           {/* Mobile callouts */}
-          <div className="md:hidden flex justify-center gap-10 mt-8">
+          <div className="md:hidden flex justify-center gap-10 pb-6">
             <div className="text-center">
               <p className="text-3xl font-heading text-foreground font-semibold">5 min</p>
               <p className="text-sm text-muted-foreground">pour remplir</p>
@@ -112,13 +112,14 @@ const EnedisInfoSection = () => {
               <p className="text-sm text-muted-foreground">de traitement</p>
             </div>
           </div>
+        </div>
 
-          <div className="text-center mt-10">
-            <Button variant="cta" size="lg" className="rounded-md px-10 text-base">
-              Faire ma demande maintenant
-              <ArrowRight className="h-4 w-4 ml-2" />
-            </Button>
-          </div>
+        {/* CTA sits right below, phones bleed into it */}
+        <div className="text-center mt-8">
+          <Button variant="cta" size="lg" className="rounded-md px-10 text-base">
+            Faire ma demande maintenant
+            <ArrowRight className="h-4 w-4 ml-2" />
+          </Button>
         </div>
       </div>
     </section>

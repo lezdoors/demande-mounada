@@ -22,7 +22,7 @@ const legalLinks = [
 
 const SiteFooter = () => {
   return (
-    <footer className="bg-[hsl(216,50%,14%)] text-white/80">
+    <footer className="bg-[hsl(228,50%,16%)] text-white/80">
       <div className="section-container py-16">
         <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-10">
           <div>

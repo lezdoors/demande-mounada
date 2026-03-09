@@ -47,12 +47,12 @@ const HeroSection = () => {
 
       {/* Centered content */}
       <div className="relative z-10 section-container text-center py-16 lg:py-0">
-        <h1 className="font-heading text-4xl sm:text-5xl md:text-6xl lg:text-7xl leading-[1.08] text-foreground mb-5 max-w-3xl mx-auto">
-          Votre raccordement<br className="hidden sm:inline" /> Enedis, simplifie
+        <h1 className="font-heading text-3xl sm:text-4xl md:text-5xl lg:text-6xl leading-[1.12] text-foreground mb-4 max-w-3xl mx-auto">
+          Partenaire n&deg;1 en France dans l'aide au raccordement Enedis.
         </h1>
 
-        <p className="text-lg lg:text-xl text-muted-foreground mb-8 max-w-md mx-auto">
-          Constituez votre dossier en quelques minutes. Nous gerons tout.
+        <p className="text-base lg:text-lg text-primary mb-8 max-w-lg mx-auto font-medium">
+          Confiez-nous le d&eacute;p&ocirc;t et le suivi de votre dossier de raccordement Enedis.
         </p>
 
         <Button

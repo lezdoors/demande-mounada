@@ -1,5 +1,6 @@
 import { Plug, Settings, Gauge, ShieldCheck, ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { useNavigate } from "react-router-dom";
 import { useScrollFadeIn } from "@/hooks/useScrollFadeIn";
 
 const enedisServices = [
@@ -28,6 +29,7 @@ const enedisServices = [
 const EnedisInfoSection = () => {
   const ref = useScrollFadeIn();
   const ref2 = useScrollFadeIn();
+  const navigate = useNavigate();
 
   return (
     <section id="enedis" className="section-padding bg-background">
@@ -115,7 +117,7 @@ const EnedisInfoSection = () => {
 
           {/* CTA inside the section, phones sit on top of it */}
           <div className="flex justify-center -mt-4 pb-10">
-            <Button variant="cta" size="lg" className="rounded-md text-base w-72 sm:w-80 md:w-96 lg:w-[420px]">
+            <Button variant="cta" size="lg" className="rounded-md text-base w-72 sm:w-80 md:w-96 lg:w-[420px]" onClick={() => navigate("/form")}>
               Faire ma demande maintenant
               <ArrowRight className="h-4 w-4 ml-2" />
             </Button>

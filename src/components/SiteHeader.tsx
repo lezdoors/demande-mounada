@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Menu, X } from "lucide-react";
 
@@ -11,11 +12,12 @@ const navLinks = [
 
 const SiteHeader = () => {
   const [mobileOpen, setMobileOpen] = useState(false);
+  const navigate = useNavigate();
 
   return (
     <header className="sticky top-0 z-50 bg-white/95 backdrop-blur-sm border-b border-border">
       <div className="section-container flex items-center justify-between h-16">
-        <a href="#" className="font-heading text-xl text-foreground">
+        <a href="/" className="font-heading text-xl text-foreground">
           Demande <span className="text-primary">Raccordement</span>
         </a>
 
@@ -29,7 +31,7 @@ const SiteHeader = () => {
               {link.label}
             </a>
           ))}
-          <Button variant="cta" size="sm" className="rounded-full px-6">
+          <Button variant="cta" size="sm" className="rounded-full px-6" onClick={() => navigate("/form")}>
             Commencer
           </Button>
         </nav>
@@ -57,7 +59,7 @@ const SiteHeader = () => {
               </a>
             ))}
             <div className="pt-3 mt-2 border-t border-border">
-              <Button variant="cta" className="w-full rounded-full">
+              <Button variant="cta" className="w-full rounded-full" onClick={() => { setMobileOpen(false); navigate("/form"); }}>
                 Commencer ma demande
               </Button>
             </div>

@@ -1,7 +1,10 @@
 import { Button } from "@/components/ui/button";
 import { Phone } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
 const FinalCtaSection = () => {
+  const navigate = useNavigate();
+
   return (
     <section className="py-20 sm:py-28 bg-primary relative overflow-hidden">
       <div className="absolute inset-0 opacity-10">
@@ -25,6 +28,7 @@ const FinalCtaSection = () => {
             variant="secondary"
             size="lg"
             className="rounded-full px-10 font-medium hover:scale-[1.02] transition-all text-base"
+            onClick={() => navigate("/form")}
           >
             Commencer ma demande
           </Button>

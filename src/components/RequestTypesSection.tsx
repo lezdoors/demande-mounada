@@ -1,5 +1,6 @@
 import { Home, HardHat, Map, Zap } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { useNavigate } from "react-router-dom";
 import { useScrollFadeIn } from "@/hooks/useScrollFadeIn";
 
 const services = [
@@ -31,6 +32,7 @@ const services = [
 
 const RequestTypesSection = () => {
   const ref = useScrollFadeIn();
+  const navigate = useNavigate();
 
   return (
     <section id="services" className="py-16 sm:py-20 bg-background">
@@ -63,6 +65,7 @@ const RequestTypesSection = () => {
                 variant="cta"
                 size="sm"
                 className="w-full rounded-md text-[8px] sm:text-xs uppercase tracking-wider font-semibold whitespace-normal h-auto py-1.5 sm:py-2.5"
+                onClick={() => navigate("/form")}
               >
                 {service.cta}
               </Button>

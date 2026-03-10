@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { usePageMeta } from "@/hooks/usePageMeta";
 import { Button } from "@/components/ui/button";
 import {
   Accordion,
@@ -166,6 +167,10 @@ const categories: FaqCategory[] = [
 ];
 
 const Faq = () => {
+  usePageMeta({
+    title: "FAQ Raccordement Enedis — Questions Fréquentes",
+    description: "Réponses aux questions fréquentes sur le raccordement électrique Enedis : délais, coûts, documents, procédure.",
+  });
   const navigate = useNavigate();
   const heroRef = useScrollFadeIn();
   const ctaRef = useScrollFadeIn();

@@ -1,7 +1,10 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
+import { usePageMeta } from "@/hooks/usePageMeta";
 import { Menu, ArrowLeft, HelpCircle, ChevronDown, Check, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { supabase } from "@/lib/supabase";
+import { trackFormStart, trackFormStep, trackFormSubmit } from "@/lib/tracking";
 
 /* ─── slide-out menu links (Lemonade style) ─── */
 const menuLinks = [
@@ -230,6 +233,10 @@ function FormCheckbox({
 
 /* ─── main form ─── */
 const Form = () => {
+  usePageMeta({
+    title: "Demande de Raccordement Enedis | Formulaire en Ligne",
+    description: "Déposez votre demande de raccordement électrique Enedis en ligne. Formulaire rapide, traitement sous 48h.",
+  });
   const navigate = useNavigate();
   const [step, setStep] = useState(0);
   const [fd, setFd] = useState<FormData>(initialData);
@@ -239,6 +246,9 @@ const Form = () => {
   const [billingCityOpen, setBillingCityOpen] = useState(false);
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [menuOpen, setMenuOpen] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
+  const [leadId, setLeadId] = useState<string | null>(null);
+  const correlationId = useRef(crypto.randomUUID());
 
   const set = <K extends keyof FormData>(key: K, val: FormData[K]) =>
     setFd((prev) => ({ ...prev, [key]: val }));
@@ -384,8 +394,44 @@ const Form = () => {
     }
   };
 
-  const next = () => {
+  const next = async () => {
     if (!validate()) return;
+
+    // Create lead after contact step (step 0)
+    if (step === 0 && !leadId) {
+      trackFormStart();
+      try {
+        const urlParams = new URLSearchParams(window.location.search);
+        const { data, error } = await supabase.functions.invoke("create-lead", {
+          headers: { "x-correlation-id": correlationId.current },
+          body: {
+            leadData: {
+              first_name: fd.first_name.trim(),
+              last_name: fd.last_name.trim(),
+              email: fd.email.trim().toLowerCase(),
+              phone: fd.phone.trim(),
+              postal_code: fd.code_postal_projet || "00000",
+              city: fd.ville_projet || "",
+              consent_gdpr: true,
+            },
+            utmData: {
+              utm_source: urlParams.get("utm_source") || undefined,
+              utm_medium: urlParams.get("utm_medium") || undefined,
+              utm_campaign: urlParams.get("utm_campaign") || undefined,
+              gclid: urlParams.get("gclid") || undefined,
+            },
+            correlationId: correlationId.current,
+          },
+        });
+        if (!error && data?.leadId) {
+          setLeadId(data.leadId);
+        }
+      } catch {
+        // Non-blocking: continue form even if lead creation fails
+      }
+    }
+
+    trackFormStep(step + 1);
     if (step < TOTAL_STEPS - 1) setStep(step + 1);
   };
 
@@ -396,10 +442,63 @@ const Form = () => {
     }
   };
 
-  const handleSubmit = () => {
-    if (!validate()) return;
-    // TODO: wire CRM submission (submit-demande) + redirect to payment page
-    console.log("Form submitted:", fd);
+  const handleSubmit = async () => {
+    if (!validate() || submitting) return;
+    setSubmitting(true);
+
+    try {
+      const { data, error } = await supabase.functions.invoke("submit-demande", {
+        headers: { "x-correlation-id": correlationId.current },
+        body: {
+          leadData: {
+            first_name: fd.first_name.trim(),
+            last_name: fd.last_name.trim(),
+            email: fd.email.trim().toLowerCase(),
+            phone: fd.phone.trim(),
+            postal_code: fd.code_postal_projet,
+            city: fd.ville_projet,
+          },
+          demandeData: {
+            type_client: fd.type_client,
+            type_demande: fd.type_demande,
+            date_intervention: fd.date_intervention || null,
+            raison_sociale: fd.raison_sociale || null,
+            siren: fd.siren || null,
+            nom_collectivite: fd.nom_collectivite || null,
+            service_direction: fd.service_direction || null,
+            siret_insee: fd.siret_insee || null,
+            adresse_projet: fd.adresse_projet,
+            complement_adresse: fd.complement_adresse || null,
+            code_postal_projet: fd.code_postal_projet,
+            ville_projet: fd.ville_projet,
+            adresse_facturation: fd.adresse_facturation_diff ? fd.adresse_facturation : null,
+            code_postal_facturation: fd.adresse_facturation_diff ? fd.code_postal_facturation : null,
+            ville_facturation: fd.adresse_facturation_diff ? fd.ville_facturation : null,
+            usage_raccordement: fd.usage_raccordement || null,
+            hors_eau_hors_air: fd.hors_eau_hors_air || null,
+            type_alimentation: fd.type_alimentation || "inconnu",
+            puissance_kva: fd.puissance_kva || 6,
+            delai_souhaite: fd.delai_souhaite || null,
+            compteur_existant: fd.compteur_existant || null,
+            commentaires: fd.commentaires || null,
+          },
+          utmData: {},
+          leadId: leadId,
+        },
+      });
+
+      if (error) throw error;
+
+      const { demandeId, reference } = data;
+      trackFormSubmit(leadId || "", demandeId, fd.type_demande);
+
+      // Redirect to payment page
+      navigate(`/paiement?demandeId=${demandeId}&leadId=${leadId || ""}&ref=${reference}`);
+    } catch {
+      setErrors({ consent: "Une erreur est survenue. Veuillez réessayer." });
+    } finally {
+      setSubmitting(false);
+    }
   };
 
   /* ─── power options based on phase (matching connect) ─── */
@@ -1148,11 +1247,11 @@ const Form = () => {
                 <FormCheckbox checked={fd.consent} onChange={(v) => set("consent", v)}>
                   <span className="text-xs text-muted-foreground leading-relaxed">
                     J'accepte les{" "}
-                    <a href="/cgu" className="underline hover:text-foreground">
-                      Conditions Générales d'Utilisation
+                    <a href="/conditions-generales" className="underline hover:text-foreground">
+                      Conditions Générales de Vente
                     </a>{" "}
                     et la{" "}
-                    <a href="/confidentialite" className="underline hover:text-foreground">
+                    <a href="/politique-confidentialite" className="underline hover:text-foreground">
                       Politique de confidentialité
                     </a>
                     . *
@@ -1172,7 +1271,11 @@ const Form = () => {
               }`}
               onClick={step === TOTAL_STEPS - 1 ? handleSubmit : next}
             >
-              {step === TOTAL_STEPS - 1 ? "Envoyer ma demande" : "Suivant"}
+              {step === TOTAL_STEPS - 1
+                ? submitting
+                  ? "Envoi en cours..."
+                  : "Envoyer ma demande"
+                : "Suivant"}
             </Button>
           </div>
         </div>

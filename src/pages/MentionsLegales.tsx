@@ -1,3 +1,4 @@
+import { usePageMeta } from "@/hooks/usePageMeta";
 import { useScrollFadeIn } from "@/hooks/useScrollFadeIn";
 import SiteHeader from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
@@ -52,6 +53,10 @@ Les donnees collectees via les formulaires du site sont utilisees exclusivement 
 ];
 
 const MentionsLegales = () => {
+  usePageMeta({
+    title: "Mentions Légales | Demande Raccordement",
+    description: "Mentions légales du site demande-raccordement.fr. Éditeur, hébergeur, propriété intellectuelle.",
+  });
   const heroRef = useScrollFadeIn();
   const contentRef = useScrollFadeIn();
 

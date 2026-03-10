@@ -1,3 +1,4 @@
+import { usePageMeta } from "@/hooks/usePageMeta";
 import { Phone, Mail, Clock, MapPin, Send } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -44,6 +45,10 @@ const subjectOptions = [
 ];
 
 const Contact = () => {
+  usePageMeta({
+    title: "Contactez le Service Raccordement | Demande Raccordement",
+    description: "Contactez notre service raccordement Enedis. Réponse sous 24h. Téléphone, email, formulaire en ligne.",
+  });
   const heroRef = useScrollFadeIn();
   const cardsRef = useScrollFadeIn();
   const formRef = useScrollFadeIn();

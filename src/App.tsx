@@ -13,7 +13,10 @@ import Contact from "./pages/Contact";
 import MentionsLegales from "./pages/MentionsLegales";
 import PolitiqueConfidentialite from "./pages/PolitiqueConfidentialite";
 import ConditionsGenerales from "./pages/ConditionsGenerales";
+import Paiement from "./pages/Paiement";
+import Confirmation from "./pages/Confirmation";
 import NotFound from "./pages/NotFound";
+import MobileStickyBar from "./components/MobileStickyBar";
 
 const queryClient = new QueryClient();
 
@@ -34,8 +37,11 @@ const App = () => (
           <Route path="/mentions-legales" element={<MentionsLegales />} />
           <Route path="/politique-confidentialite" element={<PolitiqueConfidentialite />} />
           <Route path="/conditions-generales" element={<ConditionsGenerales />} />
+          <Route path="/paiement" element={<Paiement />} />
+          <Route path="/confirmation" element={<Confirmation />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
+        <MobileStickyBar />
       </BrowserRouter>
     </TooltipProvider>
   </QueryClientProvider>

@@ -1,4 +1,5 @@
 import { useNavigate } from "react-router-dom";
+import { usePageMeta } from "@/hooks/usePageMeta";
 import {
   Building,
   Network,
@@ -114,6 +115,10 @@ const differences = [
 ];
 
 const Enedis = () => {
+  usePageMeta({
+    title: "Enedis et le Raccordement Électrique — Tout Savoir",
+    description: "Tout savoir sur Enedis, le gestionnaire du réseau électrique. Types de raccordement, processus, zone de desserte.",
+  });
   const navigate = useNavigate();
   const heroRef = useScrollFadeIn();
   const whatRef = useScrollFadeIn();

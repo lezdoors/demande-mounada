@@ -1,4 +1,5 @@
 import { useNavigate } from "react-router-dom";
+import { usePageMeta } from "@/hooks/usePageMeta";
 import { Button } from "@/components/ui/button";
 import { useScrollFadeIn } from "@/hooks/useScrollFadeIn";
 import {
@@ -159,6 +160,10 @@ const StepCard = ({ step, index }: { step: Step; index: number }) => {
 };
 
 const CommentCaMarche = () => {
+  usePageMeta({
+    title: "Comment Faire une Demande de Raccordement Enedis | Étapes",
+    description: "Les 6 étapes de votre demande de raccordement Enedis : formulaire, vérification, soumission, devis, travaux, mise en service.",
+  });
   const navigate = useNavigate();
   const heroRef = useScrollFadeIn();
   const ctaRef = useScrollFadeIn();

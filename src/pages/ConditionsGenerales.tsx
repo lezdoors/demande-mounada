@@ -1,3 +1,4 @@
+import { usePageMeta } from "@/hooks/usePageMeta";
 import { useScrollFadeIn } from "@/hooks/useScrollFadeIn";
 import SiteHeader from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
@@ -34,7 +35,7 @@ Le service vise a simplifier et accelerer le processus de demande de raccordemen
     title: "4. Prix",
     content: `Le prix du service de preparation de dossier est de 129,80 EUR TTC (Toutes Taxes Comprises).
 
-Le paiement s'effectue en une seule fois, par carte bancaire, via la plateforme de paiement securisee Stripe. Le paiement est exige au moment de la validation de la commande.
+Le paiement s'effectue en une seule fois, par carte bancaire. Le paiement est exige au moment de la validation de la commande.
 
 Le Prestataire se reserve le droit de modifier ses tarifs a tout moment. Les tarifs applicables sont ceux en vigueur au moment de la validation de la commande par le Client.`,
   },
@@ -44,7 +45,7 @@ Le Prestataire se reserve le droit de modifier ses tarifs a tout moment. Les tar
 
 1. Remplissage du formulaire en ligne : le Client fournit les informations relatives a son projet de raccordement (type de raccordement, adresse, puissance souhaitee, etc.).
 2. Validation des informations : le Client verifie les informations saisies et valide sa demande.
-3. Paiement : le Client procede au paiement securise de 129,80 EUR TTC par carte bancaire.
+3. Paiement : le Client procede au reglement de 129,80 EUR TTC par carte bancaire.
 4. Confirmation : le Client recoit une confirmation de commande par email avec un numero de reference.
 5. Traitement du dossier : l'equipe de Demande Raccordement prend en charge la preparation du dossier.
 
@@ -104,6 +105,10 @@ Le Client est informe qu'il peut en tout etat de cause recourir a une mediation 
 ];
 
 const ConditionsGenerales = () => {
+  usePageMeta({
+    title: "Conditions Générales de Vente | Demande Raccordement",
+    description: "Conditions générales de vente du service de raccordement électrique en ligne.",
+  });
   const heroRef = useScrollFadeIn();
   const contentRef = useScrollFadeIn();
 

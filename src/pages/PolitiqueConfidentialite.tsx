@@ -1,3 +1,4 @@
+import { usePageMeta } from "@/hooks/usePageMeta";
 import { useScrollFadeIn } from "@/hooks/useScrollFadeIn";
 import SiteHeader from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
@@ -26,7 +27,7 @@ Pour toute question relative a la protection de vos donnees personnelles, vous p
 - Numero de telephone
 - Adresse du projet de raccordement
 - Informations techniques relatives au raccordement (type de raccordement, puissance souhaitee, nature du projet)
-- Donnees de paiement (traitees de maniere securisee par notre prestataire Stripe)
+- Donnees de paiement (traitees de maniere securisee)
 
 Ces donnees sont collectees lorsque vous remplissez le formulaire de demande en ligne ou lorsque vous nous contactez directement.`,
   },
@@ -56,7 +57,7 @@ Ces donnees sont collectees lorsque vous remplissez le formulaire de demande en 
 - L'equipe interne de Demande Raccordement, dans la stricte mesure necessaire au traitement de votre dossier
 - Nos sous-traitants techniques :
   - Hebergeur : Vercel Inc. (hebergement du site)
-  - Service de paiement : Stripe (traitement securise des paiements)
+  - Service de paiement : prestataire bancaire agree (traitement des paiements par carte)
   - Service email : pour les communications transactionnelles liees a votre dossier
 
 Aucune donnee personnelle n'est vendue, louee ou cedee a des tiers a des fins commerciales.`,
@@ -107,6 +108,10 @@ Nous vous invitons a consulter regulierement cette page pour prendre connaissanc
 ];
 
 const PolitiqueConfidentialite = () => {
+  usePageMeta({
+    title: "Politique de Confidentialité | Demande Raccordement",
+    description: "Politique de confidentialité et protection des données personnelles. Conformité RGPD.",
+  });
   const heroRef = useScrollFadeIn();
   const contentRef = useScrollFadeIn();
 

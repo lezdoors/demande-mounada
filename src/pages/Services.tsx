@@ -1,4 +1,5 @@
 import { useNavigate } from "react-router-dom";
+import { usePageMeta } from "@/hooks/usePageMeta";
 import {
   Home,
   HardHat,
@@ -110,6 +111,10 @@ const specializedServices = [
 ];
 
 const Services = () => {
+  usePageMeta({
+    title: "Services de Raccordement Électrique Enedis | Définitif, Provisoire, Collectif",
+    description: "Raccordement définitif, provisoire, augmentation de puissance ou collectif. Déposez votre demande en ligne.",
+  });
   const navigate = useNavigate();
   const heroRef = useScrollFadeIn();
   const mainRef = useScrollFadeIn();

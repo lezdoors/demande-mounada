@@ -17,8 +17,17 @@ const SiteHeader = () => {
   return (
     <header className="sticky top-0 z-50 bg-white/95 backdrop-blur-sm border-b border-border">
       <div className="section-container flex items-center justify-between h-16">
-        <a href="/" className="font-heading text-xl text-foreground">
-          Demande <span className="text-primary">Raccordement</span>
+        {/* Logo: house icon + text */}
+        <a href="/" className="flex items-center gap-2.5">
+          <img src="/logo-illu.png" alt="" className="h-9 w-9" />
+          <div className="leading-tight">
+            <span className="block text-[11px] font-medium uppercase tracking-wider text-muted-foreground">
+              Portail en ligne
+            </span>
+            <span className="block text-sm font-heading text-foreground">
+              Raccordement Enedis
+            </span>
+          </div>
         </a>
 
         <nav className="hidden md:flex items-center gap-8">

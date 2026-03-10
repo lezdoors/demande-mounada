@@ -8,43 +8,43 @@ const HeroSection = () => {
 
   return (
     <section className="relative min-h-[70vh] bg-background overflow-hidden flex flex-col items-center justify-center">
-      {/* Left-side scene */}
-      <div className="hidden lg:block absolute left-0 bottom-0 w-[40%] h-[65%] pointer-events-none select-none">
+      {/* Left-side scene — pulled toward center */}
+      <div className="hidden lg:block absolute left-0 bottom-0 w-[48%] h-[70%] pointer-events-none select-none">
         <img
           src="/mockups/collectif.jpeg"
           alt=""
-          className="absolute bottom-0 -left-4 w-[60%] rounded-tr-3xl object-cover"
+          className="absolute bottom-0 left-[10%] w-[52%] rounded-tr-3xl object-cover"
           style={{ filter: illustrationStyle, maxHeight: "75%" }}
         />
         <img
           src="/mockups/definitif.jpeg"
           alt=""
-          className="absolute bottom-12 left-[28%] w-[55%] rounded-2xl object-cover"
+          className="absolute bottom-10 left-[38%] w-[50%] rounded-2xl object-cover"
           style={{ filter: illustrationStyle, maxHeight: "80%" }}
         />
       </div>
 
-      {/* Right-side scene */}
-      <div className="hidden lg:block absolute right-0 bottom-0 w-[40%] h-[65%] pointer-events-none select-none">
+      {/* Right-side scene — pulled toward center */}
+      <div className="hidden lg:block absolute right-0 bottom-0 w-[48%] h-[70%] pointer-events-none select-none">
         <img
           src="/mockups/provisoire.jpeg"
           alt=""
-          className="absolute bottom-0 -right-4 w-[60%] rounded-tl-3xl object-cover"
+          className="absolute bottom-0 right-[10%] w-[52%] rounded-tl-3xl object-cover"
           style={{ filter: illustrationStyle, maxHeight: "75%" }}
         />
         <img
           src="/mockups/puissance.jpeg"
           alt=""
-          className="absolute bottom-12 right-[28%] w-[55%] rounded-2xl object-cover"
+          className="absolute bottom-10 right-[38%] w-[50%] rounded-2xl object-cover"
           style={{ filter: illustrationStyle, maxHeight: "80%" }}
         />
       </div>
 
-      {/* Wide center gradient */}
+      {/* Center gradient — narrower to let pics show through */}
       <div
         className="hidden lg:block absolute inset-0 pointer-events-none z-[1]"
         style={{
-          background: "radial-gradient(ellipse 60% 100% at 50% 45%, hsl(210 20% 98%) 30%, transparent 75%)"
+          background: "radial-gradient(ellipse 48% 100% at 50% 45%, hsl(210 20% 98%) 35%, transparent 72%)"
         }}
       />
 

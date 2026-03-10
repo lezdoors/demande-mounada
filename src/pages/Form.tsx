@@ -1,7 +1,16 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { Menu, ArrowLeft, HelpCircle, ChevronDown, Check } from "lucide-react";
+import { Menu, ArrowLeft, HelpCircle, ChevronDown, Check, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
+
+/* ─── slide-out menu links (Lemonade style) ─── */
+const menuLinks = [
+  { label: "Nos services", href: "/#services" },
+  { label: "Comment ça marche", href: "/#process" },
+  { label: "Enedis", href: "/#enedis" },
+  { label: "FAQ", href: "/#faq" },
+  { label: "Recommencer", action: "reset" },
+];
 
 /* ─── step tabs (matching connect's 4 main sections) ─── */
 const tabs = [
@@ -229,6 +238,7 @@ const Form = () => {
   const [billingCities, setBillingCities] = useState<string[]>([]);
   const [billingCityOpen, setBillingCityOpen] = useState(false);
   const [errors, setErrors] = useState<Record<string, string>>({});
+  const [menuOpen, setMenuOpen] = useState(false);
 
   const set = <K extends keyof FormData>(key: K, val: FormData[K]) =>
     setFd((prev) => ({ ...prev, [key]: val }));
@@ -482,19 +492,73 @@ const Form = () => {
 
   return (
     <div className="min-h-screen bg-white flex flex-col">
+      {/* ─── Lemonade-style slide-out menu ─── */}
+      {menuOpen && (
+        <div className="fixed inset-0 z-50 flex">
+          {/* Dark sidebar */}
+          <div className="w-64 bg-[#2d2d2d] text-white flex flex-col p-6">
+            <button
+              type="button"
+              onClick={() => setMenuOpen(false)}
+              className="self-end mb-8 p-1 hover:opacity-70 transition-opacity"
+            >
+              <X className="h-5 w-5" />
+            </button>
+            <nav className="flex flex-col gap-1 flex-1">
+              {menuLinks.map((link) =>
+                link.action === "reset" ? (
+                  <button
+                    key={link.label}
+                    type="button"
+                    onClick={() => {
+                      setMenuOpen(false);
+                      setStep(0);
+                      setFd(initialData);
+                    }}
+                    className="text-left px-2 py-3 text-base hover:text-white/80 transition-colors"
+                  >
+                    {link.label}
+                  </button>
+                ) : (
+                  <a
+                    key={link.label}
+                    href={link.href}
+                    onClick={() => setMenuOpen(false)}
+                    className="px-2 py-3 text-base hover:text-white/80 transition-colors"
+                  >
+                    {link.label}
+                  </a>
+                )
+              )}
+            </nav>
+          </div>
+          {/* Backdrop */}
+          <div className="flex-1 bg-black/30" onClick={() => setMenuOpen(false)} />
+        </div>
+      )}
+
       {/* ─── Header ─── */}
       <header className="flex items-center justify-between px-4 sm:px-6 h-14 border-b border-border/50">
         <div className="flex items-center gap-3">
           <button
             type="button"
-            onClick={() => navigate("/")}
+            onClick={() => setMenuOpen(true)}
             className="p-1.5 hover:bg-muted rounded-md transition-colors"
           >
             <Menu className="h-5 w-5 text-foreground" />
           </button>
-          <span className="font-heading text-lg text-foreground">
-            Demande <span className="text-primary">Raccordement</span>
-          </span>
+          {/* Logo */}
+          <a href="/" className="flex items-center gap-2">
+            <img src="/logo-illu.png" alt="" className="h-8 w-8" />
+            <div className="leading-tight">
+              <span className="block text-[10px] font-medium uppercase tracking-wider text-muted-foreground">
+                Portail en ligne
+              </span>
+              <span className="block text-xs font-heading text-foreground">
+                Raccordement Enedis
+              </span>
+            </div>
+          </a>
         </div>
         <div className="flex items-center gap-2">
           {step > 0 && (

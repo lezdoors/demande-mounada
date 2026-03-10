@@ -1,3 +1,4 @@
+import { lazy, Suspense, useEffect, useState } from "react";
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -17,6 +18,23 @@ import Paiement from "./pages/Paiement";
 import Confirmation from "./pages/Confirmation";
 import NotFound from "./pages/NotFound";
 import MobileStickyBar from "./components/MobileStickyBar";
+
+const LazyChatWidget = lazy(() => import("./components/ChatWidget"));
+
+/** Delay chat widget load by 3s so it doesn't block initial paint */
+function DelayedChat() {
+  const [show, setShow] = useState(false);
+  useEffect(() => {
+    const t = setTimeout(() => setShow(true), 3000);
+    return () => clearTimeout(t);
+  }, []);
+  if (!show) return null;
+  return (
+    <Suspense fallback={null}>
+      <LazyChatWidget />
+    </Suspense>
+  );
+}
 
 const queryClient = new QueryClient();
 
@@ -42,6 +60,7 @@ const App = () => (
           <Route path="*" element={<NotFound />} />
         </Routes>
         <MobileStickyBar />
+        <DelayedChat />
       </BrowserRouter>
     </TooltipProvider>
   </QueryClientProvider>

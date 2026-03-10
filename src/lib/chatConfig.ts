@@ -1,0 +1,11 @@
+export const CHAT_CONFIG = {
+  ADVISOR_NAME: "Sophie",
+  INACTIVITY_TIMEOUT_MS: 45000,
+  INACTIVITY_NUDGE_COOLDOWN_MS: 120000,
+  MAX_EXCHANGES_BEFORE_CTA: 3,
+  CTA_COOLDOWN_MS: 60000,
+  FALLBACK_EMAIL: "contact@demande-raccordement.fr",
+  FALLBACK_PHONE: "01 88 61 50 00",
+  FALLBACK_HOURS: "Lun-Ven 9h-18h",
+  FORM_PATH: "/form",
+} as const;

@@ -1,0 +1,12 @@
+{
+  "name": "chatbot-monitor",
+  "version": "1.0.0",
+  "description": "Mouha — 24/7 chatbot conversation monitor for needs_human handoffs",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "dependencies": {
+    "@supabase/supabase-js": "^2.7.1"
+  }
+}

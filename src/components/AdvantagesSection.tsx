@@ -57,7 +57,7 @@ const AdvantagesSection = () => {
               className="bg-card border border-border rounded-2xl p-7 hover:shadow-md transition-all duration-300"
             >
               <div className="h-12 w-12 rounded-xl bg-primary/8 flex items-center justify-center mb-5">
-                <item.icon className="h-6 w-6 text-primary" strokeWidth={1.5} />
+                <item.icon className="h-6 w-6 text-primary" strokeWidth={1.5} fill="currentColor" fillOpacity={0.15} />
               </div>
               <h3 className="font-heading text-lg text-foreground mb-2">
                 {item.title}

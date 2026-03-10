@@ -388,7 +388,7 @@ const ChatWidget = () => {
         className="fixed z-50 bottom-20 right-4 md:bottom-6 md:right-6 h-14 w-14 rounded-full shadow-cta flex items-center justify-center hover:scale-105 transition-transform"
         aria-label="Ouvrir le chat"
       >
-        <img src="/sophie-avatar.svg" alt="Sophie" className="h-14 w-14 rounded-full" />
+        <img src="/sophie-avatar.webp" alt="Sophie" className="h-14 w-14 rounded-full object-cover" />
         {badge && (
           <span className="absolute -top-0.5 -right-0.5 h-4 w-4 bg-red-500 rounded-full border-2 border-white" />
         )}
@@ -404,7 +404,7 @@ const ChatWidget = () => {
       <div className="flex items-center justify-between px-4 py-3 border-b border-border/50 md:rounded-t-2xl">
         <div className="flex items-center gap-3">
           <div className="relative">
-            <img src="/sophie-avatar.svg" alt="Sophie" className="h-9 w-9 rounded-full" />
+            <img src="/sophie-avatar.webp" alt="Sophie" className="h-9 w-9 rounded-full object-cover" />
             <span className="absolute bottom-0 right-0 h-2.5 w-2.5 bg-green-500 rounded-full border-2 border-white" />
           </div>
           <div>

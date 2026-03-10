@@ -51,7 +51,7 @@ const EnedisInfoSection = () => {
               className="bg-card border border-border rounded-2xl p-7 hover:shadow-md hover:border-primary/20 transition-all duration-300"
             >
               <div className="h-12 w-12 rounded-xl bg-primary/8 flex items-center justify-center mb-5">
-                <service.icon className="h-6 w-6 text-primary" strokeWidth={1.5} />
+                <service.icon className="h-6 w-6 text-primary" strokeWidth={1.5} fill="currentColor" fillOpacity={0.15} />
               </div>
               <h3 className="font-heading text-lg text-foreground mb-2">
                 {service.title}

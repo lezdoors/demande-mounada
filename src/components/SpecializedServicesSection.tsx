@@ -55,7 +55,7 @@ const SpecializedServicesSection = () => {
               className="group bg-card border border-border rounded-xl sm:rounded-2xl p-3 sm:p-8 hover:shadow-lg hover:border-primary/20 transition-all duration-300"
             >
               <div className="h-8 w-8 sm:h-14 sm:w-14 rounded-lg sm:rounded-2xl bg-primary/8 flex items-center justify-center mb-3 sm:mb-6 group-hover:bg-primary/12 transition-colors">
-                <service.icon className="h-4 w-4 sm:h-7 sm:w-7 text-primary" strokeWidth={1.5} />
+                <service.icon className="h-4 w-4 sm:h-7 sm:w-7 text-primary" strokeWidth={1.5} fill="currentColor" fillOpacity={0.15} />
               </div>
               <h3 className="font-heading text-xs sm:text-xl text-foreground mb-1 sm:mb-3 leading-tight">
                 {service.title}

@@ -1,17 +1,17 @@
-import { Home, HardHat, Map, Zap } from "lucide-react";
+import { HousePlug, Construction, Zap, Shovel } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useNavigate } from "react-router-dom";
 import { useScrollFadeIn } from "@/hooks/useScrollFadeIn";
 
 const services = [
   {
-    icon: Home,
+    icon: HousePlug,
     title: "Raccordement definitif",
     description: "Raccordement permanent pour votre maison neuve ou batiment.",
     cta: "Faire ma demande",
   },
   {
-    icon: HardHat,
+    icon: Construction,
     title: "Raccordement provisoire",
     description: "Alimentation temporaire pour votre chantier de construction.",
     cta: "Faire ma demande",
@@ -23,7 +23,7 @@ const services = [
     cta: "Faire ma demande",
   },
   {
-    icon: Map,
+    icon: Shovel,
     title: "Viabilisation de terrain",
     description: "Amenagement des reseaux electriques avant construction.",
     cta: "Faire ma demande",
@@ -52,8 +52,8 @@ const RequestTypesSection = () => {
               key={service.title}
               className="group bg-card border border-border rounded-xl sm:rounded-2xl p-2.5 sm:p-5 text-center flex flex-col items-center hover:shadow-lg transition-all duration-300"
             >
-              <div className="h-10 w-10 sm:h-20 sm:w-20 flex items-center justify-center mb-2 sm:mb-4">
-                <service.icon className="h-6 w-6 sm:h-12 sm:w-12 text-muted-foreground/50 group-hover:text-muted-foreground transition-colors" strokeWidth={1} />
+              <div className="h-10 w-10 sm:h-16 sm:w-16 rounded-xl sm:rounded-2xl bg-primary/10 flex items-center justify-center mb-2 sm:mb-4 group-hover:bg-primary/15 transition-colors">
+                <service.icon className="h-5 w-5 sm:h-8 sm:w-8 text-primary" strokeWidth={1.5} fill="currentColor" fillOpacity={0.15} />
               </div>
               <h3 className="font-heading text-[10px] sm:text-base text-foreground mb-1 sm:mb-2 leading-tight">
                 {service.title}

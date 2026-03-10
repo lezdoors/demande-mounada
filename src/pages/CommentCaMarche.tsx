@@ -3,12 +3,12 @@ import { usePageMeta } from "@/hooks/usePageMeta";
 import { Button } from "@/components/ui/button";
 import { useScrollFadeIn } from "@/hooks/useScrollFadeIn";
 import {
-  ClipboardList,
-  Search,
+  PenLine,
+  ScanSearch,
   Send,
   Microscope,
-  FileText,
-  Hammer,
+  BadgeCheck,
+  PlugZap,
   ArrowRight,
   Phone,
   CheckCircle2,
@@ -27,7 +27,7 @@ interface Step {
 const steps: Step[] = [
   {
     number: "01",
-    icon: ClipboardList,
+    icon: PenLine,
     title: "Remplissez le formulaire en ligne",
     description:
       "En quelques minutes, renseignez les informations de votre projet : type de raccordement, adresse, puissance souhaitee, informations personnelles. Notre formulaire intelligent s'adapte a votre situation.",
@@ -40,7 +40,7 @@ const steps: Step[] = [
   },
   {
     number: "02",
-    icon: Search,
+    icon: ScanSearch,
     title: "Verification et preparation du dossier",
     description:
       "Nos experts verifient la coherence de votre demande, completent les elements manquants et preparent un dossier conforme aux exigences d'Enedis.",
@@ -79,7 +79,7 @@ const steps: Step[] = [
   },
   {
     number: "05",
-    icon: FileText,
+    icon: BadgeCheck,
     title: "Proposition de raccordement",
     description:
       "Vous recevez le devis d'Enedis. Nous vous aidons a comprendre la proposition et vous accompagnons dans la prise de decision.",
@@ -92,7 +92,7 @@ const steps: Step[] = [
   },
   {
     number: "06",
-    icon: Hammer,
+    icon: PlugZap,
     title: "Travaux et mise en service",
     description:
       "Apres acceptation du devis, Enedis planifie et realise les travaux. A l'issue, votre compteur Linky est installe et mis en service.",
@@ -129,7 +129,7 @@ const StepCard = ({ step, index }: { step: Step; index: number }) => {
               {step.number}
             </div>
             <div className="flex items-center justify-center h-10 w-10 rounded-lg bg-primary/10 text-primary">
-              <step.icon className="h-5 w-5" strokeWidth={1.5} />
+              <step.icon className="h-5 w-5" strokeWidth={1.5} fill="currentColor" fillOpacity={0.15} />
             </div>
           </div>
 

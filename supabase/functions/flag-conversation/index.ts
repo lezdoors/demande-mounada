@@ -26,10 +26,10 @@ serve(async (req) => {
 
     // Update conversation status to needs_human
     const { data: conv, error: updateErr } = await supabase
-      .from("conversations")
-      .update({ status: "needs_human", flagged_reason: reason || "ai_handoff" })
+      .from("chatbot_conversations")
+      .update({ status: "needs_human", handed_off_to: reason || "ai_handoff" })
       .eq("id", conversationId)
-      .select("id, messages, lead_id")
+      .select("id, lead_id")
       .single();
 
     if (updateErr) {
@@ -45,8 +45,16 @@ serve(async (req) => {
     const TELEGRAM_CHAT_ID = Deno.env.get("TELEGRAM_CHAT_ID");
 
     if (TELEGRAM_TOKEN && TELEGRAM_CHAT_ID && conv) {
-      const msgs = (conv.messages as { type: string; text: string }[]) || [];
-      const lastUserMsg = [...msgs].reverse().find((m) => m.type === "user")?.text || "(pas de message)";
+      // Fetch last user message from chatbot_messages
+      const { data: lastMsg } = await supabase
+        .from("chatbot_messages")
+        .select("content")
+        .eq("conversation_id", conversationId)
+        .eq("role", "user")
+        .order("created_at", { ascending: false })
+        .limit(1)
+        .single();
+      const lastUserMsg = lastMsg?.content || "(pas de message)";
       const preview = lastUserMsg.length > 100 ? lastUserMsg.slice(0, 100) + "..." : lastUserMsg;
 
       const text = [

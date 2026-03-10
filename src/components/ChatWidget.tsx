@@ -115,28 +115,30 @@ const ChatWidget = () => {
   useEffect(() => {
     if (!conversationId) return;
     const channel = supabase
-      .channel(`conv-${conversationId}`)
+      .channel(`chat-${conversationId}`)
       .on(
         "postgres_changes",
         {
-          event: "UPDATE",
+          event: "INSERT",
           schema: "public",
-          table: "conversations",
-          filter: `id=eq.${conversationId}`,
+          table: "chatbot_messages",
+          filter: `conversation_id=eq.${conversationId}`,
         },
         (payload) => {
-          const updated = payload.new as { messages: Message[] };
-          if (updated.messages && updated.messages.length > messages.length) {
-            // Find new messages (human replies have type "bot" but come from CRM)
-            const newMsgs = updated.messages.slice(messages.length);
-            setMessages((prev) => [...prev, ...newMsgs]);
+          const row = payload.new as { role: string; content: string; id: string };
+          // Only show messages from team (human or system), not our own inserts
+          if (row.role === "assistant" || row.role === "human") {
+            setMessages((prev) => [
+              ...prev,
+              { id: row.id, type: "bot", text: row.content },
+            ]);
           }
         }
       )
       .subscribe();
 
     return () => { supabase.removeChannel(channel); };
-  }, [conversationId, messages.length]);
+  }, [conversationId]);
 
   /* ─── helpers ─── */
   function initChat() {
@@ -188,24 +190,31 @@ const ChatWidget = () => {
     addBot(text, { label: "Démarrer ma demande", href: buildFormUrl(leadData) });
   }
 
-  /** Save conversation to Supabase for CRM visibility */
-  async function persistConversation(msgs: Message[]) {
+  /** Create conversation row in chatbot_conversations */
+  async function createConversation(): Promise<string | null> {
     try {
-      if (conversationId) {
-        // Update existing
-        await supabase.functions.invoke("create-conversation", {
-          body: { conversation_id: conversationId, messages: msgs, channel: "widget" },
-        });
-      } else {
-        // Create new
-        const { data } = await supabase.functions.invoke("create-conversation", {
-          body: { messages: msgs, channel: "widget" },
-        });
-        if (data?.data?.id) setConversationId(data.data.id);
+      const visitorId = sessionStorage.getItem("visitorId") || crypto.randomUUID();
+      sessionStorage.setItem("visitorId", visitorId);
+      const { data } = await supabase
+        .from("chatbot_conversations")
+        .insert({ site: "demande", visitor_id: visitorId, status: "active" })
+        .select("id")
+        .single();
+      if (data?.id) {
+        setConversationId(data.id);
+        return data.id;
       }
-    } catch {
-      // Non-blocking
-    }
+    } catch { /* non-blocking */ }
+    return null;
+  }
+
+  /** Insert a message row into chatbot_messages */
+  async function persistMessage(convId: string, role: string, content: string) {
+    try {
+      await supabase
+        .from("chatbot_messages")
+        .insert({ conversation_id: convId, role, content });
+    } catch { /* non-blocking */ }
   }
 
   /* ─── send message ─── */
@@ -313,18 +322,19 @@ const ChatWidget = () => {
       const finalLead = mergeQualification(merged, rq);
       setLeadData(finalLead);
 
-      // Persist conversation to DB (for CRM team visibility)
-      const allMsgs = [...updatedMsgs, { id: botId, type: "bot" as const, text: assistantText }];
-      persistConversation(allMsgs);
+      // Persist to chatbot_conversations + chatbot_messages
+      let convId = conversationId;
+      if (!convId) convId = await createConversation();
+      if (convId) {
+        persistMessage(convId, "user", text);
+        persistMessage(convId, "assistant", assistantText);
+      }
 
       // Human handoff detection — if AI says it can't answer, flag for team
-      if (detectHandoffSignal(assistantText)) {
-        // Flag conversation as needing human help
-        if (conversationId) {
-          supabase.functions.invoke("flag-conversation", {
-            body: { conversationId, reason: "ai_handoff" },
-          }).catch(() => {});
-        }
+      if (detectHandoffSignal(assistantText) && convId) {
+        supabase.functions.invoke("flag-conversation", {
+          body: { conversationId: convId, reason: "ai_handoff" },
+        }).catch(() => {});
       }
 
       // Smart CTA logic

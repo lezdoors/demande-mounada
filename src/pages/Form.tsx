@@ -5,10 +5,10 @@ import { Button } from "@/components/ui/button";
 
 /* ─── slide-out menu links (Lemonade style) ─── */
 const menuLinks = [
-  { label: "Nos services", href: "/#services" },
-  { label: "Comment ça marche", href: "/#process" },
-  { label: "Enedis", href: "/#enedis" },
-  { label: "FAQ", href: "/#faq" },
+  { label: "Accueil", href: "/" },
+  { label: "Nos services", href: "/services" },
+  { label: "Comment ça marche", href: "/comment-ca-marche" },
+  { label: "FAQ", href: "/faq" },
   { label: "Recommencer", action: "reset" },
 ];
 

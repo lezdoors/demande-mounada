@@ -4,10 +4,10 @@ import { Button } from "@/components/ui/button";
 import { Menu, X } from "lucide-react";
 
 const navLinks = [
-  { label: "Nos services", href: "#services" },
-  { label: "Comment ca marche", href: "#process" },
-  { label: "Enedis", href: "#enedis" },
-  { label: "FAQ", href: "#faq" },
+  { label: "Nos services", href: "/services" },
+  { label: "Comment ça marche", href: "/comment-ca-marche" },
+  { label: "Enedis", href: "/enedis" },
+  { label: "FAQ", href: "/faq" },
 ];
 
 const SiteHeader = () => {

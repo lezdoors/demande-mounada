@@ -15,9 +15,9 @@ const serviceProfessionnels = [
 ];
 
 const legalLinks = [
-  { label: "Mentions legales", href: "#" },
-  { label: "Politique de confidentialite", href: "#" },
-  { label: "Conditions generales de vente", href: "#" },
+  { label: "Mentions legales", href: "/mentions-legales" },
+  { label: "Politique de confidentialite", href: "/politique-confidentialite" },
+  { label: "Conditions generales de vente", href: "/conditions-generales" },
 ];
 
 const SiteFooter = () => {
@@ -56,7 +56,7 @@ const SiteFooter = () => {
             <ul className="space-y-2.5">
               {serviceParticuliers.map((s) => (
                 <li key={s}>
-                  <a href="#services" className="text-sm hover:text-white transition-colors">
+                  <a href="/services" className="text-sm hover:text-white transition-colors">
                     {s}
                   </a>
                 </li>
@@ -71,7 +71,7 @@ const SiteFooter = () => {
             <ul className="space-y-2.5">
               {serviceProfessionnels.map((s) => (
                 <li key={s}>
-                  <a href="#services" className="text-sm hover:text-white transition-colors">
+                  <a href="/services" className="text-sm hover:text-white transition-colors">
                     {s}
                   </a>
                 </li>
@@ -85,17 +85,17 @@ const SiteFooter = () => {
             </h3>
             <ul className="space-y-2.5">
               <li>
-                <a href="#process" className="text-sm hover:text-white transition-colors">
+                <a href="/comment-ca-marche" className="text-sm hover:text-white transition-colors">
                   Comment ca marche
                 </a>
               </li>
               <li>
-                <a href="#enedis" className="text-sm hover:text-white transition-colors">
+                <a href="/enedis" className="text-sm hover:text-white transition-colors">
                   A propos d'Enedis
                 </a>
               </li>
               <li>
-                <a href="#faq" className="text-sm hover:text-white transition-colors">
+                <a href="/faq" className="text-sm hover:text-white transition-colors">
                   FAQ
                 </a>
               </li>

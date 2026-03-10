@@ -3,24 +3,33 @@ import { useNavigate } from "react-router-dom";
 import { Menu, ArrowLeft, HelpCircle, ChevronDown, Check } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
-/* ─── step tabs ─── */
+/* ─── step tabs (matching connect's 4 main sections) ─── */
 const tabs = [
   { label: "COORDONNÉES", steps: [0, 1] },
-  { label: "PROJET", steps: [2, 3, 4, 5] },
-  { label: "ENVOI", steps: [6, 7] },
+  { label: "PROJET", steps: [2, 3, 4, 5, 6] },
+  { label: "ENVOI", steps: [7] },
 ];
 
 const TOTAL_STEPS = 8;
 
-/* ─── option sets ─── */
-const clientTypes = ["Particulier", "Professionnel", "Collectivité"];
+/* ─── option sets (matching connect exactly) ─── */
+const serviceTypes = [
+  { value: "provisoire", label: "Provisoire ou chantier" },
+  { value: "definitif", label: "Raccordement définitif" },
+  { value: "augmentation_puissance", label: "Modification de branchement" },
+  { value: "collectif", label: "Viabilisation de terrain" },
+];
 
-const connectionTypes = [
-  "Nouveau raccordement",
-  "Augmentation de puissance",
-  "Raccordement provisoire",
-  "Déplacement de compteur",
-  "Autre demande",
+const dateInterventionOptions = [
+  "Dans 17 jours",
+  "Le mois prochain",
+  "+3 mois",
+];
+
+const clientTypes = [
+  { value: "particulier", label: "Particulier" },
+  { value: "entreprise", label: "Entreprise" },
+  { value: "collectivite", label: "Collectivité" },
 ];
 
 const buildingTypes = [
@@ -31,85 +40,103 @@ const buildingTypes = [
   "Terrain nu",
 ];
 
-const viabilisationOptions = ["Oui", "Non", "Je ne sais pas"];
+const horsEauOptions = ["Oui", "Non"];
+const compteurOptions = ["Oui", "Non", "Je ne sais pas"];
 
-const phaseTypes = ["Monophasé", "Triphasé", "Je ne sais pas"];
+const PUISSANCE_MONO = [3, 6, 9, 12];
+const PUISSANCE_TRI = [12, 15, 18, 24, 30, 36];
 
-const monoPower = ["3 kVA", "6 kVA", "9 kVA", "12 kVA"];
-const triPower = ["12 kVA", "15 kVA", "18 kVA", "24 kVA", "30 kVA", "36 kVA"];
-
-const projectStates = ["Projet en cours de réalisation", "Projet à l'étude"];
-const travauxOptions = [
-  "À Enedis",
-  "À une entreprise agréée de mon choix",
-  "Je n'ai pas encore choisi",
+const delaiOptions = [
+  "Moins d'1,5 mois",
+  "Entre 1,5 et 3 mois",
+  "Entre 3 et 6 mois",
+  "Plus de 6 mois",
 ];
 
-/* ─── form data ─── */
+/* ─── form data (CRM-compatible field names matching connect) ─── */
 interface FormData {
-  clientType: string;
-  companyName: string;
-  siren: string;
-  firstName: string;
-  lastName: string;
+  // Step 1 - Contact
+  first_name: string;
+  last_name: string;
   email: string;
   phone: string;
-  connectionType: string;
-  otherDescription: string;
-  knowsPdl: boolean;
-  pdl: string;
-  buildingType: string;
-  isViabilise: string;
-  address: string;
-  addressComplement: string;
-  postcode: string;
-  city: string;
-  phaseType: string;
-  powerKva: string;
-  projectState: string;
-  travauxChoice: string;
-  comments: string;
+  code_postal_projet: string;
+  ville_projet: string;
+  // Step 2 - Demand type
+  type_demande: string;
+  date_intervention: string;
+  // Step 2 - Client type
+  type_client: string;
+  raison_sociale: string;
+  siren: string;
+  nom_collectivite: string;
+  service_direction: string;
+  siret_insee: string;
+  // Step 2 - Address
+  adresse_projet: string;
+  complement_adresse: string;
+  adresse_facturation_diff: boolean;
+  adresse_facturation: string;
+  code_postal_facturation: string;
+  ville_facturation: string;
+  // Step 3 - Project
+  usage_raccordement: string;
+  hors_eau_hors_air: string;
+  type_alimentation: string;
+  puissance_kva: number | null;
+  delai_souhaite: string;
+  compteur_existant: string;
+  commentaires: string;
+  // Consent
   consent: boolean;
 }
 
 const initialData: FormData = {
-  clientType: "",
-  companyName: "",
-  siren: "",
-  firstName: "",
-  lastName: "",
+  first_name: "",
+  last_name: "",
   email: "",
   phone: "",
-  connectionType: "",
-  otherDescription: "",
-  knowsPdl: false,
-  pdl: "",
-  buildingType: "",
-  isViabilise: "",
-  address: "",
-  addressComplement: "",
-  postcode: "",
-  city: "",
-  phaseType: "",
-  powerKva: "",
-  projectState: "",
-  travauxChoice: "",
-  comments: "",
+  code_postal_projet: "",
+  ville_projet: "",
+  type_demande: "",
+  date_intervention: "",
+  type_client: "particulier",
+  raison_sociale: "",
+  siren: "",
+  nom_collectivite: "",
+  service_direction: "",
+  siret_insee: "",
+  adresse_projet: "",
+  complement_adresse: "",
+  adresse_facturation_diff: false,
+  adresse_facturation: "",
+  code_postal_facturation: "",
+  ville_facturation: "",
+  usage_raccordement: "",
+  hors_eau_hors_air: "",
+  type_alimentation: "",
+  puissance_kva: null,
+  delai_souhaite: "",
+  compteur_existant: "",
+  commentaires: "",
   consent: false,
 };
 
-/* ─── radio button component ─── */
+/* ─── radio option component ─── */
 function RadioOption({
   label,
   selected,
   onClick,
+  description,
 }: {
   label: string;
   selected: boolean;
   onClick: () => void;
+  description?: string;
 }) {
   return (
     <button
+      type="button"
       onClick={onClick}
       className={`w-full flex items-center gap-3 px-5 py-4 rounded-xl border text-left transition-all ${
         selected
@@ -124,7 +151,12 @@ function RadioOption({
       >
         {selected && <div className="h-2.5 w-2.5 rounded-full bg-primary" />}
       </div>
-      <span className="text-sm font-medium">{label}</span>
+      <div>
+        <span className="text-sm font-medium">{label}</span>
+        {description && (
+          <span className="block text-xs text-muted-foreground mt-0.5">{description}</span>
+        )}
+      </div>
     </button>
   );
 }
@@ -136,22 +168,54 @@ function FormInput({
   onChange,
   type = "text",
   maxLength,
+  error,
 }: {
   placeholder: string;
   value: string;
   onChange: (v: string) => void;
   type?: string;
   maxLength?: number;
+  error?: string;
 }) {
   return (
-    <input
-      type={type}
-      placeholder={placeholder}
-      value={value}
-      onChange={(e) => onChange(e.target.value)}
-      maxLength={maxLength}
-      className="w-full px-5 py-4 rounded-xl border border-border bg-muted/30 text-sm font-medium tracking-wide placeholder:text-muted-foreground/40 placeholder:uppercase placeholder:tracking-wider focus:outline-none focus:border-primary transition-colors"
-    />
+    <div>
+      <input
+        type={type}
+        placeholder={placeholder}
+        value={value}
+        onChange={(e) => onChange(e.target.value)}
+        maxLength={maxLength}
+        className={`w-full px-5 py-4 rounded-xl border text-sm font-medium tracking-wide placeholder:text-muted-foreground/40 focus:outline-none focus:border-primary transition-colors ${
+          error ? "border-destructive bg-destructive/5" : "border-border bg-muted/30"
+        }`}
+      />
+      {error && <p className="text-xs text-destructive mt-1 ml-1">{error}</p>}
+    </div>
+  );
+}
+
+/* ─── checkbox component ─── */
+function FormCheckbox({
+  checked,
+  onChange,
+  children,
+}: {
+  checked: boolean;
+  onChange: (v: boolean) => void;
+  children: React.ReactNode;
+}) {
+  return (
+    <label className="flex items-start gap-3 cursor-pointer">
+      <div
+        onClick={() => onChange(!checked)}
+        className={`h-5 w-5 mt-0.5 rounded border-2 flex items-center justify-center flex-shrink-0 transition-colors ${
+          checked ? "bg-primary border-primary" : "border-muted-foreground/30"
+        }`}
+      >
+        {checked && <Check className="h-3 w-3 text-white" />}
+      </div>
+      {children}
+    </label>
   );
 }
 
@@ -161,71 +225,148 @@ const Form = () => {
   const [step, setStep] = useState(0);
   const [fd, setFd] = useState<FormData>(initialData);
   const [cities, setCities] = useState<string[]>([]);
-  const [cityDropdownOpen, setCityDropdownOpen] = useState(false);
+  const [cityOpen, setCityOpen] = useState(false);
+  const [billingCities, setBillingCities] = useState<string[]>([]);
+  const [billingCityOpen, setBillingCityOpen] = useState(false);
+  const [errors, setErrors] = useState<Record<string, string>>({});
 
   const set = <K extends keyof FormData>(key: K, val: FormData[K]) =>
     setFd((prev) => ({ ...prev, [key]: val }));
 
-  /* auto-fetch cities from postcode */
+  /* ─── city auto-fetch from postcode (project) ─── */
   useEffect(() => {
-    if (fd.postcode.length === 5 && /^\d{5}$/.test(fd.postcode)) {
-      fetch(`https://geo.api.gouv.fr/communes?codePostal=${fd.postcode}&fields=nom`)
+    if (fd.code_postal_projet.length === 5 && /^\d{5}$/.test(fd.code_postal_projet)) {
+      fetch(`https://geo.api.gouv.fr/communes?codePostal=${fd.code_postal_projet}&fields=nom`)
         .then((r) => r.json())
         .then((data: { nom: string }[]) => {
           const names = data.map((c) => c.nom);
           setCities(names);
-          if (names.length === 1) set("city", names[0]);
+          if (names.length === 1) set("ville_projet", names[0]);
         })
         .catch(() => setCities([]));
     } else {
       setCities([]);
     }
-  }, [fd.postcode]);
+  }, [fd.code_postal_projet]);
 
-  /* reset power when phase changes */
+  /* ─── city auto-fetch from postcode (billing) ─── */
   useEffect(() => {
-    set("powerKva", "");
-  }, [fd.phaseType]);
+    if (fd.code_postal_facturation.length === 5 && /^\d{5}$/.test(fd.code_postal_facturation)) {
+      fetch(`https://geo.api.gouv.fr/communes?codePostal=${fd.code_postal_facturation}&fields=nom`)
+        .then((r) => r.json())
+        .then((data: { nom: string }[]) => {
+          const names = data.map((c) => c.nom);
+          setBillingCities(names);
+          if (names.length === 1) set("ville_facturation", names[0]);
+        })
+        .catch(() => setBillingCities([]));
+    } else {
+      setBillingCities([]);
+    }
+  }, [fd.code_postal_facturation]);
+
+  /* ─── reset power when phase changes (matching connect logic) ─── */
+  useEffect(() => {
+    if (fd.type_alimentation === "inconnu") {
+      set("puissance_kva", 6);
+    } else if (fd.type_alimentation === "monophase") {
+      if (fd.puissance_kva && !PUISSANCE_MONO.includes(fd.puissance_kva)) set("puissance_kva", 6);
+    } else if (fd.type_alimentation === "triphase") {
+      if (fd.puissance_kva && !PUISSANCE_TRI.includes(fd.puissance_kva)) set("puissance_kva", 12);
+    }
+  }, [fd.type_alimentation]);
 
   /* ─── validation per step ─── */
+  const validate = (): boolean => {
+    const e: Record<string, string> = {};
+
+    switch (step) {
+      case 0:
+        if (fd.first_name.trim().length < 2) e.first_name = "Prénom requis";
+        if (fd.last_name.trim().length < 2) e.last_name = "Nom requis";
+        if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(fd.email)) e.email = "Email invalide";
+        {
+          const cleaned = fd.phone.replace(/\D/g, "");
+          const valid =
+            /^0[1-9]\d{8}$/.test(cleaned) ||
+            /^33[1-9]\d{8}$/.test(cleaned) ||
+            /^(\+33|0033)[1-9]\d{8}$/.test(fd.phone.replace(/\s/g, ""));
+          if (!valid) e.phone = "Format: 06 12 34 56 78";
+        }
+        break;
+      case 1: {
+        const cp = fd.code_postal_projet.replace(/\D/g, "");
+        if (cp.length !== 5) e.code_postal_projet = "5 chiffres requis";
+        if (!fd.ville_projet.trim() || fd.ville_projet.length < 2) e.ville_projet = "Ville requise";
+        break;
+      }
+      case 2:
+        if (!fd.type_demande) e.type_demande = "Requis";
+        break;
+      case 3:
+        if (!fd.type_client) e.type_client = "Requis";
+        if (fd.type_client === "entreprise" && fd.siren && !/^\d{9}$/.test(fd.siren))
+          e.siren = "SIREN : 9 chiffres";
+        break;
+      case 4:
+        if (!fd.adresse_projet.trim() || fd.adresse_projet.length < 5)
+          e.adresse_projet = "Adresse requise (min. 5 car.)";
+        {
+          const cp = fd.code_postal_projet.replace(/\D/g, "");
+          if (cp.length !== 5) e.code_postal_projet = "5 chiffres requis";
+        }
+        if (!fd.ville_projet.trim()) e.ville_projet = "Ville requise";
+        if (fd.adresse_facturation_diff) {
+          if (!fd.adresse_facturation.trim()) e.adresse_facturation = "Adresse requise";
+          const cpb = fd.code_postal_facturation.replace(/\D/g, "");
+          if (cpb.length !== 5) e.code_postal_facturation = "5 chiffres requis";
+          if (!fd.ville_facturation.trim()) e.ville_facturation = "Ville requise";
+        }
+        break;
+      case 5:
+        // Building type optional in connect, but required radio
+        break;
+      case 6:
+        if (!fd.type_alimentation) e.type_alimentation = "Requis";
+        break;
+      case 7:
+        if (!fd.consent) e.consent = "Requis";
+        break;
+    }
+
+    setErrors(e);
+    return Object.keys(e).length === 0;
+  };
+
   const canNext = (): boolean => {
     switch (step) {
-      case 0: {
-        if (!fd.clientType) return false;
-        if (
-          (fd.clientType === "Professionnel" || fd.clientType === "Collectivité") &&
-          fd.companyName.length < 2
-        )
-          return false;
-        return true;
-      }
-      case 1:
+      case 0:
         return (
-          fd.firstName.length >= 2 &&
-          fd.lastName.length >= 2 &&
+          fd.first_name.trim().length >= 2 &&
+          fd.last_name.trim().length >= 2 &&
           /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(fd.email) &&
-          /^0[1-79]\d{8}$/.test(fd.phone.replace(/\s/g, ""))
+          fd.phone.replace(/\D/g, "").length >= 10
         );
-      case 2: {
-        if (!fd.connectionType) return false;
-        if (fd.connectionType === "Autre demande" && fd.otherDescription.length < 10)
-          return false;
-        return true;
-      }
-      case 3: {
-        if (!fd.buildingType) return false;
-        if (fd.buildingType === "Terrain nu" && !fd.isViabilise) return false;
-        return true;
-      }
+      case 1:
+        return /^\d{5}$/.test(fd.code_postal_projet) && fd.ville_projet.trim().length >= 2;
+      case 2:
+        return !!fd.type_demande;
+      case 3:
+        return !!fd.type_client;
       case 4:
-        return fd.address.length >= 5 && /^\d{5}$/.test(fd.postcode) && fd.city.length > 0;
-      case 5: {
-        if (!fd.phaseType) return false;
-        if (fd.phaseType !== "Je ne sais pas" && !fd.powerKva) return false;
-        return true;
-      }
+        return (
+          fd.adresse_projet.trim().length >= 5 &&
+          /^\d{5}$/.test(fd.code_postal_projet) &&
+          fd.ville_projet.trim().length > 0 &&
+          (!fd.adresse_facturation_diff ||
+            (fd.adresse_facturation.trim().length > 0 &&
+              /^\d{5}$/.test(fd.code_postal_facturation) &&
+              fd.ville_facturation.trim().length > 0))
+        );
+      case 5:
+        return true; // building type optional
       case 6:
-        return !!fd.projectState && !!fd.travauxChoice;
+        return !!fd.type_alimentation;
       case 7:
         return fd.consent;
       default:
@@ -234,23 +375,110 @@ const Form = () => {
   };
 
   const next = () => {
+    if (!validate()) return;
     if (step < TOTAL_STEPS - 1) setStep(step + 1);
   };
+
   const back = () => {
-    if (step > 0) setStep(step - 1);
+    if (step > 0) {
+      setErrors({});
+      setStep(step - 1);
+    }
   };
 
   const handleSubmit = () => {
-    // TODO: wire CRM submission + redirect to payment
+    if (!validate()) return;
+    // TODO: wire CRM submission (submit-demande) + redirect to payment page
     console.log("Form submitted:", fd);
   };
 
+  /* ─── power options based on phase (matching connect) ─── */
+  const powerOptions =
+    fd.type_alimentation === "monophase"
+      ? PUISSANCE_MONO
+      : fd.type_alimentation === "triphase"
+        ? PUISSANCE_TRI
+        : [];
+
   /* ─── which tab is active ─── */
   const activeTabIdx = tabs.findIndex((t) => t.steps.includes(step));
-  const progressPercent = ((step + 1) / TOTAL_STEPS) * 100;
 
-  /* ─── power options based on phase ─── */
-  const powerOptions = fd.phaseType === "Monophasé" ? monoPower : fd.phaseType === "Triphasé" ? triPower : [];
+  /* ─── city dropdown helper ─── */
+  const CityField = ({
+    value,
+    onChange,
+    citiesList,
+    open,
+    setOpen,
+    error,
+  }: {
+    value: string;
+    onChange: (v: string) => void;
+    citiesList: string[];
+    open: boolean;
+    setOpen: (v: boolean) => void;
+    error?: string;
+  }) => {
+    if (citiesList.length > 1) {
+      return (
+        <div className="relative">
+          <button
+            type="button"
+            onClick={() => setOpen(!open)}
+            className={`w-full px-5 py-4 rounded-xl border text-left text-sm font-medium tracking-wide transition-colors ${
+              value
+                ? "border-border bg-muted/30 text-foreground"
+                : "border-border bg-muted/30 text-muted-foreground/40"
+            } focus:outline-none focus:border-primary`}
+          >
+            {value || "Ville"}
+            <ChevronDown className="h-4 w-4 absolute right-4 top-1/2 -translate-y-1/2 text-muted-foreground/40" />
+          </button>
+          {open && (
+            <div className="absolute z-10 top-full mt-1 w-full bg-white border border-border rounded-xl shadow-lg overflow-hidden">
+              {citiesList.map((c) => (
+                <button
+                  key={c}
+                  type="button"
+                  onClick={() => {
+                    onChange(c);
+                    setOpen(false);
+                  }}
+                  className={`w-full px-5 py-3 text-left text-sm hover:bg-muted/50 transition-colors ${
+                    value === c ? "bg-primary/5 text-primary font-medium" : "text-foreground"
+                  }`}
+                >
+                  {c}
+                </button>
+              ))}
+            </div>
+          )}
+          {error && <p className="text-xs text-destructive mt-1 ml-1">{error}</p>}
+        </div>
+      );
+    }
+    return (
+      <FormInput
+        placeholder="Ville"
+        value={value}
+        onChange={onChange}
+        error={error}
+      />
+    );
+  };
+
+  /* ─── recap labels (matching connect) ─── */
+  const TYPE_DEMANDE_LABELS: Record<string, string> = {
+    provisoire: "Raccordement provisoire ou chantier",
+    definitif: "Raccordement définitif",
+    augmentation_puissance: "Modification de branchement",
+    collectif: "Viabilisation de terrain",
+  };
+  const TYPE_CLIENT_LABELS: Record<string, string> = {
+    particulier: "Client particulier",
+    entreprise: "Client entreprise",
+    collectivite: "Collectivité",
+  };
 
   return (
     <div className="min-h-screen bg-white flex flex-col">
@@ -258,6 +486,7 @@ const Form = () => {
       <header className="flex items-center justify-between px-4 sm:px-6 h-14 border-b border-border/50">
         <div className="flex items-center gap-3">
           <button
+            type="button"
             onClick={() => navigate("/")}
             className="p-1.5 hover:bg-muted rounded-md transition-colors"
           >
@@ -270,13 +499,14 @@ const Form = () => {
         <div className="flex items-center gap-2">
           {step > 0 && (
             <button
+              type="button"
               onClick={back}
               className="p-1.5 hover:bg-muted rounded-md transition-colors"
             >
               <ArrowLeft className="h-5 w-5 text-muted-foreground" />
             </button>
           )}
-          <button className="p-1.5 hover:bg-muted rounded-md transition-colors">
+          <button type="button" className="p-1.5 hover:bg-muted rounded-md transition-colors">
             <HelpCircle className="h-5 w-5 text-muted-foreground" />
           </button>
         </div>
@@ -298,9 +528,7 @@ const Form = () => {
             </div>
             <div
               className="h-0.5 rounded-full transition-colors"
-              style={{
-                background: i <= activeTabIdx ? "hsl(228 72% 52%)" : "#e5e5e5",
-              }}
+              style={{ background: i <= activeTabIdx ? "hsl(228 72% 52%)" : "#e5e5e5" }}
             />
           </div>
         ))}
@@ -309,64 +537,30 @@ const Form = () => {
       {/* ─── Content ─── */}
       <div className="flex-1 flex flex-col items-center px-4 sm:px-6 overflow-y-auto">
         <div className="w-full max-w-md">
-          {/* ────────────── STEP 0: Client Type ────────────── */}
+          {/* ═══════════ STEP 0: Contact ═══════════ */}
           {step === 0 && (
             <div>
               <div className="text-center mb-8">
                 <h2 className="font-heading text-2xl sm:text-3xl text-foreground mb-2">
                   Bonjour !
                 </h2>
-                <p className="text-muted-foreground">Vous êtes...</p>
-              </div>
-              <div className="space-y-3">
-                {clientTypes.map((t) => (
-                  <RadioOption
-                    key={t}
-                    label={t}
-                    selected={fd.clientType === t}
-                    onClick={() => set("clientType", t)}
-                  />
-                ))}
-              </div>
-              {(fd.clientType === "Professionnel" || fd.clientType === "Collectivité") && (
-                <div className="mt-6 space-y-4">
-                  <FormInput
-                    placeholder={fd.clientType === "Collectivité" ? "Nom de la collectivité" : "Raison sociale"}
-                    value={fd.companyName}
-                    onChange={(v) => set("companyName", v)}
-                  />
-                  <FormInput
-                    placeholder="SIREN (optionnel)"
-                    value={fd.siren}
-                    onChange={(v) => set("siren", v)}
-                  />
-                </div>
-              )}
-            </div>
-          )}
-
-          {/* ────────────── STEP 1: Contact Info ────────────── */}
-          {step === 1 && (
-            <div>
-              <div className="text-center mb-8">
-                <h2 className="font-heading text-2xl sm:text-3xl text-foreground mb-2">
-                  Vos coordonnées.
-                </h2>
                 <p className="text-muted-foreground">
-                  Pour que nous puissions traiter votre dossier.
+                  Renseignez vos coordonnées pour commencer.
                 </p>
               </div>
               <div className="space-y-4">
                 <div className="grid grid-cols-2 gap-4">
                   <FormInput
                     placeholder="Prénom"
-                    value={fd.firstName}
-                    onChange={(v) => set("firstName", v)}
+                    value={fd.first_name}
+                    onChange={(v) => set("first_name", v)}
+                    error={errors.first_name}
                   />
                   <FormInput
                     placeholder="Nom"
-                    value={fd.lastName}
-                    onChange={(v) => set("lastName", v)}
+                    value={fd.last_name}
+                    onChange={(v) => set("last_name", v)}
+                    error={errors.last_name}
                   />
                 </div>
                 <FormInput
@@ -374,18 +568,49 @@ const Form = () => {
                   type="email"
                   value={fd.email}
                   onChange={(v) => set("email", v)}
+                  error={errors.email}
                 />
                 <FormInput
                   placeholder="Téléphone (ex: 06 12 34 56 78)"
                   type="tel"
                   value={fd.phone}
                   onChange={(v) => set("phone", v)}
+                  error={errors.phone}
                 />
               </div>
             </div>
           )}
 
-          {/* ────────────── STEP 2: Connection Type ────────────── */}
+          {/* ═══════════ STEP 1: Location (postcode + city) ═══════════ */}
+          {step === 1 && (
+            <div>
+              <div className="text-center mb-8">
+                <h2 className="font-heading text-2xl sm:text-3xl text-foreground mb-2">
+                  Où est situé votre projet ?
+                </h2>
+                <p className="text-muted-foreground">Code postal et ville du lieu de raccordement.</p>
+              </div>
+              <div className="space-y-4">
+                <FormInput
+                  placeholder="Code postal"
+                  value={fd.code_postal_projet}
+                  onChange={(v) => set("code_postal_projet", v.replace(/\D/g, "").slice(0, 5))}
+                  maxLength={5}
+                  error={errors.code_postal_projet}
+                />
+                <CityField
+                  value={fd.ville_projet}
+                  onChange={(v) => set("ville_projet", v)}
+                  citiesList={cities}
+                  open={cityOpen}
+                  setOpen={setCityOpen}
+                  error={errors.ville_projet}
+                />
+              </div>
+            </div>
+          )}
+
+          {/* ═══════════ STEP 2: Connection Type ═══════════ */}
           {step === 2 && (
             <div>
               <div className="text-center mb-8">
@@ -397,110 +622,103 @@ const Form = () => {
                 </p>
               </div>
               <div className="space-y-3">
-                {connectionTypes.map((t) => (
+                {serviceTypes.map((t) => (
                   <RadioOption
-                    key={t}
-                    label={t}
-                    selected={fd.connectionType === t}
-                    onClick={() => set("connectionType", t)}
+                    key={t.value}
+                    label={t.label}
+                    selected={fd.type_demande === t.value}
+                    onClick={() => set("type_demande", t.value)}
                   />
                 ))}
               </div>
 
-              {/* Conditional: "Autre" description */}
-              {fd.connectionType === "Autre demande" && (
+              {/* Provisoire: date d'intervention */}
+              {fd.type_demande === "provisoire" && (
                 <div className="mt-6">
-                  <textarea
-                    placeholder="Décrivez votre demande (min. 10 caractères)"
-                    value={fd.otherDescription}
-                    onChange={(e) => set("otherDescription", e.target.value)}
-                    rows={3}
-                    className="w-full px-5 py-4 rounded-xl border border-border bg-muted/30 text-sm font-medium tracking-wide placeholder:text-muted-foreground/40 focus:outline-none focus:border-primary transition-colors resize-none"
-                  />
-                </div>
-              )}
-
-              {/* Conditional: PDL for augmentation/déplacement */}
-              {(fd.connectionType === "Augmentation de puissance" ||
-                fd.connectionType === "Déplacement de compteur") && (
-                <div className="mt-6 space-y-3">
-                  <label className="flex items-center gap-3 cursor-pointer">
-                    <div
-                      onClick={() => set("knowsPdl", !fd.knowsPdl)}
-                      className={`h-5 w-5 rounded border-2 flex items-center justify-center transition-colors ${
-                        fd.knowsPdl
-                          ? "bg-primary border-primary"
-                          : "border-muted-foreground/30"
-                      }`}
-                    >
-                      {fd.knowsPdl && <Check className="h-3 w-3 text-white" />}
-                    </div>
-                    <span className="text-sm text-foreground">
-                      Je connais mon numéro PDL
-                    </span>
-                  </label>
-                  {fd.knowsPdl && (
-                    <FormInput
-                      placeholder="Numéro PDL (14 chiffres)"
-                      value={fd.pdl}
-                      onChange={(v) => set("pdl", v)}
-                      maxLength={14}
-                    />
-                  )}
+                  <p className="text-sm text-foreground font-medium mb-3">
+                    Date d'intervention (travaux)
+                  </p>
+                  <div className="space-y-3">
+                    {dateInterventionOptions.map((d) => (
+                      <RadioOption
+                        key={d}
+                        label={d}
+                        selected={fd.date_intervention === d}
+                        onClick={() => set("date_intervention", d)}
+                      />
+                    ))}
+                  </div>
                 </div>
               )}
             </div>
           )}
 
-          {/* ────────────── STEP 3: Building Type ────────────── */}
+          {/* ═══════════ STEP 3: Client Type ═══════════ */}
           {step === 3 && (
             <div>
               <div className="text-center mb-8">
                 <h2 className="font-heading text-2xl sm:text-3xl text-foreground mb-2">
-                  Type de bâtiment.
+                  Vous êtes...
                 </h2>
-                <p className="text-muted-foreground">
-                  Quel type de bâtiment concerne votre projet ?
-                </p>
+                <p className="text-muted-foreground">Quel type de client êtes-vous ?</p>
               </div>
               <div className="space-y-3">
-                {buildingTypes.map((t) => (
+                {clientTypes.map((t) => (
                   <RadioOption
-                    key={t}
-                    label={t}
-                    selected={fd.buildingType === t}
-                    onClick={() => set("buildingType", t)}
+                    key={t.value}
+                    label={t.label}
+                    selected={fd.type_client === t.value}
+                    onClick={() => set("type_client", t.value)}
                   />
                 ))}
               </div>
 
-              {/* Conditional: viabilisation for terrain */}
-              {fd.buildingType === "Terrain nu" && (
-                <div className="mt-6">
-                  <p className="text-sm text-foreground font-medium mb-3">
-                    Le terrain est-il viabilisé ?
+              {/* Entreprise fields */}
+              {fd.type_client === "entreprise" && (
+                <div className="mt-6 space-y-4">
+                  <p className="text-xs text-muted-foreground">Informations entreprise (optionnel)</p>
+                  <FormInput
+                    placeholder="Raison sociale"
+                    value={fd.raison_sociale}
+                    onChange={(v) => set("raison_sociale", v)}
+                  />
+                  <FormInput
+                    placeholder="SIREN (9 chiffres)"
+                    value={fd.siren}
+                    onChange={(v) => set("siren", v)}
+                    maxLength={9}
+                    error={errors.siren}
+                  />
+                </div>
+              )}
+
+              {/* Collectivité fields */}
+              {fd.type_client === "collectivite" && (
+                <div className="mt-6 space-y-4">
+                  <p className="text-xs text-muted-foreground">
+                    Informations collectivité (optionnel)
                   </p>
-                  <div className="space-y-3">
-                    {viabilisationOptions.map((opt) => (
-                      <RadioOption
-                        key={opt}
-                        label={opt}
-                        selected={fd.isViabilise === opt}
-                        onClick={() => set("isViabilise", opt)}
-                      />
-                    ))}
-                  </div>
-                  <p className="text-xs text-muted-foreground mt-3">
-                    Un terrain viabilisé dispose déjà des réseaux (eau, électricité,
-                    assainissement). Si non viabilisé, un raccordement complet sera
-                    nécessaire.
-                  </p>
+                  <FormInput
+                    placeholder="Nom de la collectivité"
+                    value={fd.nom_collectivite}
+                    onChange={(v) => set("nom_collectivite", v)}
+                  />
+                  <FormInput
+                    placeholder="Service / Direction"
+                    value={fd.service_direction}
+                    onChange={(v) => set("service_direction", v)}
+                  />
+                  <FormInput
+                    placeholder="SIRET / Code INSEE"
+                    value={fd.siret_insee}
+                    onChange={(v) => set("siret_insee", v)}
+                  />
                 </div>
               )}
             </div>
           )}
 
-          {/* ────────────── STEP 4: Address ────────────── */}
+          {/* ═══════════ STEP 4: Project Address ═══════════ */}
           {step === 4 && (
             <div>
               <div className="text-center mb-8">
@@ -508,189 +726,258 @@ const Form = () => {
                   Adresse du projet.
                 </h2>
                 <p className="text-muted-foreground">
-                  Où se situe le lieu de raccordement ?
+                  L'adresse complète du lieu de raccordement.
                 </p>
               </div>
               <div className="space-y-4">
                 <FormInput
                   placeholder="Adresse"
-                  value={fd.address}
-                  onChange={(v) => set("address", v)}
+                  value={fd.adresse_projet}
+                  onChange={(v) => set("adresse_projet", v)}
+                  error={errors.adresse_projet}
                 />
                 <FormInput
-                  placeholder="Complément (optionnel)"
-                  value={fd.addressComplement}
-                  onChange={(v) => set("addressComplement", v)}
+                  placeholder="Complément d'adresse (optionnel)"
+                  value={fd.complement_adresse}
+                  onChange={(v) => set("complement_adresse", v)}
                 />
                 <div className="grid grid-cols-2 gap-4">
                   <FormInput
                     placeholder="Code postal"
-                    value={fd.postcode}
-                    onChange={(v) => set("postcode", v.replace(/\D/g, "").slice(0, 5))}
+                    value={fd.code_postal_projet}
+                    onChange={(v) => set("code_postal_projet", v.replace(/\D/g, "").slice(0, 5))}
                     maxLength={5}
+                    error={errors.code_postal_projet}
                   />
-                  {/* City — dropdown if multiple, auto-filled if single */}
-                  <div className="relative">
-                    {cities.length > 1 ? (
-                      <>
-                        <button
-                          type="button"
-                          onClick={() => setCityDropdownOpen(!cityDropdownOpen)}
-                          className={`w-full px-5 py-4 rounded-xl border text-left text-sm font-medium tracking-wide transition-colors ${
-                            fd.city
-                              ? "border-border bg-muted/30 text-foreground"
-                              : "border-border bg-muted/30 text-muted-foreground/40"
-                          } focus:outline-none focus:border-primary`}
-                        >
-                          <span className={fd.city ? "" : "uppercase tracking-wider"}>
-                            {fd.city || "Ville"}
-                          </span>
-                          <ChevronDown className="h-4 w-4 absolute right-4 top-1/2 -translate-y-1/2 text-muted-foreground/40" />
-                        </button>
-                        {cityDropdownOpen && (
-                          <div className="absolute z-10 top-full mt-1 w-full bg-white border border-border rounded-xl shadow-lg overflow-hidden">
-                            {cities.map((c) => (
-                              <button
-                                key={c}
-                                onClick={() => {
-                                  set("city", c);
-                                  setCityDropdownOpen(false);
-                                }}
-                                className={`w-full px-5 py-3 text-left text-sm hover:bg-muted/50 transition-colors ${
-                                  fd.city === c ? "bg-primary/5 text-primary font-medium" : "text-foreground"
-                                }`}
-                              >
-                                {c}
-                              </button>
-                            ))}
-                          </div>
-                        )}
-                      </>
-                    ) : (
-                      <FormInput
-                        placeholder="Ville"
-                        value={fd.city}
-                        onChange={(v) => set("city", v)}
-                      />
-                    )}
-                  </div>
+                  <CityField
+                    value={fd.ville_projet}
+                    onChange={(v) => set("ville_projet", v)}
+                    citiesList={cities}
+                    open={cityOpen}
+                    setOpen={setCityOpen}
+                    error={errors.ville_projet}
+                  />
                 </div>
+
+                {/* Billing address toggle */}
+                <div className="pt-2">
+                  <FormCheckbox
+                    checked={fd.adresse_facturation_diff}
+                    onChange={(v) => set("adresse_facturation_diff", v)}
+                  >
+                    <span className="text-sm text-foreground">
+                      Adresse de facturation différente
+                    </span>
+                  </FormCheckbox>
+                </div>
+
+                {fd.adresse_facturation_diff && (
+                  <div className="space-y-4 pt-2 border-t border-border/50">
+                    <p className="text-sm text-foreground font-medium pt-2">
+                      Adresse de facturation
+                    </p>
+                    <FormInput
+                      placeholder="Adresse de facturation"
+                      value={fd.adresse_facturation}
+                      onChange={(v) => set("adresse_facturation", v)}
+                      error={errors.adresse_facturation}
+                    />
+                    <div className="grid grid-cols-2 gap-4">
+                      <FormInput
+                        placeholder="Code postal"
+                        value={fd.code_postal_facturation}
+                        onChange={(v) =>
+                          set("code_postal_facturation", v.replace(/\D/g, "").slice(0, 5))
+                        }
+                        maxLength={5}
+                        error={errors.code_postal_facturation}
+                      />
+                      <CityField
+                        value={fd.ville_facturation}
+                        onChange={(v) => set("ville_facturation", v)}
+                        citiesList={billingCities}
+                        open={billingCityOpen}
+                        setOpen={setBillingCityOpen}
+                        error={errors.ville_facturation}
+                      />
+                    </div>
+                  </div>
+                )}
               </div>
             </div>
           )}
 
-          {/* ────────────── STEP 5: Power ────────────── */}
+          {/* ═══════════ STEP 5: Building Type ═══════════ */}
           {step === 5 && (
             <div>
               <div className="text-center mb-8">
                 <h2 className="font-heading text-2xl sm:text-3xl text-foreground mb-2">
-                  Puissance souhaitée.
+                  Type de projet.
                 </h2>
                 <p className="text-muted-foreground">
-                  Quel type de branchement et quelle puissance ?
+                  Quel type de bâtiment concerne votre raccordement ?
                 </p>
               </div>
-
-              <p className="text-sm text-foreground font-medium mb-3">
-                Type de branchement
-              </p>
-              <div className="space-y-3 mb-6">
-                {phaseTypes.map((t) => (
+              <div className="space-y-3">
+                {buildingTypes.map((t) => (
                   <RadioOption
                     key={t}
                     label={t}
-                    selected={fd.phaseType === t}
-                    onClick={() => set("phaseType", t)}
+                    selected={fd.usage_raccordement === t}
+                    onClick={() => {
+                      set("usage_raccordement", t);
+                      if (t === "Terrain nu") set("hors_eau_hors_air", "");
+                    }}
                   />
                 ))}
               </div>
 
-              <p className="text-xs text-muted-foreground mb-6">
-                Monophasé : usage résidentiel standard (220V). Triphasé : usage
-                professionnel ou équipements puissants (380V).
-              </p>
-
-              {fd.phaseType && fd.phaseType !== "Je ne sais pas" && (
-                <>
+              {/* Hors d'eau / hors d'air (if not terrain) */}
+              {fd.usage_raccordement && fd.usage_raccordement !== "Terrain nu" && (
+                <div className="mt-6">
                   <p className="text-sm text-foreground font-medium mb-3">
-                    Puissance demandée
+                    Votre projet est-il hors d'eau / hors d'air ?
                   </p>
                   <div className="space-y-3">
-                    {powerOptions.map((p) => (
+                    {horsEauOptions.map((opt) => (
                       <RadioOption
-                        key={p}
-                        label={p}
-                        selected={fd.powerKva === p}
-                        onClick={() => set("powerKva", p)}
+                        key={opt}
+                        label={opt}
+                        selected={fd.hors_eau_hors_air === opt}
+                        onClick={() => set("hors_eau_hors_air", opt)}
                       />
                     ))}
                   </div>
-                  {fd.powerKva === "36 kVA" && (
-                    <p className="text-xs text-amber-600 mt-3">
-                      Tarif Jaune — nécessite une étude spécifique.
-                    </p>
-                  )}
-                </>
-              )}
-
-              {fd.phaseType === "Je ne sais pas" && (
-                <div className="bg-muted/40 rounded-xl p-4">
-                  <p className="text-sm text-muted-foreground">
-                    La puissance sera déterminée lors de l'étude technique selon votre
-                    projet et vos usages.
-                  </p>
                 </div>
               )}
+
+              {/* Terrain viabilisé */}
+              <div className="mt-6">
+                <p className="text-sm text-foreground font-medium mb-3">
+                  Terrain viabilisé ?
+                </p>
+                <div className="space-y-3">
+                  {compteurOptions.map((opt) => (
+                    <RadioOption
+                      key={opt}
+                      label={opt}
+                      selected={fd.compteur_existant === opt}
+                      onClick={() => set("compteur_existant", opt)}
+                    />
+                  ))}
+                </div>
+              </div>
             </div>
           )}
 
-          {/* ────────────── STEP 6: Project State ────────────── */}
+          {/* ═══════════ STEP 6: Power + Timeline ═══════════ */}
           {step === 6 && (
             <div>
               <div className="text-center mb-8">
                 <h2 className="font-heading text-2xl sm:text-3xl text-foreground mb-2">
-                  Avancement du projet.
+                  Besoin électrique.
                 </h2>
                 <p className="text-muted-foreground">
-                  Où en êtes-vous dans votre projet ?
+                  Type d'alimentation et puissance souhaitée.
                 </p>
               </div>
 
+              {/* Phase type */}
               <p className="text-sm text-foreground font-medium mb-3">
-                État du projet
+                Type d'alimentation *
               </p>
-              <div className="space-y-3 mb-8">
-                {projectStates.map((s) => (
-                  <RadioOption
-                    key={s}
-                    label={s}
-                    selected={fd.projectState === s}
-                    onClick={() => set("projectState", s)}
-                  />
-                ))}
+              <div className="space-y-3 mb-2">
+                <RadioOption
+                  label="Monophasé"
+                  description="Usage résidentiel standard"
+                  selected={fd.type_alimentation === "monophase"}
+                  onClick={() => set("type_alimentation", "monophase")}
+                />
+                <RadioOption
+                  label="Triphasé"
+                  description="Usage professionnel"
+                  selected={fd.type_alimentation === "triphase"}
+                  onClick={() => set("type_alimentation", "triphase")}
+                />
+                <RadioOption
+                  label="Je ne sais pas"
+                  description="Nous vous conseillerons"
+                  selected={fd.type_alimentation === "inconnu"}
+                  onClick={() => set("type_alimentation", "inconnu")}
+                />
               </div>
 
-              <p className="text-sm text-foreground font-medium mb-3">
-                À qui souhaitez-vous confier les travaux ?
-              </p>
-              <div className="space-y-3">
-                {travauxOptions.map((t) => (
-                  <RadioOption
-                    key={t}
-                    label={t}
-                    selected={fd.travauxChoice === t}
-                    onClick={() => set("travauxChoice", t)}
-                  />
-                ))}
+              {/* Power kVA */}
+              {fd.type_alimentation && fd.type_alimentation !== "inconnu" && (
+                <div className="mt-6">
+                  <p className="text-sm text-foreground font-medium mb-3">
+                    Puissance demandée (kVA)
+                  </p>
+                  <div className="space-y-3">
+                    {powerOptions.map((kva) => (
+                      <RadioOption
+                        key={kva}
+                        label={`${kva} kVA`}
+                        selected={fd.puissance_kva === kva}
+                        onClick={() => set("puissance_kva", kva)}
+                        description={
+                          fd.type_alimentation === "triphase" && kva === 36
+                            ? "Tarif Jaune — étude spécifique"
+                            : undefined
+                        }
+                      />
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              {fd.type_alimentation === "inconnu" && (
+                <div className="mt-4 bg-muted/40 rounded-xl p-4">
+                  <p className="text-sm text-muted-foreground">
+                    Nous vous conseillons 6 kVA pour un usage résidentiel standard. La puissance
+                    sera déterminée lors de l'étude technique.
+                  </p>
+                </div>
+              )}
+
+              {/* Timeline */}
+              <div className="mt-8">
+                <p className="text-sm text-foreground font-medium mb-3">
+                  Échéance de raccordement souhaitée
+                </p>
+                <div className="space-y-3">
+                  {delaiOptions.map((d) => (
+                    <RadioOption
+                      key={d}
+                      label={d}
+                      selected={fd.delai_souhaite === d}
+                      onClick={() => set("delai_souhaite", d)}
+                    />
+                  ))}
+                </div>
               </div>
-              <p className="text-xs text-muted-foreground mt-4">
-                Conformément à l'article L.342-2 du code de l'énergie, vous pouvez
-                choisir de confier les travaux à Enedis ou à une entreprise agréée.
-              </p>
+
+              {/* Comments */}
+              <div className="mt-8">
+                <p className="text-sm text-foreground font-medium mb-3">
+                  Commentaires ou précisions
+                </p>
+                <textarea
+                  placeholder="Informations complémentaires sur votre projet (optionnel)"
+                  value={fd.commentaires}
+                  onChange={(e) => set("commentaires", e.target.value)}
+                  rows={3}
+                  maxLength={500}
+                  className="w-full px-5 py-4 rounded-xl border border-border bg-muted/30 text-sm tracking-wide placeholder:text-muted-foreground/40 focus:outline-none focus:border-primary transition-colors resize-none"
+                />
+                <p className="text-xs text-muted-foreground mt-1 text-right">
+                  {fd.commentaires.length}/500
+                </p>
+              </div>
             </div>
           )}
 
-          {/* ────────────── STEP 7: Summary + Consent ────────────── */}
+          {/* ═══════════ STEP 7: Recap + Consent ═══════════ */}
           {step === 7 && (
             <div>
               <div className="text-center mb-8">
@@ -703,89 +990,101 @@ const Form = () => {
               </div>
 
               <div className="space-y-5">
-                {/* Contact */}
+                {/* Ma demande */}
                 <div className="bg-muted/30 rounded-xl p-5">
-                  <h3 className="text-xs font-semibold uppercase tracking-wider text-muted-foreground mb-3">
-                    Coordonnées
+                  <h3 className="text-xs font-semibold uppercase tracking-wider text-primary mb-3">
+                    Ma demande
                   </h3>
                   <div className="space-y-1 text-sm">
-                    <p><span className="text-muted-foreground">Type :</span> {fd.clientType}</p>
-                    <p><span className="text-muted-foreground">Nom :</span> {fd.firstName} {fd.lastName}</p>
-                    <p><span className="text-muted-foreground">Email :</span> {fd.email}</p>
-                    <p><span className="text-muted-foreground">Tél :</span> {fd.phone}</p>
-                    {fd.companyName && (
-                      <p><span className="text-muted-foreground">Entreprise :</span> {fd.companyName}</p>
+                    <p>{TYPE_CLIENT_LABELS[fd.type_client] || fd.type_client}</p>
+                    <p>{TYPE_DEMANDE_LABELS[fd.type_demande] || fd.type_demande}</p>
+                    {fd.type_demande === "provisoire" && fd.date_intervention && (
+                      <p className="text-muted-foreground">
+                        Intervention : {fd.date_intervention}
+                      </p>
                     )}
-                    {fd.siren && (
-                      <p><span className="text-muted-foreground">SIREN :</span> {fd.siren}</p>
-                    )}
-                  </div>
-                </div>
-
-                {/* Project */}
-                <div className="bg-muted/30 rounded-xl p-5">
-                  <h3 className="text-xs font-semibold uppercase tracking-wider text-muted-foreground mb-3">
-                    Projet
-                  </h3>
-                  <div className="space-y-1 text-sm">
-                    <p><span className="text-muted-foreground">Raccordement :</span> {fd.connectionType}</p>
-                    {fd.otherDescription && (
-                      <p><span className="text-muted-foreground">Description :</span> {fd.otherDescription}</p>
-                    )}
-                    <p><span className="text-muted-foreground">Bâtiment :</span> {fd.buildingType}</p>
-                    {fd.buildingType === "Terrain nu" && (
-                      <p><span className="text-muted-foreground">Viabilisé :</span> {fd.isViabilise}</p>
-                    )}
-                    <p><span className="text-muted-foreground">Adresse :</span> {fd.address}{fd.addressComplement ? `, ${fd.addressComplement}` : ""}</p>
-                    <p><span className="text-muted-foreground">Ville :</span> {fd.postcode} {fd.city}</p>
                     <p>
-                      <span className="text-muted-foreground">Puissance :</span>{" "}
-                      {fd.phaseType === "Je ne sais pas"
-                        ? "À déterminer"
-                        : `${fd.powerKva} (${fd.phaseType})`}
+                      {fd.first_name} {fd.last_name}
                     </p>
-                    {fd.pdl && (
-                      <p><span className="text-muted-foreground">PDL :</span> {fd.pdl}</p>
+                    <p className="text-muted-foreground">{fd.email}</p>
+                    <p className="text-muted-foreground">{fd.phone}</p>
+                    {fd.raison_sociale && <p>Entreprise : {fd.raison_sociale}</p>}
+                    {fd.siren && <p className="text-muted-foreground">SIREN : {fd.siren}</p>}
+                    {fd.nom_collectivite && <p>Collectivité : {fd.nom_collectivite}</p>}
+                  </div>
+                </div>
+
+                {/* Mon projet */}
+                <div className="bg-muted/30 rounded-xl p-5">
+                  <h3 className="text-xs font-semibold uppercase tracking-wider text-primary mb-3">
+                    Mon projet
+                  </h3>
+                  <div className="space-y-1 text-sm">
+                    {fd.usage_raccordement && (
+                      <p>
+                        {fd.usage_raccordement === "Terrain nu"
+                          ? "Terrain nu"
+                          : `Raccordement d'un(e) ${fd.usage_raccordement.toLowerCase()}`}
+                      </p>
+                    )}
+                    <p>{fd.adresse_projet}</p>
+                    {fd.complement_adresse && (
+                      <p className="text-muted-foreground">{fd.complement_adresse}</p>
+                    )}
+                    <p>
+                      {fd.code_postal_projet} {fd.ville_projet}
+                    </p>
+                    {fd.compteur_existant && (
+                      <p className="text-muted-foreground">
+                        Terrain viabilisé : {fd.compteur_existant}
+                      </p>
+                    )}
+                    {fd.hors_eau_hors_air && (
+                      <p className="text-muted-foreground">
+                        Hors d'eau / hors d'air : {fd.hors_eau_hors_air}
+                      </p>
+                    )}
+                    {fd.adresse_facturation_diff && (
+                      <p className="text-muted-foreground">
+                        Facturation : {fd.adresse_facturation}, {fd.code_postal_facturation}{" "}
+                        {fd.ville_facturation}
+                      </p>
                     )}
                   </div>
                 </div>
 
-                {/* State */}
+                {/* Mon besoin électrique */}
                 <div className="bg-muted/30 rounded-xl p-5">
-                  <h3 className="text-xs font-semibold uppercase tracking-wider text-muted-foreground mb-3">
-                    Avancement
+                  <h3 className="text-xs font-semibold uppercase tracking-wider text-primary mb-3">
+                    Besoin électrique
                   </h3>
                   <div className="space-y-1 text-sm">
-                    <p><span className="text-muted-foreground">État :</span> {fd.projectState}</p>
-                    <p><span className="text-muted-foreground">Travaux :</span> {fd.travauxChoice}</p>
+                    <p>
+                      {fd.puissance_kva || 6} kVA (
+                      {fd.type_alimentation === "triphase"
+                        ? "Triphasé"
+                        : fd.type_alimentation === "inconnu"
+                          ? "À déterminer"
+                          : "Monophasé"}
+                      )
+                    </p>
+                    {fd.delai_souhaite && (
+                      <p className="text-muted-foreground">
+                        Échéance : {fd.delai_souhaite}
+                      </p>
+                    )}
+                    {fd.commentaires && (
+                      <p className="text-muted-foreground">{fd.commentaires}</p>
+                    )}
                   </div>
                 </div>
-
-                {/* Comments */}
-                <textarea
-                  placeholder="Précisions supplémentaires sur votre projet (optionnel)"
-                  value={fd.comments}
-                  onChange={(e) => set("comments", e.target.value)}
-                  rows={3}
-                  className="w-full px-5 py-4 rounded-xl border border-border bg-muted/30 text-sm tracking-wide placeholder:text-muted-foreground/40 focus:outline-none focus:border-primary transition-colors resize-none"
-                />
 
                 {/* Consent */}
-                <label className="flex items-start gap-3 cursor-pointer">
-                  <div
-                    onClick={() => set("consent", !fd.consent)}
-                    className={`h-5 w-5 mt-0.5 rounded border-2 flex items-center justify-center flex-shrink-0 transition-colors ${
-                      fd.consent
-                        ? "bg-primary border-primary"
-                        : "border-muted-foreground/30"
-                    }`}
-                  >
-                    {fd.consent && <Check className="h-3 w-3 text-white" />}
-                  </div>
+                <FormCheckbox checked={fd.consent} onChange={(v) => set("consent", v)}>
                   <span className="text-xs text-muted-foreground leading-relaxed">
                     J'accepte les{" "}
                     <a href="/cgu" className="underline hover:text-foreground">
-                      Conditions Générales
+                      Conditions Générales d'Utilisation
                     </a>{" "}
                     et la{" "}
                     <a href="/confidentialite" className="underline hover:text-foreground">
@@ -793,13 +1092,7 @@ const Form = () => {
                     </a>
                     . *
                   </span>
-                </label>
-
-                {/* Trust signals */}
-                <div className="flex items-center justify-center gap-6 text-xs text-muted-foreground pt-2">
-                  <span>Transmission sécurisée</span>
-                  <span>Données protégées</span>
-                </div>
+                </FormCheckbox>
               </div>
             </div>
           )}
@@ -814,7 +1107,7 @@ const Form = () => {
               }`}
               onClick={step === TOTAL_STEPS - 1 ? handleSubmit : next}
             >
-              {step === TOTAL_STEPS - 1 ? "Transmettre ma demande" : "Suivant"}
+              {step === TOTAL_STEPS - 1 ? "Envoyer ma demande" : "Suivant"}
             </Button>
           </div>
         </div>

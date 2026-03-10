@@ -61,7 +61,7 @@ const HeroSection = () => {
         <Button
           variant="cta"
           size="lg"
-          className="text-base sm:text-lg h-13 sm:h-14 px-10 sm:px-14 rounded-full shadow-lg hover:shadow-xl transition-all hover:scale-[1.02] uppercase tracking-wider font-semibold"
+          className="text-base sm:text-lg h-13 sm:h-14 px-10 sm:px-14 rounded-full shadow-cta uppercase tracking-wider font-semibold"
           onClick={() => navigate("/form")}
         >
           Commencer ma demande

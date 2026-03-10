@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { Menu, X, Home, Search, HelpCircle, ChevronRight } from "lucide-react";
+import { Menu, X, Home, Search, HelpCircle, ChevronRight, Phone } from "lucide-react";
 
 const audienceLinks = [
   { label: "Particulier", href: "/form" },
@@ -10,7 +10,6 @@ const audienceLinks = [
 ];
 
 const secondaryLinks = [
-  { label: "Fournisseur d'électricité", href: "/enedis" },
   { label: "Acteur du système électrique", href: "/enedis" },
 ];
 
@@ -44,6 +43,13 @@ const SiteHeader = () => {
             </nav>
           </div>
           <nav className="flex items-center gap-7">
+            <a
+              href="tel:0188615000"
+              className="flex items-center gap-1.5 text-[13px] font-medium text-foreground hover:text-primary transition-colors"
+            >
+              <Phone className="h-3 w-3" />
+              01 88 61 50 00
+            </a>
             {secondaryLinks.map((link) => (
               <a
                 key={link.label}

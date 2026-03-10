@@ -1,10 +1,11 @@
 import { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { usePageMeta } from "@/hooks/usePageMeta";
-import { Menu, ArrowLeft, HelpCircle, ChevronDown, Check, X } from "lucide-react";
+import { Menu, ArrowLeft, HelpCircle, ChevronDown, Check, X, MessageSquare, Phone, Clock } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { supabase } from "@/lib/supabase";
 import { trackFormStart, trackFormStep, trackFormSubmit } from "@/lib/tracking";
+import SiteFooter from "@/components/SiteFooter";
 
 /* ─── slide-out menu links (Lemonade style) ─── */
 const menuLinks = [
@@ -1280,6 +1281,61 @@ const Form = () => {
           </div>
         </div>
       </div>
+
+      {/* ─── Support section ─── */}
+      <section className="border-t border-border/50 bg-white">
+        <div className="max-w-2xl mx-auto px-4 sm:px-6 py-12">
+          {/* Header */}
+          <div className="flex items-center gap-2.5 mb-1">
+            <MessageSquare className="h-4 w-4 text-primary" />
+            <span className="text-xs font-semibold uppercase tracking-[0.14em] text-primary">
+              Support portail en ligne
+            </span>
+          </div>
+          <div className="h-px bg-border mb-6" />
+
+          <p className="text-foreground text-base sm:text-lg leading-relaxed mb-6">
+            Notre équipe de spécialistes est disponible pour vous accompagner dans
+            votre demande de raccordement électrique.{" "}
+            <a href="/contact" className="text-primary hover:underline font-medium">
+              Assistance personnalisée.
+            </a>
+          </p>
+
+          {/* Question input */}
+          <div className="flex items-center gap-3 mb-6">
+            <div className="h-2 w-2 rounded-sm bg-primary flex-shrink-0" />
+            <input
+              type="text"
+              placeholder="Quels documents dois-je préparer ?"
+              className="flex-1 text-base text-foreground placeholder:text-muted-foreground/50 bg-transparent border-none outline-none"
+              onKeyDown={(e) => {
+                if (e.key === "Enter" && (e.target as HTMLInputElement).value.trim()) {
+                  const q = encodeURIComponent((e.target as HTMLInputElement).value.trim());
+                  window.location.href = `/contact?q=${q}`;
+                }
+              }}
+            />
+          </div>
+
+          {/* CTA row */}
+          <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-4">
+            <a
+              href="tel:0188615000"
+              className="flex items-center justify-center gap-3 bg-primary text-white font-semibold text-base px-8 py-4 rounded-xl hover:bg-primary/90 transition-colors shadow-cta"
+            >
+              <Phone className="h-5 w-5" />
+              01 88 61 50 00
+            </a>
+            <span className="flex items-center gap-2 text-sm text-muted-foreground">
+              <Clock className="h-4 w-4" />
+              Réponse sous 2h en jours ouvrés
+            </span>
+          </div>
+        </div>
+      </section>
+
+      <SiteFooter />
     </div>
   );
 };

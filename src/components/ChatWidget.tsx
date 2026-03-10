@@ -1,5 +1,5 @@
-import { useState, useEffect, useRef } from "react";
-import { MessageSquare, X, Send, Phone } from "lucide-react";
+import { useState, useEffect, useRef, useCallback } from "react";
+import { X, Send, Phone } from "lucide-react";
 import { supabase } from "@/lib/supabase";
 import { CHAT_CONFIG } from "@/lib/chatConfig";
 import {
@@ -69,6 +69,23 @@ const ChatWidget = () => {
   useEffect(() => {
     if (!localStorage.getItem("chatVisited")) setBadge(true);
   }, []);
+
+  /* ─── listen for support section opening chat with a message ─── */
+  useEffect(() => {
+    const handler = (e: Event) => {
+      const detail = (e as CustomEvent<{ message: string }>).detail;
+      if (!detail?.message) return;
+      setOpen(true);
+      sessionStorage.setItem("chatOpen", "true");
+      localStorage.setItem("chatVisited", "1");
+      setBadge(false);
+      if (messages.length === 0) initChat();
+      // Small delay so chat renders first, then send the message
+      setTimeout(() => send(detail.message), 400);
+    };
+    window.addEventListener("chat:open", handler);
+    return () => window.removeEventListener("chat:open", handler);
+  }, [messages]);
 
   /* ─── session restore ─── */
   useEffect(() => {
@@ -368,13 +385,14 @@ const ChatWidget = () => {
     return (
       <button
         onClick={toggle}
-        className="fixed z-50 bottom-20 right-4 md:bottom-6 md:right-6 h-14 w-14 rounded-full bg-primary text-white shadow-cta flex items-center justify-center hover:bg-primary/90 transition-colors"
+        className="fixed z-50 bottom-20 right-4 md:bottom-6 md:right-6 h-14 w-14 rounded-full shadow-cta flex items-center justify-center hover:scale-105 transition-transform"
         aria-label="Ouvrir le chat"
       >
-        <MessageSquare className="h-6 w-6" />
+        <img src="/sophie-avatar.svg" alt="Sophie" className="h-14 w-14 rounded-full" />
         {badge && (
           <span className="absolute -top-0.5 -right-0.5 h-4 w-4 bg-red-500 rounded-full border-2 border-white" />
         )}
+        <span className="absolute bottom-0.5 right-0.5 h-3 w-3 bg-green-500 rounded-full border-2 border-white" />
       </button>
     );
   }
@@ -385,8 +403,9 @@ const ChatWidget = () => {
       {/* Header */}
       <div className="flex items-center justify-between px-4 py-3 border-b border-border/50 md:rounded-t-2xl">
         <div className="flex items-center gap-3">
-          <div className="h-9 w-9 rounded-full bg-primary/10 flex items-center justify-center">
-            <MessageSquare className="h-4 w-4 text-primary" />
+          <div className="relative">
+            <img src="/sophie-avatar.svg" alt="Sophie" className="h-9 w-9 rounded-full" />
+            <span className="absolute bottom-0 right-0 h-2.5 w-2.5 bg-green-500 rounded-full border-2 border-white" />
           </div>
           <div>
             <p className="text-sm font-semibold text-foreground leading-tight">

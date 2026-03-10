@@ -1302,7 +1302,7 @@ const Form = () => {
             </a>
           </p>
 
-          {/* Question input */}
+          {/* Question input — opens chat widget */}
           <div className="flex items-center gap-3 mb-6">
             <div className="h-2 w-2 rounded-sm bg-primary flex-shrink-0" />
             <input
@@ -1311,8 +1311,11 @@ const Form = () => {
               className="flex-1 text-base text-foreground placeholder:text-muted-foreground/50 bg-transparent border-none outline-none"
               onKeyDown={(e) => {
                 if (e.key === "Enter" && (e.target as HTMLInputElement).value.trim()) {
-                  const q = encodeURIComponent((e.target as HTMLInputElement).value.trim());
-                  window.location.href = `/contact?q=${q}`;
+                  const msg = (e.target as HTMLInputElement).value.trim();
+                  (e.target as HTMLInputElement).value = "";
+                  window.dispatchEvent(
+                    new CustomEvent("chat:open", { detail: { message: msg } })
+                  );
                 }
               }}
             />

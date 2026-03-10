@@ -1,9 +1,39 @@
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
+import { createClient } from "https://esm.sh/@supabase/supabase-js@2.7.1";
 
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
   "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type",
 };
+
+let cachedKey: string | null = null;
+
+async function getOpenAIKey(): Promise<string | null> {
+  // Try env var first (Supabase secret)
+  const envKey = Deno.env.get("OPENAI_API_KEY");
+  if (envKey) return envKey;
+  // Use cached DB key
+  if (cachedKey) return cachedKey;
+  // Fall back to app_config table (service_role access)
+  try {
+    const supabase = createClient(
+      Deno.env.get("SUPABASE_URL")!,
+      Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!
+    );
+    const { data } = await supabase
+      .from("app_config")
+      .select("value")
+      .eq("key", "OPENAI_API_KEY")
+      .single();
+    if (data?.value) {
+      cachedKey = data.value;
+      return data.value;
+    }
+  } catch (e) {
+    console.error("Failed to fetch key from DB:", e);
+  }
+  return null;
+}
 
 serve(async (req) => {
   if (req.method === "OPTIONS") {
@@ -12,7 +42,7 @@ serve(async (req) => {
 
   try {
     const { messages } = await req.json();
-    const OPENAI_API_KEY = Deno.env.get("OPENAI_API_KEY");
+    const OPENAI_API_KEY = await getOpenAIKey();
 
     if (!OPENAI_API_KEY) {
       return new Response(

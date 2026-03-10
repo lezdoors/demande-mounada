@@ -17,14 +17,15 @@ const SiteHeader = () => {
   return (
     <header className="sticky top-0 z-50 bg-white/95 backdrop-blur-sm border-b border-border">
       <div className="section-container flex items-center justify-between h-16">
-        {/* Logo: house icon + text */}
-        <a href="/" className="flex items-center gap-2.5">
-          <img src="/logo-illu.png" alt="" className="h-9 w-9" />
-          <div className="leading-tight">
-            <span className="block text-[11px] font-medium uppercase tracking-wider text-muted-foreground">
+        {/* Logo */}
+        <a href="/" className="flex items-center gap-3 group">
+          <img src="/logo-illu.png" alt="" className="h-8 w-8 opacity-90 group-hover:opacity-100 transition-opacity" />
+          <div className="w-px h-7 bg-border" />
+          <div className="leading-none">
+            <span className="block text-[10px] font-semibold uppercase tracking-[0.14em] text-muted-foreground/70">
               Portail en ligne
             </span>
-            <span className="block text-sm font-heading text-foreground">
+            <span className="block text-[15px] font-heading text-foreground mt-0.5 tracking-tight">
               Raccordement Enedis
             </span>
           </div>

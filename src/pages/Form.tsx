@@ -548,13 +548,14 @@ const Form = () => {
             <Menu className="h-5 w-5 text-foreground" />
           </button>
           {/* Logo */}
-          <a href="/" className="flex items-center gap-2">
-            <img src="/logo-illu.png" alt="" className="h-8 w-8" />
-            <div className="leading-tight">
-              <span className="block text-[10px] font-medium uppercase tracking-wider text-muted-foreground">
+          <a href="/" className="flex items-center gap-2.5">
+            <img src="/logo-illu.png" alt="" className="h-7 w-7 opacity-90" />
+            <div className="w-px h-6 bg-border" />
+            <div className="leading-none">
+              <span className="block text-[9px] font-semibold uppercase tracking-[0.14em] text-muted-foreground/70">
                 Portail en ligne
               </span>
-              <span className="block text-xs font-heading text-foreground">
+              <span className="block text-[13px] font-heading text-foreground mt-0.5 tracking-tight">
                 Raccordement Enedis
               </span>
             </div>

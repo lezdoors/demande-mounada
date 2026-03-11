@@ -1,31 +1,31 @@
-import { PenLine, ScanSearch, BadgeCheck, PlugZap } from "lucide-react";
+import { PencilSimple, MagnifyingGlass, SealCheck, Lightning } from "@phosphor-icons/react";
 import { useScrollFadeIn } from "@/hooks/useScrollFadeIn";
 
 const steps = [
   {
     number: "01",
-    icon: PenLine,
+    icon: PencilSimple,
     title: "Demande en ligne",
     description:
       "Remplissez notre formulaire en quelques minutes avec les informations de votre projet de raccordement.",
   },
   {
     number: "02",
-    icon: ScanSearch,
+    icon: MagnifyingGlass,
     title: "Etude du dossier",
     description:
       "Nos experts verifient et completent votre dossier pour garantir sa conformite aux exigences Enedis.",
   },
   {
     number: "03",
-    icon: BadgeCheck,
+    icon: SealCheck,
     title: "Devis Enedis",
     description:
       "Votre dossier est transmis a Enedis qui realise l'etude technique et vous adresse un devis de raccordement.",
   },
   {
     number: "04",
-    icon: PlugZap,
+    icon: Lightning,
     title: "Realisation des travaux",
     description:
       "Apres acceptation du devis, Enedis planifie et realise les travaux de raccordement sur votre terrain.",
@@ -51,7 +51,7 @@ const ProcessSection = () => {
           {steps.map((step, i) => (
             <div key={step.number} className="relative text-center">
               <div className="inline-flex items-center justify-center h-16 w-16 rounded-full bg-primary text-primary-foreground mb-6 mx-auto">
-                <step.icon className="h-7 w-7" strokeWidth={1.5} fill="currentColor" fillOpacity={0.15} />
+                <step.icon className="h-7 w-7" weight="duotone" />
               </div>
               <div className="text-xs font-medium text-primary uppercase tracking-widest mb-2">
                 Etape {step.number}

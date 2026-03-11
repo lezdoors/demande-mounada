@@ -1,80 +1,84 @@
-import { Shovel, Sun, Wind, Zap } from "lucide-react";
+import { HouseSimple, HardHat, Shovel, GearSix, Buildings, SunDim } from "@phosphor-icons/react";
 import { Button } from "@/components/ui/button";
+import { useNavigate } from "react-router-dom";
 import { useScrollFadeIn } from "@/hooks/useScrollFadeIn";
 
 const specializedServices = [
   {
+    icon: HouseSimple,
+    title: "Raccordement Maison Neuve",
+    description:
+      "Branchement definitif au reseau Enedis avec mise en service du compteur Linky.",
+  },
+  {
+    icon: HardHat,
+    title: "Raccordement Provisoire",
+    description:
+      "Compteur de chantier pour alimenter vos travaux de construction.",
+  },
+  {
     icon: Shovel,
-    title: "Viabilisation de terrain",
+    title: "Viabilisation de Terrain",
     description:
-      "Preparation complete de votre terrain pour le raccordement aux reseaux. Coordination avec les differents concessionnaires.",
-    features: ["Etude de faisabilite", "Coordination multi-reseaux", "Suivi des travaux"],
+      "Raccordement terrain nu et coordination avec les concessionnaires reseaux.",
   },
   {
-    icon: Sun,
-    title: "Installations photovoltaiques",
+    icon: GearSix,
+    title: "Modification de Raccordement",
     description:
-      "Raccordement de vos panneaux solaires au reseau Enedis. Autoconsommation ou revente totale, nous gerons le dossier complet.",
-    features: ["Autoconsommation", "Revente totale", "Contrat d'acces"],
+      "Deplacement compteur, changement puissance ou modification de branchement.",
   },
   {
-    icon: Wind,
-    title: "Pompes a chaleur",
+    icon: Buildings,
+    title: "Raccordement Collectif",
     description:
-      "Augmentation de puissance necessaire pour l'installation d'une pompe a chaleur. Verification de la capacite de votre branchement.",
-    features: ["Diagnostic puissance", "Mise a niveau", "Certificats"],
+      "Lotissements, coproprietes et operations d'amenagement multi-lots.",
   },
   {
-    icon: Zap,
-    title: "Bornes de recharge",
+    icon: SunDim,
+    title: "Raccordement Photovoltaique",
     description:
-      "Raccordement ou augmentation de puissance pour l'installation de bornes de recharge de vehicules electriques.",
-    features: ["Particuliers", "Coproprietes", "Entreprises"],
+      "Raccordement panneaux solaires au reseau pour autoconsommation ou revente.",
   },
 ];
 
 const SpecializedServicesSection = () => {
   const ref = useScrollFadeIn();
+  const navigate = useNavigate();
 
   return (
     <section className="py-16 sm:py-20 bg-background">
       <div className="section-container">
         <div ref={ref} className="scroll-fade-in text-center mb-10">
           <h2 className="font-heading text-2xl sm:text-3xl lg:text-5xl text-foreground mb-3">
-            Services specialises
+            Tous nos services de raccordement
           </h2>
           <p className="text-sm sm:text-base text-muted-foreground max-w-xl mx-auto">
-            Des solutions adaptees aux projets qui necessitent une expertise technique specifique.
+            Quel que soit votre projet, nous preparons votre dossier Enedis de A a Z.
           </p>
         </div>
 
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-6">
+        <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 sm:gap-5">
           {specializedServices.map((service) => (
             <div
               key={service.title}
-              className="group bg-card border border-border rounded-xl sm:rounded-2xl p-3 sm:p-8 hover:shadow-lg hover:border-primary/20 transition-all duration-300"
+              className="group bg-card border border-border rounded-xl sm:rounded-2xl p-3 sm:p-6 hover:shadow-lg hover:border-primary/20 transition-all duration-300"
             >
-              <div className="h-8 w-8 sm:h-14 sm:w-14 rounded-lg sm:rounded-2xl bg-primary/8 flex items-center justify-center mb-3 sm:mb-6 group-hover:bg-primary/12 transition-colors">
-                <service.icon className="h-4 w-4 sm:h-7 sm:w-7 text-primary" strokeWidth={1.5} fill="currentColor" fillOpacity={0.15} />
+              <div className="h-8 w-8 sm:h-12 sm:w-12 rounded-lg sm:rounded-xl bg-primary/8 flex items-center justify-center mb-3 sm:mb-4 group-hover:bg-primary/12 transition-colors">
+                <service.icon className="h-4 w-4 sm:h-6 sm:w-6 text-primary" weight="duotone" />
               </div>
-              <h3 className="font-heading text-xs sm:text-xl text-foreground mb-1 sm:mb-3 leading-tight">
+              <h3 className="font-heading text-xs sm:text-base text-foreground mb-1 sm:mb-2 leading-tight">
                 {service.title}
               </h3>
-              <p className="hidden sm:block text-sm text-muted-foreground leading-relaxed mb-5">
+              <p className="hidden sm:block text-xs text-muted-foreground leading-relaxed mb-4">
                 {service.description}
               </p>
-              <div className="hidden sm:flex flex-wrap gap-2 mb-6">
-                {service.features.map((f) => (
-                  <span
-                    key={f}
-                    className="text-xs font-medium bg-primary/6 text-primary px-3 py-1 rounded-full"
-                  >
-                    {f}
-                  </span>
-                ))}
-              </div>
-              <Button variant="ctaOutline" className="w-full rounded-full text-[8px] sm:text-sm h-auto py-1.5 sm:py-2.5">
-                En savoir plus
+              <Button
+                variant="ctaOutline"
+                className="w-full rounded-full text-[7px] sm:text-xs h-auto py-1 sm:py-2"
+                onClick={() => navigate("/form")}
+              >
+                Faire ma demande
               </Button>
             </div>
           ))}

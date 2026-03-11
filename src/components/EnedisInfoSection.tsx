@@ -1,4 +1,5 @@
-import { Plug, Settings, Gauge, ShieldCheck, ArrowRight } from "lucide-react";
+import { Plug, Lightning, Gauge, ShieldCheck } from "@phosphor-icons/react";
+import { ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useNavigate } from "react-router-dom";
 import { useScrollFadeIn } from "@/hooks/useScrollFadeIn";
@@ -6,23 +7,23 @@ import { useScrollFadeIn } from "@/hooks/useScrollFadeIn";
 const enedisServices = [
   {
     icon: Plug,
-    title: "Raccordement neuf",
-    description: "Extension ou creation du reseau electrique jusqu'a votre propriete.",
+    title: "Raccordement au Reseau",
+    description: "Connexion installations neuves: habitations, immeubles, locaux professionnels.",
   },
   {
-    icon: Settings,
-    title: "Modification de branchement",
-    description: "Deplacement de compteur, changement de coffret ou modification de l'alimentation.",
+    icon: Lightning,
+    title: "Mise en Service",
+    description: "Operation technique pour alimenter votre installation apres contrat fournisseur.",
   },
   {
     icon: Gauge,
-    title: "Changement de puissance",
-    description: "Adaptation de la puissance delivree en fonction de vos nouveaux equipements.",
+    title: "Gestion des Compteurs",
+    description: "Installation, remplacement, maintenance compteurs Linky.",
   },
   {
     icon: ShieldCheck,
-    title: "Mise en conformite",
-    description: "Mise aux normes de votre installation electrique selon les reglementations en vigueur.",
+    title: "Depannage 24h/24",
+    description: "Intervention rapide pannes reseau electrique.",
   },
 ];
 
@@ -51,7 +52,7 @@ const EnedisInfoSection = () => {
               className="bg-card border border-border rounded-2xl p-7 hover:shadow-md hover:border-primary/20 transition-all duration-300"
             >
               <div className="h-12 w-12 rounded-xl bg-primary/8 flex items-center justify-center mb-5">
-                <service.icon className="h-6 w-6 text-primary" strokeWidth={1.5} fill="currentColor" fillOpacity={0.15} />
+                <service.icon className="h-6 w-6 text-primary" weight="duotone" />
               </div>
               <h3 className="font-heading text-lg text-foreground mb-2">
                 {service.title}

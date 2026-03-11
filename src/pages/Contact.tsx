@@ -1,5 +1,5 @@
 import { usePageMeta } from "@/hooks/usePageMeta";
-import { Phone, Mail, Clock, MapPin, Send } from "lucide-react";
+import { Phone, EnvelopeSimple, Clock, MapPin, PaperPlaneTilt } from "@phosphor-icons/react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -22,7 +22,7 @@ const contactCards = [
     subtitle: "Appel non surtaxe",
   },
   {
-    icon: Mail,
+    icon: EnvelopeSimple,
     title: "Email",
     value: "contact@demande-raccordement.fr",
     subtitle: "Reponse sous 24h ouvrees",
@@ -87,7 +87,7 @@ const Contact = () => {
                     className="bg-card border border-border rounded-2xl p-6 sm:p-8 text-center hover:shadow-lg hover:border-primary/20 transition-all duration-300"
                   >
                     <div className="h-14 w-14 rounded-2xl bg-primary/8 flex items-center justify-center mx-auto mb-5">
-                      <card.icon className="h-7 w-7 text-primary" strokeWidth={1.5} />
+                      <card.icon className="h-7 w-7 text-primary" weight="duotone" />
                     </div>
                     <h3 className="font-heading text-lg text-foreground mb-2">{card.title}</h3>
                     <p className="text-sm font-medium text-foreground mb-1">{card.value}</p>
@@ -166,7 +166,7 @@ const Contact = () => {
                   </div>
 
                   <Button variant="cta" className="w-full rounded-full" size="lg">
-                    <Send className="h-4 w-4 mr-2" />
+                    <PaperPlaneTilt className="h-4 w-4 mr-2" weight="bold" />
                     Envoyer le message
                   </Button>
                 </div>
@@ -180,7 +180,7 @@ const Contact = () => {
           <div className="section-container">
             <div ref={mapRef} className="scroll-fade-in text-center max-w-2xl mx-auto">
               <div className="h-16 w-16 rounded-2xl bg-primary/8 flex items-center justify-center mx-auto mb-6">
-                <MapPin className="h-8 w-8 text-primary" strokeWidth={1.5} />
+                <MapPin className="h-8 w-8 text-primary" weight="duotone" />
               </div>
               <h2 className="font-heading text-2xl sm:text-3xl text-foreground mb-4">
                 Service 100% en ligne

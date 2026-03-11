@@ -1,19 +1,16 @@
 import { useNavigate } from "react-router-dom";
 import { usePageMeta } from "@/hooks/usePageMeta";
 import {
-  Home,
+  HouseSimple,
   HardHat,
-  Zap,
-  Building2,
+  GearSix,
+  Buildings,
   Shovel,
-  Sun,
-  Car,
-  Wind,
-  ArrowRight,
-  CheckCircle2,
-  Clock,
+  SunDim,
+  Lightning,
   Star,
-} from "lucide-react";
+} from "@phosphor-icons/react";
+import { ArrowRight, CheckCircle2, Clock } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useScrollFadeIn } from "@/hooks/useScrollFadeIn";
 import SiteHeader from "@/components/SiteHeader";
@@ -21,7 +18,7 @@ import SiteFooter from "@/components/SiteFooter";
 
 const mainServices = [
   {
-    icon: Home,
+    icon: HouseSimple,
     title: "Raccordement definitif",
     subtitle: "Construction neuve",
     description:
@@ -50,21 +47,21 @@ const mainServices = [
     ],
   },
   {
-    icon: Zap,
-    title: "Augmentation de puissance",
-    subtitle: "Modification d'installation",
+    icon: GearSix,
+    title: "Modification de branchement",
+    subtitle: "Deplacement et modification",
     description:
-      "Changement de puissance de votre installation (passage de monophase a triphase, augmentation des kVA). Pour pompes a chaleur, bornes de recharge, equipements industriels.",
+      "Deplacement de compteur, changement de coffret ou modification de l'alimentation electrique existante. Adaptation de votre branchement a vos nouveaux besoins.",
     delay: "2 a 8 semaines",
     features: [
-      "Passage monophase a triphase",
-      "Augmentation des kVA",
-      "Pompes a chaleur et bornes de recharge",
-      "Equipements industriels",
+      "Deplacement de compteur",
+      "Changement de coffret",
+      "Modification d'alimentation",
+      "Mise aux normes branchement",
     ],
   },
   {
-    icon: Building2,
+    icon: Buildings,
     title: "Raccordement collectif",
     subtitle: "Lotissements et coproprietes",
     description:
@@ -81,32 +78,32 @@ const mainServices = [
 
 const specializedServices = [
   {
+    icon: HouseSimple,
+    title: "Raccordement Maison Neuve",
+    description:
+      "Branchement definitif au reseau Enedis avec mise en service du compteur Linky.",
+    features: ["Compteur Linky", "Maison individuelle", "Dossier complet"],
+  },
+  {
     icon: Shovel,
-    title: "Viabilisation de terrain",
+    title: "Viabilisation de Terrain",
     description:
-      "Preparation et amenagement des reseaux electriques avant construction. Coordination avec les differents concessionnaires de reseaux.",
-    features: ["Etude de faisabilite", "Coordination multi-reseaux", "Suivi des travaux"],
+      "Raccordement terrain nu et coordination avec les concessionnaires reseaux.",
+    features: ["Etude faisabilite", "Coordination reseaux", "Suivi travaux"],
   },
   {
-    icon: Sun,
-    title: "Installations photovoltaiques",
+    icon: GearSix,
+    title: "Modification de Raccordement",
     description:
-      "Raccordement de vos panneaux solaires au reseau Enedis. Autoconsommation ou revente totale, nous gerons le dossier complet.",
-    features: ["Autoconsommation", "Revente totale", "Contrat d'acces reseau"],
+      "Deplacement compteur, changement puissance ou modification de branchement existant.",
+    features: ["Deplacement compteur", "Changement coffret", "Mise aux normes"],
   },
   {
-    icon: Car,
-    title: "Bornes de recharge vehicules electriques",
+    icon: SunDim,
+    title: "Raccordement Photovoltaique",
     description:
-      "Raccordement ou augmentation de puissance pour l'installation de bornes de recharge de vehicules electriques.",
-    features: ["Particuliers", "Coproprietes", "Entreprises et flottes"],
-  },
-  {
-    icon: Wind,
-    title: "Pompes a chaleur",
-    description:
-      "Augmentation de puissance necessaire pour l'installation d'une pompe a chaleur. Verification de la capacite de votre branchement existant.",
-    features: ["Diagnostic puissance", "Mise a niveau branchement", "Certificats de conformite"],
+      "Raccordement panneaux solaires au reseau pour autoconsommation ou revente totale.",
+    features: ["Autoconsommation", "Revente totale", "Contrat d'acces"],
   },
 ];
 
@@ -165,7 +162,7 @@ const Services = () => {
                     {/* Icon + meta */}
                     <div className="flex-shrink-0">
                       <div className="h-14 w-14 sm:h-16 sm:w-16 rounded-2xl bg-primary/8 flex items-center justify-center group-hover:bg-primary/12 transition-colors">
-                        <service.icon className="h-7 w-7 sm:h-8 sm:w-8 text-primary" strokeWidth={1.5} />
+                        <service.icon className="h-7 w-7 sm:h-8 sm:w-8 text-primary" weight="duotone" />
                       </div>
                     </div>
 
@@ -227,10 +224,10 @@ const Services = () => {
           <div className="section-container">
             <div ref={specializedRef} className="scroll-fade-in text-center mb-14">
               <h2 className="font-heading text-2xl sm:text-3xl lg:text-4xl text-foreground mb-3">
-                Services specialises
+                Autres services
               </h2>
               <p className="text-sm sm:text-base text-muted-foreground max-w-xl mx-auto">
-                Des solutions adaptees aux projets qui necessitent une expertise technique specifique.
+                Modification, viabilisation et augmentation de puissance pour tous vos projets.
               </p>
             </div>
 
@@ -241,7 +238,7 @@ const Services = () => {
                   className="group bg-card border border-border rounded-2xl p-5 sm:p-7 hover:shadow-lg hover:border-primary/20 transition-all duration-300"
                 >
                   <div className="h-12 w-12 rounded-xl bg-primary/8 flex items-center justify-center mb-5 group-hover:bg-primary/12 transition-colors">
-                    <service.icon className="h-6 w-6 text-primary" strokeWidth={1.5} />
+                    <service.icon className="h-6 w-6 text-primary" weight="duotone" />
                   </div>
                   <h3 className="font-heading text-base sm:text-lg text-foreground mb-2 leading-tight">
                     {service.title}
@@ -278,7 +275,7 @@ const Services = () => {
           </div>
           <div className="section-container text-center relative z-10">
             <div ref={ctaRef} className="scroll-fade-in">
-              <Star className="h-10 w-10 text-primary-foreground/40 mx-auto mb-6" strokeWidth={1} />
+              <Star className="h-10 w-10 text-primary-foreground/40 mx-auto mb-6" weight="duotone" />
               <h2 className="font-heading text-3xl sm:text-4xl lg:text-5xl text-primary-foreground mb-5">
                 Pret a demarrer votre projet ?
               </h2>

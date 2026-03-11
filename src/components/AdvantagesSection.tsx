@@ -1,4 +1,4 @@
-import { Shield, Clock, Users, Headphones } from "lucide-react";
+import { ShieldCheck, Timer, UsersThree, Headset } from "@phosphor-icons/react";
 import { useScrollFadeIn } from "@/hooks/useScrollFadeIn";
 
 const stats = [
@@ -10,25 +10,25 @@ const stats = [
 
 const advantages = [
   {
-    icon: Shield,
+    icon: ShieldCheck,
     title: "Dossier garanti conforme",
     description:
       "Chaque dossier est verifie par nos experts pour garantir sa conformite aux exigences Enedis. Zero rejet, zero retard.",
   },
   {
-    icon: Clock,
+    icon: Timer,
     title: "Traitement rapide",
     description:
       "Votre dossier est pris en charge sous 48h et transmis directement a Enedis pour accelerer les delais.",
   },
   {
-    icon: Users,
+    icon: UsersThree,
     title: "Expert dedie",
     description:
       "Un interlocuteur unique vous accompagne du debut a la fin de votre projet de raccordement.",
   },
   {
-    icon: Headphones,
+    icon: Headset,
     title: "Support continu",
     description:
       "Une equipe disponible par telephone et email pour repondre a toutes vos questions sur votre dossier.",
@@ -57,7 +57,7 @@ const AdvantagesSection = () => {
               className="bg-card border border-border rounded-2xl p-7 hover:shadow-md transition-all duration-300"
             >
               <div className="h-12 w-12 rounded-xl bg-primary/8 flex items-center justify-center mb-5">
-                <item.icon className="h-6 w-6 text-primary" strokeWidth={1.5} fill="currentColor" fillOpacity={0.15} />
+                <item.icon className="h-6 w-6 text-primary" weight="duotone" />
               </div>
               <h3 className="font-heading text-lg text-foreground mb-2">
                 {item.title}

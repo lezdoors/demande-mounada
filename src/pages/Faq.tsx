@@ -9,7 +9,8 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 import { useScrollFadeIn } from "@/hooks/useScrollFadeIn";
-import { Headset, Plug, Building2, Cpu, FileText, ArrowRight, Phone } from "lucide-react";
+import { Headset, Plug, Buildings, Cpu, FileText } from "@phosphor-icons/react";
+import { ArrowRight, Phone } from "lucide-react";
 import SiteHeader from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
 
@@ -84,7 +85,7 @@ const categories: FaqCategory[] = [
   {
     id: "enedis",
     label: "Enedis",
-    icon: Building2,
+    icon: Buildings,
     items: [
       {
         question: "Quelle est la difference entre Enedis et EDF ?",
@@ -219,7 +220,7 @@ const Faq = () => {
                       }
                     `}
                   >
-                    <Icon className="h-4 w-4" />
+                    <Icon className="h-4 w-4" weight="duotone" />
                     {cat.label}
                   </button>
                 );
@@ -254,7 +255,7 @@ const Faq = () => {
                     <div key={cat.id}>
                       <div className="flex items-center gap-3 mb-6">
                         <div className="flex items-center justify-center h-9 w-9 rounded-lg bg-primary/10 text-primary">
-                          <Icon className="h-4.5 w-4.5" />
+                          <Icon className="h-4.5 w-4.5" weight="duotone" />
                         </div>
                         <h2 className="font-heading text-xl text-foreground">
                           {cat.label}

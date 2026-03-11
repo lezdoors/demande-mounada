@@ -1,31 +1,31 @@
-import { HousePlug, Construction, Zap, Shovel } from "lucide-react";
+import { HouseSimple, HardHat, GearSix, Buildings } from "@phosphor-icons/react";
 import { Button } from "@/components/ui/button";
 import { useNavigate } from "react-router-dom";
 import { useScrollFadeIn } from "@/hooks/useScrollFadeIn";
 
 const services = [
   {
-    icon: HousePlug,
+    icon: HouseSimple,
     title: "Raccordement definitif",
     description: "Raccordement permanent pour votre maison neuve ou batiment.",
     cta: "Faire ma demande",
   },
   {
-    icon: Construction,
+    icon: HardHat,
     title: "Raccordement provisoire",
     description: "Alimentation temporaire pour votre chantier de construction.",
     cta: "Faire ma demande",
   },
   {
-    icon: Zap,
-    title: "Raccordement Enedis",
-    description: "Toute demande de raccordement au reseau electrique Enedis.",
+    icon: GearSix,
+    title: "Modification de branchement",
+    description: "Deplacement de compteur, changement de coffret ou modification de l'alimentation.",
     cta: "Faire ma demande",
   },
   {
-    icon: Shovel,
-    title: "Viabilisation de terrain",
-    description: "Amenagement des reseaux electriques avant construction.",
+    icon: Buildings,
+    title: "Raccordement collectif",
+    description: "Lotissements, coproprietes et operations d'amenagement multi-lots.",
     cta: "Faire ma demande",
   },
 ];
@@ -53,7 +53,7 @@ const RequestTypesSection = () => {
               className="group bg-card border border-border rounded-xl sm:rounded-2xl p-2.5 sm:p-5 text-center flex flex-col items-center hover:shadow-lg transition-all duration-300"
             >
               <div className="h-10 w-10 sm:h-16 sm:w-16 rounded-xl sm:rounded-2xl bg-primary/10 flex items-center justify-center mb-2 sm:mb-4 group-hover:bg-primary/15 transition-colors">
-                <service.icon className="h-5 w-5 sm:h-8 sm:w-8 text-primary" strokeWidth={1.5} fill="currentColor" fillOpacity={0.15} />
+                <service.icon className="h-5 w-5 sm:h-8 sm:w-8 text-primary" weight="duotone" />
               </div>
               <h3 className="font-heading text-[10px] sm:text-base text-foreground mb-1 sm:mb-2 leading-tight">
                 {service.title}

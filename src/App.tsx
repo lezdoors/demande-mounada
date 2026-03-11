@@ -18,6 +18,7 @@ import Paiement from "./pages/Paiement";
 import Confirmation from "./pages/Confirmation";
 import NotFound from "./pages/NotFound";
 import MobileStickyBar from "./components/MobileStickyBar";
+import CookieBanner from "./components/CookieBanner";
 
 const LazyChatWidget = lazy(() => import("./components/ChatWidget"));
 
@@ -61,6 +62,7 @@ const App = () => (
         </Routes>
         <MobileStickyBar />
         <DelayedChat />
+        <CookieBanner />
       </BrowserRouter>
     </TooltipProvider>
   </QueryClientProvider>

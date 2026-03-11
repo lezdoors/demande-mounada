@@ -254,6 +254,32 @@ const Form = () => {
   const set = <K extends keyof FormData>(key: K, val: FormData[K]) =>
     setFd((prev) => ({ ...prev, [key]: val }));
 
+  /* ─── restore form from localStorage + pre-fill from URL params ─── */
+  useEffect(() => {
+    // Restore saved progress
+    const saved = localStorage.getItem("demande_form");
+    if (saved) {
+      try {
+        const parsed = JSON.parse(saved);
+        setFd((prev) => ({ ...prev, ...parsed }));
+        const savedStep = localStorage.getItem("demande_form_step");
+        if (savedStep) setStep(Number(savedStep));
+      } catch { /* ignore */ }
+    }
+    // Pre-fill from URL params (chat widget sends these)
+    const p = new URLSearchParams(window.location.search);
+    const prefill: Partial<FormData> = {};
+    if (p.get("type_client")) prefill.type_client = p.get("type_client")!;
+    if (p.get("type_demande")) prefill.type_demande = p.get("type_demande")!;
+    if (Object.keys(prefill).length) setFd((prev) => ({ ...prev, ...prefill }));
+  }, []);
+
+  /* ─── persist form to localStorage on change ─── */
+  useEffect(() => {
+    localStorage.setItem("demande_form", JSON.stringify(fd));
+    localStorage.setItem("demande_form_step", String(step));
+  }, [fd, step]);
+
   /* ─── city auto-fetch from postcode (project) ─── */
   useEffect(() => {
     if (fd.code_postal_projet.length === 5 && /^\d{5}$/.test(fd.code_postal_projet)) {
@@ -493,6 +519,10 @@ const Form = () => {
       const { demandeId, reference } = data;
       trackFormSubmit(leadId || "", demandeId, fd.type_demande);
 
+      // Clear saved form data after successful submit
+      localStorage.removeItem("demande_form");
+      localStorage.removeItem("demande_form_step");
+
       // Redirect to payment page
       navigate(`/paiement?demandeId=${demandeId}&leadId=${leadId || ""}&ref=${reference}`);
     } catch {
@@ -707,10 +737,10 @@ const Form = () => {
             <div>
               <div className="text-center mb-8">
                 <h2 className="font-heading text-2xl sm:text-3xl text-foreground mb-2">
-                  Bonjour !
+                  Demande de raccordement Enedis
                 </h2>
                 <p className="text-muted-foreground">
-                  Renseignez vos coordonnées pour commencer.
+                  Renseignez vos coordonnées pour déposer votre dossier.
                 </p>
               </div>
               <div className="space-y-4">

@@ -64,26 +64,24 @@ const HeroSection = () => {
         }}
       />
 
-      {/* Glassmorphism card with centered content */}
-      <div className="relative z-10 section-container text-center py-12 lg:py-0 flex justify-center">
-        <div className="glass p-12 max-w-2xl mx-auto">
-          <h1 className="font-heading text-4xl sm:text-5xl lg:text-[56px] leading-[1.12] text-foreground mb-4 font-bold">
-            Partenaire n&deg;1 en France dans l'aide au raccordement Enedis.
-          </h1>
+      {/* Centered content — directly on hero */}
+      <div className="relative z-10 section-container text-center py-12 lg:py-0 max-w-2xl mx-auto">
+        <h1 className="font-heading text-4xl sm:text-5xl lg:text-[56px] leading-[1.12] text-foreground mb-4 font-bold">
+          Partenaire n&deg;1 en France dans l'aide au raccordement Enedis.
+        </h1>
 
-          <p className="text-lg lg:text-xl text-primary mb-6 max-w-lg mx-auto font-medium">
-            Confiez-nous le d&eacute;p&ocirc;t et le suivi de votre dossier de raccordement Enedis.
-          </p>
+        <p className="text-lg lg:text-xl text-primary mb-6 max-w-lg mx-auto font-medium">
+          Confiez-nous le d&eacute;p&ocirc;t et le suivi de votre dossier de raccordement Enedis.
+        </p>
 
-          <Button
-            variant="cta"
-            size="lg"
-            className="btn-lift text-base sm:text-lg h-13 sm:h-14 px-10 sm:px-14 rounded-full shadow-cta uppercase tracking-wider font-semibold"
-            onClick={() => navigate("/form")}
-          >
-            Commencer ma demande
-          </Button>
-        </div>
+        <Button
+          variant="cta"
+          size="lg"
+          className="btn-lift text-base sm:text-lg h-13 sm:h-14 px-10 sm:px-14 rounded-full shadow-cta uppercase tracking-wider font-semibold"
+          onClick={() => navigate("/form")}
+        >
+          Commencer ma demande
+        </Button>
       </div>
 
       {/* Mobile scrolling strip — full color, larger images */}

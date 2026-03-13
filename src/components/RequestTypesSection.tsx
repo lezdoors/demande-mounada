@@ -46,26 +46,25 @@ const RequestTypesSection = () => {
           </p>
         </div>
 
-        {/* Horizontal swipe on mobile, grid on desktop */}
-        <div className="sm:grid sm:grid-cols-4 sm:gap-6 flex gap-4 overflow-x-auto snap-x snap-mandatory scrollbar-hide pb-2 sm:pb-0 -mx-4 px-4 sm:mx-0 sm:px-0">
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-6">
           {services.map((service) => (
             <article
               key={service.title}
-              className="group card-elevated p-6 text-center flex flex-col items-center min-w-[72%] sm:min-w-0 snap-start"
+              className="group card-elevated p-3 sm:p-6 text-center flex flex-col items-center"
             >
-              <div className="h-14 w-14 rounded-full bg-primary/10 flex items-center justify-center mb-4 icon-hover">
-                <service.icon className="h-12 w-12 text-primary" weight="duotone" />
+              <div className="h-10 w-10 sm:h-14 sm:w-14 rounded-full bg-primary/10 flex items-center justify-center mb-2 sm:mb-4 icon-hover">
+                <service.icon className="h-6 w-6 sm:h-12 sm:w-12 text-primary" weight="duotone" />
               </div>
-              <h3 className="font-heading text-lg sm:text-xl font-semibold text-foreground mb-2 leading-tight">
+              <h3 className="font-heading text-[13px] sm:text-xl font-semibold text-foreground mb-1 sm:mb-2 leading-tight">
                 {service.title}
               </h3>
-              <p className="text-xs text-muted-foreground leading-relaxed mb-4 flex-1">
+              <p className="hidden sm:block text-xs text-muted-foreground leading-relaxed mb-4 flex-1">
                 {service.description}
               </p>
               <Button
                 variant="cta"
                 size="sm"
-                className="btn-lift w-full rounded-md text-xs uppercase tracking-wider font-semibold whitespace-normal h-auto py-2.5"
+                className="btn-lift w-full rounded-md text-[10px] sm:text-xs uppercase tracking-wider font-semibold whitespace-normal h-auto py-1.5 sm:py-2.5"
                 onClick={() => navigate("/form")}
               >
                 {service.cta}

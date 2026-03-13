@@ -50,32 +50,32 @@ const AdvantagesSection = () => {
           </p>
         </div>
 
-        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-16">
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-6 mb-12 sm:mb-16">
           {advantages.map((item) => (
             <div
               key={item.title}
-              className="card-elevated bg-card border border-border p-7"
+              className="card-elevated bg-card border border-border p-4 sm:p-7"
             >
-              <div className="h-14 w-14 rounded-full bg-primary/10 flex items-center justify-center mb-5 icon-hover">
-                <item.icon className="h-7 w-7 text-primary" weight="duotone" />
+              <div className="h-10 w-10 sm:h-14 sm:w-14 rounded-full bg-primary/10 flex items-center justify-center mb-3 sm:mb-5 icon-hover">
+                <item.icon className="h-5 w-5 sm:h-7 sm:w-7 text-primary" weight="duotone" />
               </div>
-              <h3 className="font-heading text-lg text-foreground mb-2">
+              <h3 className="font-heading text-[13px] sm:text-lg text-foreground mb-1 sm:mb-2 leading-tight">
                 {item.title}
               </h3>
-              <p className="text-sm text-muted-foreground leading-relaxed">
+              <p className="hidden sm:block text-sm text-muted-foreground leading-relaxed">
                 {item.description}
               </p>
             </div>
           ))}
         </div>
 
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-8">
+        <div className="grid grid-cols-4 gap-3 sm:gap-8">
           {stats.map((stat) => (
             <div key={stat.label} className="text-center">
-              <div className="text-5xl font-bold text-primary">
+              <div className="text-2xl sm:text-5xl font-bold text-primary">
                 {stat.value}
               </div>
-              <div className="text-sm uppercase tracking-wider text-muted-foreground mt-2">{stat.label}</div>
+              <div className="text-[10px] sm:text-sm uppercase tracking-wider text-muted-foreground mt-1 sm:mt-2">{stat.label}</div>
             </div>
           ))}
         </div>

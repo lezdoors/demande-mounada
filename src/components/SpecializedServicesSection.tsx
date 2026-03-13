@@ -58,25 +58,24 @@ const SpecializedServicesSection = () => {
           </p>
         </div>
 
-        {/* Horizontal swipe on mobile, grid on desktop */}
-        <div className="sm:grid sm:grid-cols-3 sm:gap-6 flex gap-4 overflow-x-auto snap-x snap-mandatory scrollbar-hide pb-2 sm:pb-0 -mx-4 px-4 sm:mx-0 sm:px-0">
+        <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 sm:gap-6">
           {specializedServices.map((service) => (
             <div
               key={service.title}
-              className="group card-elevated p-6 min-w-[72%] sm:min-w-0 snap-start"
+              className="group card-elevated p-3 sm:p-6"
             >
-              <div className="h-14 w-14 rounded-full bg-primary/10 flex items-center justify-center mb-4 icon-hover">
-                <service.icon className="h-12 w-12 text-primary" weight="duotone" />
+              <div className="h-10 w-10 sm:h-14 sm:w-14 rounded-full bg-primary/10 flex items-center justify-center mb-2 sm:mb-4 icon-hover">
+                <service.icon className="h-6 w-6 sm:h-12 sm:w-12 text-primary" weight="duotone" />
               </div>
-              <h3 className="font-heading text-lg font-semibold text-foreground mb-2 leading-tight">
+              <h3 className="font-heading text-[13px] sm:text-lg font-semibold text-foreground mb-1 sm:mb-2 leading-tight">
                 {service.title}
               </h3>
-              <p className="text-xs text-muted-foreground leading-relaxed mb-4">
+              <p className="hidden sm:block text-xs text-muted-foreground leading-relaxed mb-4">
                 {service.description}
               </p>
               <Button
                 variant="ctaOutline"
-                className="btn-lift w-full rounded-full text-xs h-auto py-2"
+                className="btn-lift w-full rounded-full text-[10px] sm:text-xs h-auto py-1.5 sm:py-2"
                 onClick={() => navigate("/form")}
               >
                 Faire ma demande

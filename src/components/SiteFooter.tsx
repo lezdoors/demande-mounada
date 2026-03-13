@@ -27,10 +27,16 @@ const SiteFooter = () => {
         <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-10">
           <div>
             <div className="flex items-center gap-3 mb-4">
-              <img src="/logo-illu.png" alt="Demande Raccordement" className="h-10 w-10 brightness-0 invert" />
-              <span className="font-heading text-xl text-white">
-                Demande <span className="text-blue-300">Raccordement</span>
-              </span>
+              <img src="/logo-illu.png" alt="Raccordement Enedis" className="h-9 w-9 brightness-0 invert" />
+              <div className="w-px h-7 bg-white/20" />
+              <div className="leading-none">
+                <span className="block text-[10px] font-semibold uppercase tracking-[0.14em] text-white/50">
+                  Portail en ligne
+                </span>
+                <span className="block text-[15px] font-heading text-white mt-0.5 tracking-tight">
+                  Raccordement Enedis
+                </span>
+              </div>
             </div>
             <p className="text-sm leading-relaxed mb-6">
               Service en ligne de preparation de dossier de raccordement electrique.

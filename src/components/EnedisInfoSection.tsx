@@ -1,5 +1,5 @@
 import { Lightning, Wrench, Phone, Plug } from "@phosphor-icons/react";
-import { ArrowRight, CheckCircle2, Info } from "lucide-react";
+import { ArrowRight, CheckCircle2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useNavigate } from "react-router-dom";
 import { useScrollFadeIn } from "@/hooks/useScrollFadeIn";
@@ -107,18 +107,7 @@ const EnedisInfoSection = () => {
             ))}
           </div>
 
-          {/* Info callout */}
-          <div className="border-l-4 border-amber-400 bg-amber-50 rounded-r-xl px-5 py-4 mb-12">
-            <div className="flex items-start gap-3">
-              <Info className="h-5 w-5 text-amber-600 flex-shrink-0 mt-0.5" strokeWidth={2} />
-              <p className="text-sm text-amber-900 leading-relaxed">
-                <span className="font-bold">Important pour votre raccordement Enedis :</span> Enedis assure la gestion technique du reseau electrique et des
-                compteurs Linky, intervient en cas de panne sur le reseau public, et realise tous les types de branchements electriques,
-                independamment du fournisseur d'electricite choisi par le client. Le delai de raccordement Enedis varie selon la region et
-                la complexite du projet en France.
-              </p>
-            </div>
-          </div>
+          <div className="mb-12" aria-hidden="true" />
         </div>
 
         {/* Lemonade-style illustration section */}

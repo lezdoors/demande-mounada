@@ -1,5 +1,6 @@
 import SiteHeader from "@/components/SiteHeader";
 import HeroSection from "@/components/HeroSection";
+import EnedisNoticeBar from "@/components/EnedisNoticeBar";
 import RequestTypesSection from "@/components/RequestTypesSection";
 import ProcessSection from "@/components/ProcessSection";
 import EnedisInfoSection from "@/components/EnedisInfoSection";
@@ -18,6 +19,7 @@ const Index = () => {
       <SiteHeader />
       <main>
         <HeroSection />
+        <EnedisNoticeBar />
         <RequestTypesSection />
         <ProcessSection />
         <EnedisInfoSection />

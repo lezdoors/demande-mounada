@@ -39,10 +39,10 @@ const AdvantagesSection = () => {
   const ref = useScrollFadeIn();
 
   return (
-    <section className="section-padding bg-muted/40">
+    <section className="py-24 bg-[hsl(210,30%,97%)]">
       <div className="section-container">
         <div ref={ref} className="scroll-fade-in text-center mb-16">
-          <h2 className="font-heading text-3xl sm:text-4xl lg:text-5xl text-foreground mb-4">
+          <h2 className="font-heading text-[40px] font-semibold text-foreground mb-6">
             Pourquoi nous choisir
           </h2>
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
@@ -54,10 +54,10 @@ const AdvantagesSection = () => {
           {advantages.map((item) => (
             <div
               key={item.title}
-              className="bg-card border border-border rounded-2xl p-7 hover:shadow-md transition-all duration-300"
+              className="card-elevated bg-card border border-border p-7"
             >
-              <div className="h-12 w-12 rounded-xl bg-primary/8 flex items-center justify-center mb-5">
-                <item.icon className="h-6 w-6 text-primary" weight="duotone" />
+              <div className="h-14 w-14 rounded-full bg-primary/10 flex items-center justify-center mb-5 icon-hover">
+                <item.icon className="h-7 w-7 text-primary" weight="duotone" />
               </div>
               <h3 className="font-heading text-lg text-foreground mb-2">
                 {item.title}
@@ -69,13 +69,13 @@ const AdvantagesSection = () => {
           ))}
         </div>
 
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-6">
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-8">
           {stats.map((stat) => (
             <div key={stat.label} className="text-center">
-              <div className="font-heading text-3xl sm:text-4xl text-primary mb-1">
+              <div className="text-5xl font-bold text-primary">
                 {stat.value}
               </div>
-              <div className="text-sm text-muted-foreground">{stat.label}</div>
+              <div className="text-sm uppercase tracking-wider text-muted-foreground mt-2">{stat.label}</div>
             </div>
           ))}
         </div>

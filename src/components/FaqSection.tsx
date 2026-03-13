@@ -51,10 +51,10 @@ const FaqSection = () => {
   const ref = useScrollFadeIn();
 
   return (
-    <section id="faq" className="section-padding bg-muted/40">
+    <section id="faq" className="py-24 bg-[hsl(210,30%,97%)]">
       <div className="section-container">
         <div ref={ref} className="scroll-fade-in text-center mb-14">
-          <h2 className="font-heading text-3xl sm:text-4xl lg:text-5xl text-foreground mb-4">
+          <h2 className="font-heading text-[40px] font-semibold text-foreground mb-4">
             Questions frequentes
           </h2>
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
@@ -68,7 +68,7 @@ const FaqSection = () => {
               <AccordionItem
                 key={i}
                 value={`left-${i}`}
-                className="bg-card border border-border rounded-xl px-6 data-[state=open]:shadow-sm"
+                className="bg-card border border-border rounded-2xl px-6 shadow-sm hover:shadow-md transition-all data-[state=open]:shadow-md data-[state=open]:border-primary/10"
               >
                 <AccordionTrigger className="text-sm font-medium text-foreground hover:no-underline py-5 text-left">
                   {faq.question}
@@ -85,7 +85,7 @@ const FaqSection = () => {
               <AccordionItem
                 key={i}
                 value={`right-${i}`}
-                className="bg-card border border-border rounded-xl px-6 data-[state=open]:shadow-sm"
+                className="bg-card border border-border rounded-2xl px-6 shadow-sm hover:shadow-md transition-all data-[state=open]:shadow-md data-[state=open]:border-primary/10"
               >
                 <AccordionTrigger className="text-sm font-medium text-foreground hover:no-underline py-5 text-left">
                   {faq.question}

@@ -47,10 +47,10 @@ const SpecializedServicesSection = () => {
   const navigate = useNavigate();
 
   return (
-    <section className="py-16 sm:py-20 bg-background">
+    <section className="py-24 bg-white">
       <div className="section-container">
-        <div ref={ref} className="scroll-fade-in text-center mb-10">
-          <h2 className="font-heading text-2xl sm:text-3xl lg:text-5xl text-foreground mb-3">
+        <div ref={ref} className="scroll-fade-in text-center mb-12">
+          <h2 className="font-heading text-[40px] font-semibold text-foreground mb-6">
             Tous nos services de raccordement
           </h2>
           <p className="text-sm sm:text-base text-muted-foreground max-w-xl mx-auto">
@@ -58,16 +58,16 @@ const SpecializedServicesSection = () => {
           </p>
         </div>
 
-        <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 sm:gap-5">
+        <div className="grid grid-cols-2 sm:grid-cols-3 gap-6">
           {specializedServices.map((service) => (
             <div
               key={service.title}
-              className="group bg-card border border-border rounded-xl sm:rounded-2xl p-3 sm:p-6 hover:shadow-lg hover:border-primary/20 transition-all duration-300"
+              className="group card-elevated p-6"
             >
-              <div className="h-8 w-8 sm:h-12 sm:w-12 rounded-lg sm:rounded-xl bg-primary/8 flex items-center justify-center mb-3 sm:mb-4 group-hover:bg-primary/12 transition-colors">
-                <service.icon className="h-4 w-4 sm:h-6 sm:w-6 text-primary" weight="duotone" />
+              <div className="h-14 w-14 rounded-full bg-primary/10 flex items-center justify-center mb-4 icon-hover">
+                <service.icon className="h-12 w-12 text-primary" weight="duotone" />
               </div>
-              <h3 className="font-heading text-xs sm:text-base text-foreground mb-1 sm:mb-2 leading-tight">
+              <h3 className="font-heading text-lg font-semibold text-foreground mb-2 leading-tight">
                 {service.title}
               </h3>
               <p className="hidden sm:block text-xs text-muted-foreground leading-relaxed mb-4">
@@ -75,7 +75,7 @@ const SpecializedServicesSection = () => {
               </p>
               <Button
                 variant="ctaOutline"
-                className="w-full rounded-full text-[7px] sm:text-xs h-auto py-1 sm:py-2"
+                className="btn-lift w-full rounded-full text-[7px] sm:text-xs h-auto py-1 sm:py-2"
                 onClick={() => navigate("/form")}
               >
                 Faire ma demande

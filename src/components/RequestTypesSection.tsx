@@ -35,10 +35,10 @@ const RequestTypesSection = () => {
   const navigate = useNavigate();
 
   return (
-    <section id="services" className="py-16 sm:py-20 bg-background">
+    <section id="services" className="py-24 bg-white">
       <div className="section-container">
-        <div ref={ref} className="scroll-fade-in text-center mb-10">
-          <h2 className="font-heading text-2xl sm:text-3xl lg:text-5xl text-foreground mb-3">
+        <div ref={ref} className="scroll-fade-in text-center mb-12">
+          <h2 className="font-heading text-[40px] font-semibold text-foreground mb-6">
             Nos services de raccordement
           </h2>
           <p className="text-sm sm:text-base text-muted-foreground max-w-xl mx-auto">
@@ -46,16 +46,16 @@ const RequestTypesSection = () => {
           </p>
         </div>
 
-        <div className="grid grid-cols-4 gap-2 sm:gap-4">
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-6">
           {services.map((service) => (
             <article
               key={service.title}
-              className="group bg-card border border-border rounded-xl sm:rounded-2xl p-2.5 sm:p-5 text-center flex flex-col items-center hover:shadow-lg transition-all duration-300"
+              className="group card-elevated p-6 text-center flex flex-col items-center"
             >
-              <div className="h-10 w-10 sm:h-16 sm:w-16 rounded-xl sm:rounded-2xl bg-primary/10 flex items-center justify-center mb-2 sm:mb-4 group-hover:bg-primary/15 transition-colors">
-                <service.icon className="h-5 w-5 sm:h-8 sm:w-8 text-primary" weight="duotone" />
+              <div className="h-14 w-14 rounded-full bg-primary/10 flex items-center justify-center mb-4 icon-hover">
+                <service.icon className="h-12 w-12 text-primary" weight="duotone" />
               </div>
-              <h3 className="font-heading text-[10px] sm:text-base text-foreground mb-1 sm:mb-2 leading-tight">
+              <h3 className="font-heading text-xl font-semibold text-foreground mb-2 leading-tight">
                 {service.title}
               </h3>
               <p className="hidden sm:block text-xs text-muted-foreground leading-relaxed mb-4 flex-1">
@@ -64,7 +64,7 @@ const RequestTypesSection = () => {
               <Button
                 variant="cta"
                 size="sm"
-                className="w-full rounded-md text-[8px] sm:text-xs uppercase tracking-wider font-semibold whitespace-normal h-auto py-1.5 sm:py-2.5"
+                className="btn-lift w-full rounded-md text-[8px] sm:text-xs uppercase tracking-wider font-semibold whitespace-normal h-auto py-1.5 sm:py-2.5"
                 onClick={() => navigate("/form")}
               >
                 {service.cta}

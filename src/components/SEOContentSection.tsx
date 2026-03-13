@@ -20,7 +20,7 @@ const SEOContentSection = () => {
   const ref = useScrollFadeIn();
 
   return (
-    <section className="section-padding bg-background">
+    <section className="py-24 bg-white">
       <div className="section-container">
         <div className="max-w-4xl mx-auto">
           <div ref={ref} className="scroll-fade-in mb-12">
@@ -51,7 +51,7 @@ const SEOContentSection = () => {
             </div>
           </div>
 
-          <div className="bg-muted/50 rounded-2xl p-8">
+          <div className="bg-muted/50 rounded-3xl shadow-sm p-8">
             <h3 className="font-heading text-xl text-foreground mb-6 text-center flex items-center justify-center gap-2">
               <MapPin className="h-5 w-5 text-primary" />
               Couverture nationale
@@ -60,7 +60,7 @@ const SEOContentSection = () => {
               {regions.map((region) => (
                 <div
                   key={region}
-                  className="text-sm text-muted-foreground bg-card border border-border rounded-lg px-4 py-2.5 text-center"
+                  className="text-sm text-muted-foreground bg-card border border-border rounded-xl shadow-sm hover:shadow-md transition px-4 py-2.5 text-center"
                 >
                   {region}
                 </div>

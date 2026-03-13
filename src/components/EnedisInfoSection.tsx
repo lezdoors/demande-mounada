@@ -45,7 +45,7 @@ const EnedisInfoSection = () => {
   const navigate = useNavigate();
 
   return (
-    <section id="enedis" className="section-padding bg-background">
+    <section id="enedis" className="py-24 bg-white">
       <div className="section-container">
         {/* Header with badge */}
         <div ref={ref} className="scroll-fade-in mb-10">
@@ -76,10 +76,10 @@ const EnedisInfoSection = () => {
             {enedisServices.map((service) => (
               <div
                 key={service.title}
-                className="bg-primary/4 border border-primary/10 rounded-2xl p-6 sm:p-7"
+                className="bg-primary/4 border border-primary/10 rounded-2xl p-6 sm:p-7 shadow-sm hover:shadow-md transition-all duration-200"
               >
                 <div className="flex items-center gap-3 mb-4">
-                  <div className="h-10 w-10 rounded-xl bg-primary flex items-center justify-center flex-shrink-0">
+                  <div className="h-10 w-10 rounded-xl bg-primary flex items-center justify-center flex-shrink-0 icon-hover">
                     <service.icon className="h-5 w-5 text-primary-foreground" weight="bold" />
                   </div>
                   <h4 className="font-heading text-base sm:text-lg text-foreground font-bold">

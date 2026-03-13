@@ -29,7 +29,7 @@ const TestimonialsSection = () => {
   const ref = useScrollFadeIn();
 
   return (
-    <section className="py-10 sm:py-14 bg-background">
+    <section className="py-16 bg-background">
       <div className="section-container">
         <div ref={ref} className="scroll-fade-in">
           <div className="flex items-center gap-3 mb-6">
@@ -47,7 +47,7 @@ const TestimonialsSection = () => {
             {testimonials.map((t) => (
               <div
                 key={t.author}
-                className="border border-border/60 rounded-xl px-5 py-4"
+                className="card-elevated border border-border/60 px-5 py-4"
               >
                 <p className="text-sm text-muted-foreground leading-relaxed mb-3">
                   "{t.quote}"

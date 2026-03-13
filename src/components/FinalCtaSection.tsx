@@ -6,7 +6,7 @@ const FinalCtaSection = () => {
   const navigate = useNavigate();
 
   return (
-    <section className="py-20 sm:py-28 bg-primary relative overflow-hidden">
+    <section className="noise-overlay py-24 sm:py-32 relative overflow-hidden" style={{ background: "linear-gradient(135deg, hsl(228,72%,48%) 0%, hsl(228,72%,56%) 50%, hsl(240,60%,52%) 100%)" }}>
       <div className="absolute inset-0 opacity-10">
         <div
           className="absolute inset-0"
@@ -17,7 +17,7 @@ const FinalCtaSection = () => {
         />
       </div>
       <div className="section-container text-center relative z-10">
-        <h2 className="font-heading text-3xl sm:text-4xl lg:text-5xl text-primary-foreground mb-5">
+        <h2 className="font-heading text-[40px] sm:text-5xl font-bold text-primary-foreground mb-5">
           Pret a lancer votre raccordement ?
         </h2>
         <p className="text-lg text-primary-foreground/80 max-w-xl mx-auto mb-10">
@@ -27,7 +27,7 @@ const FinalCtaSection = () => {
           <Button
             variant="secondary"
             size="lg"
-            className="rounded-full px-10 font-medium hover:scale-[1.02] transition-all text-base"
+            className="btn-lift rounded-full px-10 font-medium transition-all text-base"
             onClick={() => navigate("/form")}
           >
             Commencer ma demande

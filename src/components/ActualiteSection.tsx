@@ -29,7 +29,7 @@ const ActualiteSection = () => {
   const ref = useScrollFadeIn();
 
   return (
-    <section className="section-padding bg-muted/30">
+    <section className="py-24 bg-white">
       <div className="section-container">
         <div ref={ref} className="scroll-fade-in mb-10">
           <p className="text-xs font-semibold text-muted-foreground uppercase tracking-widest mb-2">
@@ -45,7 +45,7 @@ const ActualiteSection = () => {
           {articles.map((article) => (
             <article
               key={article.title}
-              className="group bg-card border border-border rounded-2xl overflow-hidden hover:shadow-md transition-all duration-300"
+              className="group card-elevated bg-card border border-border overflow-hidden"
             >
               <div className="aspect-[4/3] overflow-hidden bg-muted">
                 <img

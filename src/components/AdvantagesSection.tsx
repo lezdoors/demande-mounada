@@ -2,9 +2,9 @@ import { ShieldCheck, Timer, UsersThree, Headset } from "@phosphor-icons/react";
 import { useScrollFadeIn } from "@/hooks/useScrollFadeIn";
 
 const stats = [
-  { value: "180 000+", label: "dossiers traites" },
   { value: "48h", label: "delai moyen de traitement" },
-  { value: "98%", label: "taux de satisfaction" },
+  { value: "95%", label: "couverture du territoire" },
+  { value: "100%", label: "en ligne" },
   { value: "24/7", label: "suivi en ligne" },
 ];
 
@@ -46,7 +46,7 @@ const AdvantagesSection = () => {
             Pourquoi nous choisir
           </h2>
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-            Des milliers de particuliers et professionnels nous font confiance pour leurs demarches de raccordement.
+            Un accompagnement complet pour toutes vos demarches de raccordement electrique.
           </p>
         </div>
 

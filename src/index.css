@@ -201,4 +201,13 @@
     transform: translateY(-1px);
     box-shadow: var(--shadow-md);
   }
+
+  /* Hide scrollbar for horizontal swipe */
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
 }

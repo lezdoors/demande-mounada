@@ -43,11 +43,11 @@ const TestimonialsSection = () => {
             </span>
           </div>
 
-          <div className="grid md:grid-cols-3 gap-4">
+          <div className="md:grid md:grid-cols-3 md:gap-4 flex gap-3 overflow-x-auto snap-x snap-mandatory scrollbar-hide pb-2 md:pb-0 -mx-4 px-4 md:mx-0 md:px-0">
             {testimonials.map((t) => (
               <div
                 key={t.author}
-                className="card-elevated border border-border/60 px-5 py-4"
+                className="card-elevated border border-border/60 px-5 py-4 min-w-[80%] md:min-w-0 snap-start"
               >
                 <p className="text-sm text-muted-foreground leading-relaxed mb-3">
                   "{t.quote}"

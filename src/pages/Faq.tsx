@@ -43,9 +43,9 @@ const categories: FaqCategory[] = [
           "Notre service de preparation de dossier est facture 129,80 EUR TTC. Ce tarif comprend l'etude de votre projet, la preparation complete du dossier et l'accompagnement jusqu'a la soumission a Enedis.",
       },
       {
-        question: "Etes-vous affilie a Enedis ?",
+        question: "Comment fonctionne votre accompagnement ?",
         answer:
-          "Non, nous sommes un service independant de preparation de dossier. Nous ne sommes pas affilies a Enedis. Notre role est de vous aider a constituer un dossier complet et conforme pour faciliter le traitement de votre demande par Enedis.",
+          "Nous preparons et verifions votre dossier de raccordement pour garantir sa conformite aux exigences techniques et administratives. Notre equipe vous accompagne a chaque etape, de la constitution du dossier jusqu'a sa soumission a Enedis.",
       },
       {
         question: "Comment suivre l'avancement de ma demande ?",

@@ -46,25 +46,26 @@ const RequestTypesSection = () => {
           </p>
         </div>
 
-        <div className="grid grid-cols-2 sm:grid-cols-4 gap-6">
+        {/* Horizontal swipe on mobile, grid on desktop */}
+        <div className="sm:grid sm:grid-cols-4 sm:gap-6 flex gap-4 overflow-x-auto snap-x snap-mandatory scrollbar-hide pb-2 sm:pb-0 -mx-4 px-4 sm:mx-0 sm:px-0">
           {services.map((service) => (
             <article
               key={service.title}
-              className="group card-elevated p-6 text-center flex flex-col items-center"
+              className="group card-elevated p-6 text-center flex flex-col items-center min-w-[72%] sm:min-w-0 snap-start"
             >
               <div className="h-14 w-14 rounded-full bg-primary/10 flex items-center justify-center mb-4 icon-hover">
                 <service.icon className="h-12 w-12 text-primary" weight="duotone" />
               </div>
-              <h3 className="font-heading text-xl font-semibold text-foreground mb-2 leading-tight">
+              <h3 className="font-heading text-lg sm:text-xl font-semibold text-foreground mb-2 leading-tight">
                 {service.title}
               </h3>
-              <p className="hidden sm:block text-xs text-muted-foreground leading-relaxed mb-4 flex-1">
+              <p className="text-xs text-muted-foreground leading-relaxed mb-4 flex-1">
                 {service.description}
               </p>
               <Button
                 variant="cta"
                 size="sm"
-                className="btn-lift w-full rounded-md text-[8px] sm:text-xs uppercase tracking-wider font-semibold whitespace-normal h-auto py-1.5 sm:py-2.5"
+                className="btn-lift w-full rounded-md text-xs uppercase tracking-wider font-semibold whitespace-normal h-auto py-2.5"
                 onClick={() => navigate("/form")}
               >
                 {service.cta}

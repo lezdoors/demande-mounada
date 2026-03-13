@@ -164,18 +164,17 @@ const SiteFooter = () => {
             </div>
             <div className="px-6 py-5 space-y-4">
               <p className="text-sm text-muted-foreground leading-relaxed">
-                Ce site propose un service independant de preparation et de constitution de dossiers
-                de raccordement electrique. Nous ne sommes pas Enedis et nous ne sommes pas affilies
-                a Enedis.
+                Notre service vous accompagne dans la preparation et la constitution de votre
+                dossier de raccordement electrique. Nous verifions la completude de vos documents,
+                la coherence des informations techniques et la conformite aux exigences administratives.
               </p>
               <p className="text-sm text-muted-foreground leading-relaxed">
-                Enedis est le gestionnaire du reseau public de distribution d'electricite en France.
-                Notre role est de vous accompagner dans la preparation de votre dossier afin de
-                faciliter vos demarches aupres d'Enedis.
+                Enedis est le gestionnaire du reseau public de distribution d'electricite couvrant
+                95% du territoire francais. Le raccordement est realise par Enedis apres validation
+                de votre dossier.
               </p>
               <p className="text-sm text-muted-foreground leading-relaxed">
-                Enedis est une marque deposee. Toutes les marques citees sur ce site appartiennent
-                a leurs proprietaires respectifs.
+                Toutes les marques citees sur ce site appartiennent a leurs proprietaires respectifs.
               </p>
             </div>
           </div>

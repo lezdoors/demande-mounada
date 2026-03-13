@@ -58,11 +58,12 @@ const SpecializedServicesSection = () => {
           </p>
         </div>
 
-        <div className="grid grid-cols-2 sm:grid-cols-3 gap-6">
+        {/* Horizontal swipe on mobile, grid on desktop */}
+        <div className="sm:grid sm:grid-cols-3 sm:gap-6 flex gap-4 overflow-x-auto snap-x snap-mandatory scrollbar-hide pb-2 sm:pb-0 -mx-4 px-4 sm:mx-0 sm:px-0">
           {specializedServices.map((service) => (
             <div
               key={service.title}
-              className="group card-elevated p-6"
+              className="group card-elevated p-6 min-w-[72%] sm:min-w-0 snap-start"
             >
               <div className="h-14 w-14 rounded-full bg-primary/10 flex items-center justify-center mb-4 icon-hover">
                 <service.icon className="h-12 w-12 text-primary" weight="duotone" />
@@ -70,12 +71,12 @@ const SpecializedServicesSection = () => {
               <h3 className="font-heading text-lg font-semibold text-foreground mb-2 leading-tight">
                 {service.title}
               </h3>
-              <p className="hidden sm:block text-xs text-muted-foreground leading-relaxed mb-4">
+              <p className="text-xs text-muted-foreground leading-relaxed mb-4">
                 {service.description}
               </p>
               <Button
                 variant="ctaOutline"
-                className="btn-lift w-full rounded-full text-[7px] sm:text-xs h-auto py-1 sm:py-2"
+                className="btn-lift w-full rounded-full text-xs h-auto py-2"
                 onClick={() => navigate("/form")}
               >
                 Faire ma demande

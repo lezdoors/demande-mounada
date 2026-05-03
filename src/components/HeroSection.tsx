@@ -6,8 +6,8 @@ const HeroSection = () => {
 
   return (
     <CinematicHero
-      tagline1="Votre raccordement,"
-      tagline2="simplifie et garanti."
+      tagline1="Raccordement Enedis,"
+      tagline2="on s'occupe de tout."
       brandName="ENEDIS"
       cardHeading="Votre dossier, notre expertise."
       cardDescription={

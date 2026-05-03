@@ -1,33 +1,32 @@
-import { Lightning, Wrench, Phone, Plug } from "@phosphor-icons/react";
-import { ArrowRight, CheckCircle2 } from "lucide-react";
+import { ArrowRight, CheckCircle2, FileCheck, Clock, Headphones, ShieldCheck } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useNavigate } from "react-router-dom";
 import { useScrollFadeIn } from "@/hooks/useScrollFadeIn";
 
 const enedisServices = [
   {
-    icon: Lightning,
-    title: "Raccordement au Reseau",
+    icon: FileCheck,
+    title: "Constitution du dossier",
     description:
-      "Connexion des installations neuves au reseau electrique, incluant les habitations, immeubles, locaux professionnels et installations de production d'energie renouvelable comme les panneaux solaires.",
+      "Nous preparons et verifions l'ensemble des pieces de votre dossier de raccordement : formulaire Enedis, plan de masse, autorisations. Aucun oubli, aucune erreur.",
   },
   {
-    icon: Lightning,
-    title: "Mise en Service",
+    icon: Clock,
+    title: "Traitement sous 48h",
     description:
-      "Operation technique permettant d'alimenter une installation en electricite apres souscription d'un contrat aupres d'un fournisseur d'energie, minimisant les delais d'attente.",
+      "Votre demande est traitee et transmise a Enedis dans les 48 heures suivant la validation de votre dossier. Vous recevez un devis directement d'Enedis.",
   },
   {
-    icon: Wrench,
-    title: "Gestion des Compteurs",
+    icon: Headphones,
+    title: "Accompagnement personnalise",
     description:
-      "Installation, remplacement et maintenance des compteurs electriques, y compris le deploiement des compteurs communicants Linky, permettant un suivi precis de votre consommation energetique.",
+      "Un interlocuteur dedie vous guide a chaque etape : du depot de votre demande jusqu'a l'intervention du technicien Enedis sur votre chantier.",
   },
   {
-    icon: Phone,
-    title: "Depannage 24h/24 et 7j/7",
+    icon: ShieldCheck,
+    title: "Conformite garantie",
     description:
-      "Intervention rapide en cas de panne ou d'incident sur le reseau electrique public, comme les coupures de courant collectives ou les problemes de tension, assurant une continuite de service.",
+      "Chaque dossier est verifie pour respecter les normes Enedis en vigueur. En cas de rejet, nous corrigeons et re-deposons votre demande sans frais supplementaires.",
   },
 ];
 
@@ -80,7 +79,7 @@ const EnedisInfoSection = () => {
               >
                 <div className="flex items-center gap-3 mb-4">
                   <div className="h-10 w-10 rounded-xl bg-primary flex items-center justify-center flex-shrink-0 icon-hover">
-                    <service.icon className="h-5 w-5 text-primary-foreground" weight="bold" />
+                    <service.icon className="h-5 w-5 text-primary-foreground" strokeWidth={2} />
                   </div>
                   <h4 className="font-heading text-base sm:text-lg text-foreground font-bold">
                     {service.title}

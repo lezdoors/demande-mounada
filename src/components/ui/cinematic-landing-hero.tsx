@@ -158,8 +158,8 @@ export interface CinematicHeroProps extends React.HTMLAttributes<HTMLDivElement>
 }
 
 export function CinematicHero({
-  tagline1 = "Votre raccordement,",
-  tagline2 = "simplifie et garanti.",
+  tagline1 = "Raccordement Enedis,",
+  tagline2 = "on s'occupe de tout.",
   brandName = "ENEDIS",
   cardHeading = "Votre dossier, notre expertise.",
   cardDescription = <>Nous preparons et verifions votre dossier de raccordement electrique pour garantir sa conformite aux exigences <span className="text-white font-semibold">Enedis</span>. Traitement sous 48h.</>,
@@ -233,14 +233,14 @@ export function CinematicHero({
         .set(".cta-wrapper", { autoAlpha: 1 })
         .to({}, { duration: 0.3 })
         .to([".mockup-scroll-wrapper", ".floating-badge", ".card-left-text", ".card-right-text"], {
-          scale: 0.9, y: -40, z: -200, autoAlpha: 0, ease: "power3.in", duration: 1.2, stagger: 0.05,
+          scale: 0.9, y: -40, z: -200, autoAlpha: 0, ease: "power3.in", duration: 0.8, stagger: 0.05,
         })
         .to(".main-card", {
           width: isMobile ? "92vw" : "85vw", height: isMobile ? "92vh" : "85vh",
-          borderRadius: isMobile ? "32px" : "40px", ease: "expo.inOut", duration: 1.8
+          borderRadius: isMobile ? "32px" : "40px", ease: "expo.inOut", duration: 0.8
         }, "pullback")
-        .to(".cta-wrapper", { scale: 1, filter: "blur(0px)", ease: "expo.inOut", duration: 1.8 }, "pullback")
-        .to(".main-card", { y: -window.innerHeight - 300, ease: "power3.in", duration: 1.5 });
+        .to(".cta-wrapper", { scale: 1, filter: "blur(0px)", ease: "expo.inOut", duration: 0.8 }, "pullback")
+        .to(".main-card", { y: -window.innerHeight - 300, ease: "power3.in", duration: 0.6 });
     }, containerRef);
     return () => ctx.revert();
   }, [metricValue]);
